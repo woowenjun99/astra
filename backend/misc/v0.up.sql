@@ -5,3 +5,12 @@ CREATE TABLE users (
 	full_name TEXT NOT NULL,
 	uid TEXT PRIMARY KEY
 );
+
+CREATE TABLE transactions (
+	amount BIGINT NOT NULL,
+	category INT NOT NULL,
+	date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	name TEXT NOT NULL,
+	user_id TEXT NOT NULL REFERENCES users ON DELETE CASCADE
+);

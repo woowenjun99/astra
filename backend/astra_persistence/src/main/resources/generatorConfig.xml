@@ -37,5 +37,9 @@
         <table tableName="users" domainObjectName="UserEntity" >
             <property name="useActualColumnNames" value="false"/>
         </table>
+
+        <table tableName="transactions" domainObjectName="TransactionEntity" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>
