@@ -1,0 +1,9 @@
+spring:
+    application:
+        name: tutor_buddy_app
+    datasource:
+        hikari:
+            connectionTimeout: 20000
+            maximumPoolSize: 5
+        url: ${DATABASE_URL}
+firebaseServiceAccount: ${FIREBASE_SERVICE_ACCOUNT}
