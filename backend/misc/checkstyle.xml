@@ -4,9 +4,14 @@
         "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
+
     <module name="LineLength">
         <property name="max" value="150"/>
     </module>
+
+
+
+    <module name="NewlineAtEndOfFile"/>
 
     <module name="TreeWalker">
         <!--   Import Related     -->
@@ -16,7 +21,7 @@
         <module name="ImportOrder">
             <property name="ordered" value="true"/>  <!-- Ensures that imports are ordered -->
             <property name="separated" value="true"/>  <!-- Ensures there is a blank line between groups -->
-            <property name="groups" value="com,org,java,javax,net,.*"/>  <!-- Groups imports -->
+            <property name="groups" value="com.wenjun,com,lombok,org,java,javax,net,.*"/>  <!-- Groups imports -->
         </module>
     </module>
 </module>
