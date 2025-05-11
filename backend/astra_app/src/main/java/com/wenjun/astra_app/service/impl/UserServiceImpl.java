@@ -15,15 +15,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-import jakarta.annotation.Resource;
-
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    @Resource
-    private AuthService authService;
-    @Resource
-    private UserRepository userRepository;
+    private final AuthService authService;
+    private final UserRepository userRepository;
 
     @Override
     public UserEntity createUser(CreateUserDTO request) throws FirebaseAuthException {
@@ -36,8 +32,7 @@ public class UserServiceImpl implements UserService {
         Date now = new Date();
         user.setEmail(request.getEmail());
         user.setUid(userRecord.getUid());
-        user.setDateCreated(now);
-        user.setDateUpdated(now);
+        user.setFullName("");
         userRepository.createUser(user);
         return user;
     }

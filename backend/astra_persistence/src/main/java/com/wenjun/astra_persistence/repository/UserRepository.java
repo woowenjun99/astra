@@ -4,6 +4,7 @@ import com.wenjun.astra_persistence.mappers.UserEntityMapper;
 import com.wenjun.astra_persistence.models.UserEntity;
 import com.wenjun.astra_persistence.models.UserEntityExample;
 
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Repository
 public class UserRepository {
+    @Resource
     private UserEntityMapper userEntityMapper;
 
     public void createUser(UserEntity user) {
