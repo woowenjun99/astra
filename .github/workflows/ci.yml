@@ -38,3 +38,6 @@ jobs:
             - name: Build with Maven
               working-directory: ./backend
               run: mvn -B package --file pom.xml
+            - name: Create a Docker Image with the Jar file
+              working-directory: /backend
+              run: docker build -t app .
