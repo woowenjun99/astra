@@ -5,14 +5,14 @@ import 'package:getwidget/getwidget.dart';
 import 'package:astra/src/service/user/presentation/register_controller.dart';
 import 'package:astra/src/util/async_value_ui.dart';
 
-class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({super.key});
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  ConsumerState<AuthScreen> createState() => _AuthScreenState();
+  ConsumerState<RegisterScreen> createState() => _LoginScreenState();
 }
 
-class _AuthScreenState extends ConsumerState<AuthScreen> {
+class _LoginScreenState extends ConsumerState<RegisterScreen> {
   bool isVisible = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

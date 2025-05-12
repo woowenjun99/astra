@@ -1,1 +1,1 @@
-enum Routes { home }
+enum Routes { home, login, register }
