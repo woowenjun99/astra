@@ -116,6 +116,7 @@ firebase-exports
 
 # Environment variables
 .env
+env.g.dart
 
 # Ignore test coverage data
 coverage/lcov.info

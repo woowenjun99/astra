@@ -1,3 +1,4 @@
+import 'package:astra/src/screens/auth_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -26,8 +27,9 @@ GoRouter goRouter(Ref ref) {
       // }
       return null;
     },
-    initialLocation: "/",
+    initialLocation: "/login",
     routes: [
+      GoRoute(path: "/login", builder: (context, state) => AuthScreen()),
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(
