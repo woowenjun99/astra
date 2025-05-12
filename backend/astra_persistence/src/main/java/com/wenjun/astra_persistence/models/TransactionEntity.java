@@ -15,6 +15,12 @@ public class TransactionEntity {
 
     private String userId;
 
+    private Integer transactionType;
+
+    private Date dateCreated;
+
+    private Date dateUpdated;
+
     public Object getId() {
         return id;
     }
@@ -61,5 +67,29 @@ public class TransactionEntity {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
+    }
+
+    public Integer getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(Integer transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 }

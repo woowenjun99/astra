@@ -8,6 +8,9 @@
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="transaction_type" jdbcType="INTEGER" property="transactionType" />
+    <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
+    <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, amount, category, date, name, user_id
+    id, amount, category, date, name, user_id, transaction_type, date_created, date_updated
   </sql>
   <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.TransactionEntityExample" resultMap="BaseResultMap">
     select
@@ -102,10 +105,12 @@
   </delete>
   <insert id="insert" parameterType="com.wenjun.astra_persistence.models.TransactionEntity">
     insert into transactions (id, amount, category, 
-      date, name, user_id
+      date, name, user_id, 
+      transaction_type, date_created, date_updated
       )
     values (#{id,jdbcType=OTHER}, #{amount,jdbcType=BIGINT}, #{category,jdbcType=INTEGER}, 
-      #{date,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      #{date,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{transactionType,jdbcType=INTEGER}, #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.TransactionEntity">
@@ -129,6 +134,15 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="transactionType != null">
+        transaction_type,
+      </if>
+      <if test="dateCreated != null">
+        date_created,
+      </if>
+      <if test="dateUpdated != null">
+        date_updated,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -148,6 +162,15 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionType != null">
+        #{transactionType,jdbcType=INTEGER},
+      </if>
+      <if test="dateCreated != null">
+        #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateUpdated != null">
+        #{dateUpdated,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -178,6 +201,15 @@
       <if test="row.userId != null">
         user_id = #{row.userId,jdbcType=VARCHAR},
       </if>
+      <if test="row.transactionType != null">
+        transaction_type = #{row.transactionType,jdbcType=INTEGER},
+      </if>
+      <if test="row.dateCreated != null">
+        date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.dateUpdated != null">
+        date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +222,10 @@
       category = #{row.category,jdbcType=INTEGER},
       date = #{row.date,jdbcType=TIMESTAMP},
       name = #{row.name,jdbcType=VARCHAR},
-      user_id = #{row.userId,jdbcType=VARCHAR}
+      user_id = #{row.userId,jdbcType=VARCHAR},
+      transaction_type = #{row.transactionType,jdbcType=INTEGER},
+      date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,6 +248,15 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="transactionType != null">
+        transaction_type = #{transactionType,jdbcType=INTEGER},
+      </if>
+      <if test="dateCreated != null">
+        date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateUpdated != null">
+        date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=OTHER}
   </update>
@@ -222,7 +266,10 @@
       category = #{category,jdbcType=INTEGER},
       date = #{date,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR}
+      user_id = #{userId,jdbcType=VARCHAR},
+      transaction_type = #{transactionType,jdbcType=INTEGER},
+      date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      date_updated = #{dateUpdated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=OTHER}
   </update>
 </mapper>

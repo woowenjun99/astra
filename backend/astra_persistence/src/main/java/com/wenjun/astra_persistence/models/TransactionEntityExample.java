@@ -484,6 +484,186 @@ public class TransactionEntityExample {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
+
+        public Criteria andTransactionTypeIsNull() {
+            addCriterion("transaction_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeIsNotNull() {
+            addCriterion("transaction_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeEqualTo(Integer value) {
+            addCriterion("transaction_type =", value, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeNotEqualTo(Integer value) {
+            addCriterion("transaction_type <>", value, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeGreaterThan(Integer value) {
+            addCriterion("transaction_type >", value, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("transaction_type >=", value, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeLessThan(Integer value) {
+            addCriterion("transaction_type <", value, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("transaction_type <=", value, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeIn(List<Integer> values) {
+            addCriterion("transaction_type in", values, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeNotIn(List<Integer> values) {
+            addCriterion("transaction_type not in", values, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeBetween(Integer value1, Integer value2) {
+            addCriterion("transaction_type between", value1, value2, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransactionTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("transaction_type not between", value1, value2, "transactionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedIsNull() {
+            addCriterion("date_created is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedIsNotNull() {
+            addCriterion("date_created is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedEqualTo(Date value) {
+            addCriterion("date_created =", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedNotEqualTo(Date value) {
+            addCriterion("date_created <>", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedGreaterThan(Date value) {
+            addCriterion("date_created >", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("date_created >=", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedLessThan(Date value) {
+            addCriterion("date_created <", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedLessThanOrEqualTo(Date value) {
+            addCriterion("date_created <=", value, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedIn(List<Date> values) {
+            addCriterion("date_created in", values, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedNotIn(List<Date> values) {
+            addCriterion("date_created not in", values, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedBetween(Date value1, Date value2) {
+            addCriterion("date_created between", value1, value2, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateCreatedNotBetween(Date value1, Date value2) {
+            addCriterion("date_created not between", value1, value2, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedIsNull() {
+            addCriterion("date_updated is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedIsNotNull() {
+            addCriterion("date_updated is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedEqualTo(Date value) {
+            addCriterion("date_updated =", value, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedNotEqualTo(Date value) {
+            addCriterion("date_updated <>", value, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedGreaterThan(Date value) {
+            addCriterion("date_updated >", value, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedGreaterThanOrEqualTo(Date value) {
+            addCriterion("date_updated >=", value, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedLessThan(Date value) {
+            addCriterion("date_updated <", value, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedLessThanOrEqualTo(Date value) {
+            addCriterion("date_updated <=", value, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedIn(List<Date> values) {
+            addCriterion("date_updated in", values, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedNotIn(List<Date> values) {
+            addCriterion("date_updated not in", values, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedBetween(Date value1, Date value2) {
+            addCriterion("date_updated between", value1, value2, "dateUpdated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateUpdatedNotBetween(Date value1, Date value2) {
+            addCriterion("date_updated not between", value1, value2, "dateUpdated");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

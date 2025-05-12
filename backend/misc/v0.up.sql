@@ -14,3 +14,9 @@ CREATE TABLE transactions (
 	name TEXT NOT NULL,
 	user_id TEXT NOT NULL REFERENCES users ON DELETE CASCADE
 );
+
+ALTER TABLE transactions ADD COLUMN transaction_type INT NOT NULL;
+
+ALTER TABLE transactions ADD COLUMN date_created TIMESTAMPTZ NOT NULL DEFAULT NOW();
+
+ALTER TABLE transactions ADD COLUMN date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW();

@@ -23,5 +23,10 @@
             <property name="separated" value="true"/>  <!-- Ensures there is a blank line between groups -->
             <property name="groups" value="com.wenjun,com,lombok,org,java,javax,net,.*"/>  <!-- Groups imports -->
         </module>
+
+        <!--   Method Related     -->
+        <module name="MethodParamPad">
+            <property name="option" value="nospace"/>
+        </module>
     </module>
 </module>

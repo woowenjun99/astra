@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -22,7 +21,6 @@ import jakarta.validation.Valid;
 public class UserController {
     private final UserService userService;
 
-    @ResponseBody
     @PostMapping("/register")
     public UserEntity createUser(@Valid @RequestBody CreateUserDTO request) throws FirebaseAuthException {
         return userService.createUser(request);
