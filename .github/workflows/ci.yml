@@ -8,9 +8,27 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres:14-alpine
+                env:
+                    POSTGRES_USER: root
+                    POSTGRES_PASSWORD: secret
+                    POSTGRES_DB: test
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+        # Inject fake environment variables
+        env:
+            DATABASE_URL: jdbc:postgresql://localhost:5432/test
+            FIREBASE_SERVICE_ACCOUNT: "{}"
+
         steps:
-            -   name: Checkout with Maven
-                uses: actions/checkout@v4
+            - uses: actions/checkout@v4
             - name: Set up JDK 17
               uses: actions/setup-java@v4
               with:
@@ -20,4 +38,3 @@ jobs:
             - name: Build with Maven
               working-directory: ./backend
               run: mvn -B package --file pom.xml
-
