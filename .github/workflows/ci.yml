@@ -9,14 +9,15 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout the repository
-              uses: actions/checkout@v4
+            -   name: Checkout with Maven
+                uses: actions/checkout@v4
             - name: Set up JDK 17
               uses: actions/setup-java@v4
               with:
                   java-version: "17"
                   distribution: "temurin"
                   cache: maven
-            - name: Package with Maven
-              working-directory: ./backend/astra_app
-              run: ./mvnw package
+            - name: Build with Maven
+              working-directory: ./backend
+              run: mvn -B package --file pom.xml
+
