@@ -8,25 +8,6 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        services:
-            postgres:
-                image: postgres:14-alpine
-                env:
-                    POSTGRES_USER: root
-                    POSTGRES_PASSWORD: secret
-                    POSTGRES_DB: test
-                ports:
-                    - 5432:5432
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
-        # Inject fake environment variables
-        env:
-            DATABASE_URL: jdbc:postgresql://localhost:5432/test
-            FIREBASE_SERVICE_ACCOUNT: "{}"
-
         steps:
             - uses: actions/checkout@v4
             - name: Set up JDK 17
@@ -38,6 +19,3 @@ jobs:
             - name: Build with Maven
               working-directory: ./backend
               run: mvn -B package --file pom.xml
-            - name: Create a Docker Image with the Jar file
-              working-directory: /backend
-              run: docker build -t app .

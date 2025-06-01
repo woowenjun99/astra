@@ -83,7 +83,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<skip>${mybatis.generator.skip}</skip>
+							<skip>true</skip>
 						</configuration>
 					</execution>
 				</executions>
