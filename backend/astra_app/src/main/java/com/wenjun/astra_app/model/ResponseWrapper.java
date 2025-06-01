@@ -11,10 +11,12 @@ public class ResponseWrapper<T> {
     private final String message;
     private final Date date = new Date();
     private final Long version = 1L;
+    private final Integer code;
 
-    public ResponseWrapper(T data, boolean isSuccess, String message) {
+    public ResponseWrapper(T data, boolean isSuccess, String message, Integer code) {
         this.data = data;
         this.isSuccess = isSuccess;
         this.message = message;
+        this.code = code;
     }
 }

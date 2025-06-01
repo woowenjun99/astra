@@ -1,5 +1,6 @@
 package com.wenjun.astra_app.controller;
 
+import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.service.UserService;
 
@@ -19,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PutMapping
-    private void updateUser(@Valid @RequestBody UpdateUserDTO request) {
+    private void updateUser(@Valid @RequestBody UpdateUserDTO request) throws AstraException {
         userService.updateUser(request);
     }
 }

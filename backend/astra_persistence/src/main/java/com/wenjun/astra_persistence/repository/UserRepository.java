@@ -15,4 +15,8 @@ public class UserRepository {
     public UserEntity getUserByUid(String uid) {
         return userEntityMapper.selectByPrimaryKey(uid);
     }
+
+    public void updateByPrimaryKey(UserEntity user) {
+        userEntityMapper.updateByPrimaryKey(user);
+    }
 }

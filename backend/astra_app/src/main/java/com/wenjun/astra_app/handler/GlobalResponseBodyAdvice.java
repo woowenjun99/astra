@@ -6,6 +6,7 @@ import com.wenjun.astra_app.service.impl.ThreadLocalUser;
 import lombok.AllArgsConstructor;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -29,13 +30,18 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice {
             ServerHttpRequest request,
             ServerHttpResponse response
     ) {
-        ThreadLocalUser.clear();
+        // We need to clear the current thread for future uses
+        if (ThreadLocalUser.get() != null) {
+            ThreadLocalUser.clear();
+        }
 
-        // Prevent double wrapping
+        // Double wrapping might occur when we throw an exception
+        // We need to handle the status code as well
         if (body instanceof ResponseWrapper<?>) {
+            response.setStatusCode(HttpStatusCode.valueOf(((ResponseWrapper) body).getCode()));
             return body;
         }
 
-        return new ResponseWrapper<>(body, true, "");
+        return new ResponseWrapper<>(body, true, "", 200);
     }
 }
