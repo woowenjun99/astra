@@ -7,3 +7,4 @@ spring:
             maximumPoolSize: 5
         url: ${DATABASE_URL}
 firebaseServiceAccount: ${FIREBASE_SERVICE_ACCOUNT}
+baseUrl: ${BASE_URL}

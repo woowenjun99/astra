@@ -1,22 +1,12 @@
 CREATE TABLE users (
 	date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	email TEXT NOT NULL UNIQUE,
+	email TEXT NOT NULL,
 	full_name TEXT NOT NULL,
-	uid TEXT PRIMARY KEY
+	profile_photo_url TEXT,
+	uid TEXT PRIMARY KEY,
+    goal_weight NUMERIC(6, 2),
+    goal_date DATE,
+    CHECK (goal_weight > 0),
+    CHECK (goal_date > CURRENT_DATE)
 );
-
-CREATE TABLE transactions (
-	amount BIGINT NOT NULL,
-	category INT NOT NULL,
-	date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-	name TEXT NOT NULL,
-	user_id TEXT NOT NULL REFERENCES users ON DELETE CASCADE
-);
-
-ALTER TABLE transactions ADD COLUMN transaction_type INT NOT NULL;
-
-ALTER TABLE transactions ADD COLUMN date_created TIMESTAMPTZ NOT NULL DEFAULT NOW();
-
-ALTER TABLE transactions ADD COLUMN date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW();

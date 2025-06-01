@@ -1,12 +1,25 @@
 package com.wenjun.astra_app.controller;
 
+import com.wenjun.astra_app.model.dto.UpdateUserDTO;
+import com.wenjun.astra_app.service.UserService;
+
 import lombok.AllArgsConstructor;
 
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final UserService userService;
+
+    @PutMapping
+    private void updateUser(@Valid @RequestBody UpdateUserDTO request) {
+        userService.updateUser(request);
+    }
 }

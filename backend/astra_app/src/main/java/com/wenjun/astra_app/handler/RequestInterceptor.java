@@ -20,6 +20,10 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // Allow bypass if the method comes from preflight of CORs
+        if ("options".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
         String jwt = request.getHeader("Authorization");
         FirebaseToken token = authService.validate(jwt);
         ThreadLocalUser.set(token);

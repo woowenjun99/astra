@@ -1,6 +1,7 @@
 package com.wenjun.astra_app.handler;
 
 import com.wenjun.astra_app.model.ResponseWrapper;
+import com.wenjun.astra_app.service.impl.ThreadLocalUser;
 
 import lombok.AllArgsConstructor;
 
@@ -28,6 +29,8 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice {
             ServerHttpRequest request,
             ServerHttpResponse response
     ) {
+        ThreadLocalUser.clear();
+
         // Prevent double wrapping
         if (body instanceof ResponseWrapper<?>) {
             return body;
