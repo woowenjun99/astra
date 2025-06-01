@@ -13,6 +13,12 @@ public class UserEntity {
 
     private String fullName;
 
+    private String profilePhotoUrl;
+
+    private Double goalWeight;
+
+    private Date goalDate;
+
     public String getUid() {
         return uid;
     }
@@ -51,5 +57,29 @@ public class UserEntity {
 
     public void setFullName(String fullName) {
         this.fullName = fullName == null ? null : fullName.trim();
+    }
+
+    public String getProfilePhotoUrl() {
+        return profilePhotoUrl;
+    }
+
+    public void setProfilePhotoUrl(String profilePhotoUrl) {
+        this.profilePhotoUrl = profilePhotoUrl == null ? null : profilePhotoUrl.trim();
+    }
+
+    public Double getGoalWeight() {
+        return goalWeight;
+    }
+
+    public void setGoalWeight(Double goalWeight) {
+        this.goalWeight = goalWeight;
+    }
+
+    public Date getGoalDate() {
+        return goalDate;
+    }
+
+    public void setGoalDate(Date goalDate) {
+        this.goalDate = goalDate;
     }
 }

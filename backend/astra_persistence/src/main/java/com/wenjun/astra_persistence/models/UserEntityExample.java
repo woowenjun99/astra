@@ -2,6 +2,7 @@ package com.wenjun.astra_persistence.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class UserEntityExample {
@@ -103,6 +104,32 @@ public class UserEntityExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+            if (values == null || values.size() == 0) {
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+            }
+            List<java.sql.Date> dateList = new ArrayList<>();
+            Iterator<Date> iter = values.iterator();
+            while (iter.hasNext()) {
+                dateList.add(new java.sql.Date(iter.next().getTime()));
+            }
+            addCriterion(condition, dateList, property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andUidIsNull() {
@@ -432,6 +459,196 @@ public class UserEntityExample {
 
         public Criteria andFullNameNotBetween(String value1, String value2) {
             addCriterion("full_name not between", value1, value2, "fullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlIsNull() {
+            addCriterion("profile_photo_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlIsNotNull() {
+            addCriterion("profile_photo_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlEqualTo(String value) {
+            addCriterion("profile_photo_url =", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlNotEqualTo(String value) {
+            addCriterion("profile_photo_url <>", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlGreaterThan(String value) {
+            addCriterion("profile_photo_url >", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("profile_photo_url >=", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlLessThan(String value) {
+            addCriterion("profile_photo_url <", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlLessThanOrEqualTo(String value) {
+            addCriterion("profile_photo_url <=", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlLike(String value) {
+            addCriterion("profile_photo_url like", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlNotLike(String value) {
+            addCriterion("profile_photo_url not like", value, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlIn(List<String> values) {
+            addCriterion("profile_photo_url in", values, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlNotIn(List<String> values) {
+            addCriterion("profile_photo_url not in", values, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlBetween(String value1, String value2) {
+            addCriterion("profile_photo_url between", value1, value2, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andProfilePhotoUrlNotBetween(String value1, String value2) {
+            addCriterion("profile_photo_url not between", value1, value2, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightIsNull() {
+            addCriterion("goal_weight is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightIsNotNull() {
+            addCriterion("goal_weight is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightEqualTo(Double value) {
+            addCriterion("goal_weight =", value, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightNotEqualTo(Double value) {
+            addCriterion("goal_weight <>", value, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightGreaterThan(Double value) {
+            addCriterion("goal_weight >", value, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightGreaterThanOrEqualTo(Double value) {
+            addCriterion("goal_weight >=", value, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightLessThan(Double value) {
+            addCriterion("goal_weight <", value, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightLessThanOrEqualTo(Double value) {
+            addCriterion("goal_weight <=", value, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightIn(List<Double> values) {
+            addCriterion("goal_weight in", values, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightNotIn(List<Double> values) {
+            addCriterion("goal_weight not in", values, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightBetween(Double value1, Double value2) {
+            addCriterion("goal_weight between", value1, value2, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalWeightNotBetween(Double value1, Double value2) {
+            addCriterion("goal_weight not between", value1, value2, "goalWeight");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateIsNull() {
+            addCriterion("goal_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateIsNotNull() {
+            addCriterion("goal_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateEqualTo(Date value) {
+            addCriterionForJDBCDate("goal_date =", value, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateNotEqualTo(Date value) {
+            addCriterionForJDBCDate("goal_date <>", value, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateGreaterThan(Date value) {
+            addCriterionForJDBCDate("goal_date >", value, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("goal_date >=", value, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateLessThan(Date value) {
+            addCriterionForJDBCDate("goal_date <", value, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("goal_date <=", value, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateIn(List<Date> values) {
+            addCriterionForJDBCDate("goal_date in", values, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateNotIn(List<Date> values) {
+            addCriterionForJDBCDate("goal_date not in", values, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("goal_date between", value1, value2, "goalDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoalDateNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("goal_date not between", value1, value2, "goalDate");
             return (Criteria) this;
         }
     }

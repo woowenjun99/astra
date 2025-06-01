@@ -7,6 +7,9 @@
     <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="profile_photo_url" jdbcType="VARCHAR" property="profilePhotoUrl" />
+    <result column="goal_weight" jdbcType="NUMERIC" property="goalWeight" />
+    <result column="goal_date" jdbcType="DATE" property="goalDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    uid, date_created, date_updated, email, full_name
+    uid, date_created, date_updated, email, full_name, profile_photo_url, goal_weight, 
+    goal_date
   </sql>
   <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.UserEntityExample" resultMap="BaseResultMap">
     select
@@ -101,9 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     insert into users (uid, date_created, date_updated, 
-      email, full_name)
+      email, full_name, profile_photo_url, 
+      goal_weight, goal_date)
     values (#{uid,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}, 
-      #{email,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR})
+      #{email,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, #{profilePhotoUrl,jdbcType=VARCHAR}, 
+      #{goalWeight,jdbcType=NUMERIC}, #{goalDate,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     insert into users
@@ -123,6 +129,15 @@
       <if test="fullName != null">
         full_name,
       </if>
+      <if test="profilePhotoUrl != null">
+        profile_photo_url,
+      </if>
+      <if test="goalWeight != null">
+        goal_weight,
+      </if>
+      <if test="goalDate != null">
+        goal_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uid != null">
@@ -139,6 +154,15 @@
       </if>
       <if test="fullName != null">
         #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="profilePhotoUrl != null">
+        #{profilePhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="goalWeight != null">
+        #{goalWeight,jdbcType=NUMERIC},
+      </if>
+      <if test="goalDate != null">
+        #{goalDate,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -166,6 +190,15 @@
       <if test="row.fullName != null">
         full_name = #{row.fullName,jdbcType=VARCHAR},
       </if>
+      <if test="row.profilePhotoUrl != null">
+        profile_photo_url = #{row.profilePhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="row.goalWeight != null">
+        goal_weight = #{row.goalWeight,jdbcType=NUMERIC},
+      </if>
+      <if test="row.goalDate != null">
+        goal_date = #{row.goalDate,jdbcType=DATE},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +210,10 @@
       date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
       date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
       email = #{row.email,jdbcType=VARCHAR},
-      full_name = #{row.fullName,jdbcType=VARCHAR}
+      full_name = #{row.fullName,jdbcType=VARCHAR},
+      profile_photo_url = #{row.profilePhotoUrl,jdbcType=VARCHAR},
+      goal_weight = #{row.goalWeight,jdbcType=NUMERIC},
+      goal_date = #{row.goalDate,jdbcType=DATE}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +233,15 @@
       <if test="fullName != null">
         full_name = #{fullName,jdbcType=VARCHAR},
       </if>
+      <if test="profilePhotoUrl != null">
+        profile_photo_url = #{profilePhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="goalWeight != null">
+        goal_weight = #{goalWeight,jdbcType=NUMERIC},
+      </if>
+      <if test="goalDate != null">
+        goal_date = #{goalDate,jdbcType=DATE},
+      </if>
     </set>
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
@@ -205,7 +250,10 @@
     set date_created = #{dateCreated,jdbcType=TIMESTAMP},
       date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
       email = #{email,jdbcType=VARCHAR},
-      full_name = #{fullName,jdbcType=VARCHAR}
+      full_name = #{fullName,jdbcType=VARCHAR},
+      profile_photo_url = #{profilePhotoUrl,jdbcType=VARCHAR},
+      goal_weight = #{goalWeight,jdbcType=NUMERIC},
+      goal_date = #{goalDate,jdbcType=DATE}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>
