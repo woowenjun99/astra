@@ -1,4 +1,4 @@
-import { ProfileFormSchema } from "@/app/(main)/profile/page";
+import { ProfileFormSchema } from "@/component/user/ProfileForm";
 import { auth } from "@/firebase";
 import type { BaseResponse } from "@/model/base-response";
 import { axiosInstance } from "@/util/axios-instance";
@@ -6,7 +6,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateEmail,
 } from "firebase/auth";
 
 export async function createUser(email: string, password: string) {
@@ -36,20 +35,14 @@ export async function updateUser(payload: ProfileFormSchema) {
 
   // Send the updated user data to the server
   const { data } = await axiosInstance.put<BaseResponse<void>>(
-    "/user",
+    "/users",
     payload,
     {
-      headers: { Authorization: `${headers}` },
+      headers: { Authorization: headers },
     }
   );
   if (!data.success) {
     throw new Error(data.message);
-  }
-
-  // Check if the email needs to be updated
-  const currentEmail = auth.currentUser?.email;
-  if (payload.email !== currentEmail) {
-    await updateEmail(auth.currentUser!, payload.email);
   }
 }
 

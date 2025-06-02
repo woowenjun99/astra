@@ -39,7 +39,7 @@ public class AstraConfiguration {
                 registry
                         .addMapping("/**")
                         .allowedOrigins(baseUrl)
-                        .allowedMethods("POST", "OPTIONS", "GET")
+                        .allowedMethods("POST", "OPTIONS", "GET", "PUT")
                         .allowedHeaders("Authorization");
             }
         };

@@ -13,6 +13,7 @@ CREATE TABLE users (
 	height NUMERIC(6, 2),
 	profile_photo_url TEXT,
 	weight NUMERIC(6, 2),
+	bio TEXT,
 
 	-- Fitness Goals
     goal_weight NUMERIC(6, 2),

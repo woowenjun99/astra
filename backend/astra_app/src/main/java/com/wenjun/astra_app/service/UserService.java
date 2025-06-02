@@ -1,5 +1,6 @@
 package com.wenjun.astra_app.service;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 
@@ -10,5 +11,5 @@ public interface UserService {
      * @param request The request
      * @throws AstraException If the user is not logged in or does not exist in the DB
      */
-    void updateUser(UpdateUserDTO request) throws AstraException;
+    void updateUser(UpdateUserDTO request) throws AstraException, FirebaseAuthException;
 }

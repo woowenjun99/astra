@@ -25,6 +25,8 @@ public class UserEntity {
 
     private Double weight;
 
+    private String bio;
+
     private Double goalWeight;
 
     private Date goalDate;
@@ -115,6 +117,14 @@ public class UserEntity {
 
     public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio == null ? null : bio.trim();
     }
 
     public Double getGoalWeight() {

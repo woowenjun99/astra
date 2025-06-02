@@ -4,6 +4,8 @@ import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.service.UserService;
 
+import com.google.firebase.auth.FirebaseAuthException;
+
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @PutMapping
-    private void updateUser(@Valid @RequestBody UpdateUserDTO request) throws AstraException {
+    private void updateUser(@Valid @RequestBody UpdateUserDTO request) throws AstraException, FirebaseAuthException {
         userService.updateUser(request);
     }
 }
