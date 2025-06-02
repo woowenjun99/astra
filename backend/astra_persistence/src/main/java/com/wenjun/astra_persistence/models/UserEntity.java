@@ -11,9 +11,19 @@ public class UserEntity {
 
     private String email;
 
+    private Boolean isProfilePublic;
+
+    private Date dateOfBirth;
+
     private String fullName;
 
+    private Integer gender;
+
+    private Double height;
+
     private String profilePhotoUrl;
+
+    private Double weight;
 
     private Double goalWeight;
 
@@ -51,6 +61,22 @@ public class UserEntity {
         this.email = email == null ? null : email.trim();
     }
 
+    public Boolean getIsProfilePublic() {
+        return isProfilePublic;
+    }
+
+    public void setIsProfilePublic(Boolean isProfilePublic) {
+        this.isProfilePublic = isProfilePublic;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public String getFullName() {
         return fullName;
     }
@@ -59,12 +85,36 @@ public class UserEntity {
         this.fullName = fullName == null ? null : fullName.trim();
     }
 
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
     public String getProfilePhotoUrl() {
         return profilePhotoUrl;
     }
 
     public void setProfilePhotoUrl(String profilePhotoUrl) {
         this.profilePhotoUrl = profilePhotoUrl == null ? null : profilePhotoUrl.trim();
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
     public Double getGoalWeight() {

@@ -392,6 +392,126 @@ public class UserEntityExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsProfilePublicIsNull() {
+            addCriterion("is_profile_public is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicIsNotNull() {
+            addCriterion("is_profile_public is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicEqualTo(Boolean value) {
+            addCriterion("is_profile_public =", value, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicNotEqualTo(Boolean value) {
+            addCriterion("is_profile_public <>", value, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicGreaterThan(Boolean value) {
+            addCriterion("is_profile_public >", value, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_profile_public >=", value, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicLessThan(Boolean value) {
+            addCriterion("is_profile_public <", value, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_profile_public <=", value, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicIn(List<Boolean> values) {
+            addCriterion("is_profile_public in", values, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicNotIn(List<Boolean> values) {
+            addCriterion("is_profile_public not in", values, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_profile_public between", value1, value2, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsProfilePublicNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_profile_public not between", value1, value2, "isProfilePublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthIsNull() {
+            addCriterion("date_of_birth is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthIsNotNull() {
+            addCriterion("date_of_birth is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth =", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthNotEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth <>", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthGreaterThan(Date value) {
+            addCriterionForJDBCDate("date_of_birth >", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth >=", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthLessThan(Date value) {
+            addCriterionForJDBCDate("date_of_birth <", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth <=", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthIn(List<Date> values) {
+            addCriterionForJDBCDate("date_of_birth in", values, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthNotIn(List<Date> values) {
+            addCriterionForJDBCDate("date_of_birth not in", values, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("date_of_birth between", value1, value2, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("date_of_birth not between", value1, value2, "dateOfBirth");
+            return (Criteria) this;
+        }
+
         public Criteria andFullNameIsNull() {
             addCriterion("full_name is null");
             return (Criteria) this;
@@ -462,6 +582,126 @@ public class UserEntityExample {
             return (Criteria) this;
         }
 
+        public Criteria andGenderIsNull() {
+            addCriterion("gender is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderIsNotNull() {
+            addCriterion("gender is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderEqualTo(Integer value) {
+            addCriterion("gender =", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderNotEqualTo(Integer value) {
+            addCriterion("gender <>", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderGreaterThan(Integer value) {
+            addCriterion("gender >", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderGreaterThanOrEqualTo(Integer value) {
+            addCriterion("gender >=", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderLessThan(Integer value) {
+            addCriterion("gender <", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderLessThanOrEqualTo(Integer value) {
+            addCriterion("gender <=", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderIn(List<Integer> values) {
+            addCriterion("gender in", values, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderNotIn(List<Integer> values) {
+            addCriterion("gender not in", values, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderBetween(Integer value1, Integer value2) {
+            addCriterion("gender between", value1, value2, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderNotBetween(Integer value1, Integer value2) {
+            addCriterion("gender not between", value1, value2, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightIsNull() {
+            addCriterion("height is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightIsNotNull() {
+            addCriterion("height is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightEqualTo(Double value) {
+            addCriterion("height =", value, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightNotEqualTo(Double value) {
+            addCriterion("height <>", value, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightGreaterThan(Double value) {
+            addCriterion("height >", value, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightGreaterThanOrEqualTo(Double value) {
+            addCriterion("height >=", value, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightLessThan(Double value) {
+            addCriterion("height <", value, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightLessThanOrEqualTo(Double value) {
+            addCriterion("height <=", value, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightIn(List<Double> values) {
+            addCriterion("height in", values, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightNotIn(List<Double> values) {
+            addCriterion("height not in", values, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightBetween(Double value1, Double value2) {
+            addCriterion("height between", value1, value2, "height");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeightNotBetween(Double value1, Double value2) {
+            addCriterion("height not between", value1, value2, "height");
+            return (Criteria) this;
+        }
+
         public Criteria andProfilePhotoUrlIsNull() {
             addCriterion("profile_photo_url is null");
             return (Criteria) this;
@@ -529,6 +769,66 @@ public class UserEntityExample {
 
         public Criteria andProfilePhotoUrlNotBetween(String value1, String value2) {
             addCriterion("profile_photo_url not between", value1, value2, "profilePhotoUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightIsNull() {
+            addCriterion("weight is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightIsNotNull() {
+            addCriterion("weight is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightEqualTo(Double value) {
+            addCriterion("weight =", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightNotEqualTo(Double value) {
+            addCriterion("weight <>", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightGreaterThan(Double value) {
+            addCriterion("weight >", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightGreaterThanOrEqualTo(Double value) {
+            addCriterion("weight >=", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightLessThan(Double value) {
+            addCriterion("weight <", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightLessThanOrEqualTo(Double value) {
+            addCriterion("weight <=", value, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightIn(List<Double> values) {
+            addCriterion("weight in", values, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightNotIn(List<Double> values) {
+            addCriterion("weight not in", values, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightBetween(Double value1, Double value2) {
+            addCriterion("weight between", value1, value2, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWeightNotBetween(Double value1, Double value2) {
+            addCriterion("weight not between", value1, value2, "weight");
             return (Criteria) this;
         }
 

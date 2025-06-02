@@ -25,9 +25,8 @@ type Schema = z.infer<typeof schema>;
 
 export default function AuthenticationImage() {
   const [isLogin, setIsLogin] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     register,
     handleSubmit,
   } = useForm<Schema>({
@@ -40,7 +39,6 @@ export default function AuthenticationImage() {
 
   const submit = handleSubmit(async ({ email, password }) => {
     try {
-      setIsLoading(true);
       if (!isLogin) await createUser(email, password);
       await signin(email, password);
     } catch (e) {
@@ -49,8 +47,6 @@ export default function AuthenticationImage() {
         message: (e as Error).message,
         title: "Error",
       });
-    } finally {
-      setIsLoading(false);
     }
   });
 
@@ -95,7 +91,7 @@ export default function AuthenticationImage() {
             size="md"
             radius="md"
             type="submit"
-            loading={isLoading}
+            loading={isSubmitting}
           >
             {isLogin ? "Login" : "Register"}
           </Button>
