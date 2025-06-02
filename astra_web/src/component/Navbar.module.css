@@ -8,6 +8,13 @@
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 }
 
+/* Hide on medium to small size screens */
+@media screen and (max-width: 600px) {
+  .navbar {
+    display: none;
+  }
+}
+
 .navbarMain {
   flex: 1;
 }

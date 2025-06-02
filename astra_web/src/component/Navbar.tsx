@@ -23,7 +23,7 @@ const data = [
 ];
 
 export function NavbarSimple() {
-  const [active, setActive] = useState("Billing");
+  const [active, setActive] = useState("Dashboard");
 
   const links = data.map((item) => (
     <Link
@@ -42,7 +42,7 @@ export function NavbarSimple() {
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>
         <Group className={classes.header} justify="space-between">
-          <Code fw={700}>v3.1.2</Code>
+          <Code fw={700}>v0.1.0</Code>
         </Group>
         {links}
       </div>
