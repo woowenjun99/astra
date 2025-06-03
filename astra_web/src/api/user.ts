@@ -2,19 +2,20 @@ import { ProfileFormSchema } from "@/component/user/ProfileForm";
 import { auth } from "@/firebase";
 import type { BaseResponse } from "@/model/base-response";
 import { axiosInstance } from "@/util/axios-instance";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export async function createUser(email: string, password: string) {
-  const userCredential = await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
+  const response = await axiosInstance.post<BaseResponse<void>>(
+    "/users/register",
+    {
+      email,
+      password,
+    }
   );
-  return userCredential.user;
+
+  if (!response.data.success) {
+    throw new Error(response.data.message);
+  }
 }
 
 export async function signin(email: string, password: string) {

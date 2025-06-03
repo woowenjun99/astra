@@ -5,6 +5,8 @@ import com.wenjun.astra_app.service.AuthService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.auth.UserRecord.UpdateRequest;
 
 import lombok.AllArgsConstructor;
@@ -29,7 +31,14 @@ public class AuthServiceImpl implements AuthService {
         UpdateRequest request = new UpdateRequest(uid);
         request.setEmail(newEmail);
         request.setDisplayName(newName);
-
         firebaseAuth.updateUser(request);
+    }
+
+    @Override
+    public UserRecord createUser(String email, String password) throws FirebaseAuthException {
+        CreateRequest request = new CreateRequest();
+        request.setEmail(email);
+        request.setPassword(password);
+        return firebaseAuth.createUser(request);
     }
 }

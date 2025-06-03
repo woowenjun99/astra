@@ -40,7 +40,7 @@ public class AstraConfiguration {
                         .addMapping("/**")
                         .allowedOrigins(baseUrl)
                         .allowedMethods("POST", "OPTIONS", "GET", "PUT")
-                        .allowedHeaders("Authorization");
+                        .allowedHeaders("*");
             }
         };
     }

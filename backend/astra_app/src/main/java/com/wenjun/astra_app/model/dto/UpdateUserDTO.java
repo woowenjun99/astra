@@ -1,7 +1,8 @@
 package com.wenjun.astra_app.model.dto;
 
-import jakarta.validation.constraints.Email;
 import lombok.Data;
+
+import jakarta.validation.constraints.Email;
 
 @Data
 public class UpdateUserDTO {
