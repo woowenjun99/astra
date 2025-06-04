@@ -33,4 +33,8 @@ public class UserRepository {
     public void insertSelective(UserEntity user) {
         userEntityMapper.insertSelective(user);
     }
+
+    public void deleteByUid(String uid) {
+        userEntityMapper.deleteByPrimaryKey(uid);
+    }
 }

@@ -25,23 +25,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UpdateUserDTO request) throws AstraException, FirebaseAuthException {
-        FirebaseToken token = ThreadLocalUser.get();
-        if (token == null) {
-            throw new AstraException(AstraExceptionEnum.UNAUTHORIZED);
-        }
-        String uid = token.getUid();
-        UserEntity user = userRepository.getUserByUid(uid);
-        if (user == null) {
-            throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");
-        }
-
+        UserEntity user = getUser();
         Boolean needChangeNameOrEmail = user.getFullName().equals(request.getName()) || user.getEmail().equals(request.getEmail());
         user.setFullName(request.getName());
         user.setBio(request.getBio());
         user.setEmail(request.getEmail());
         userRepository.updateByPrimaryKey(user);
         if (needChangeNameOrEmail) {
-            authService.updateUser(uid, request.getEmail(), request.getName());
+            authService.updateUser(user.getUid(), request.getEmail(), request.getName());
         }
     }
 
@@ -56,5 +47,25 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.getEmail());
         user.setUid(userRecord.getUid());
         userRepository.insertSelective(user);
+    }
+
+    @Override
+    public void deleteUser() throws AstraException, FirebaseAuthException {
+        UserEntity user = getUser();
+        userRepository.deleteByUid(user.getUid());
+        authService.deleteUser(user.getUid());
+    }
+
+    @Override
+    public UserEntity getUser() throws AstraException {
+        FirebaseToken firebaseToken = ThreadLocalUser.get();
+        if (firebaseToken == null) {
+            throw new AstraException(AstraExceptionEnum.UNAUTHORIZED);
+        }
+        UserEntity user = userRepository.getUserByUid(firebaseToken.getUid());
+        if (user == null) {
+            throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");
+        }
+        return user;
     }
 }

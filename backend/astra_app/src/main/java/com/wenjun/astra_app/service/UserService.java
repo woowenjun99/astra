@@ -3,6 +3,7 @@ package com.wenjun.astra_app.service;
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
+import com.wenjun.astra_persistence.models.UserEntity;
 
 import com.google.firebase.auth.FirebaseAuthException;
 
@@ -16,4 +17,8 @@ public interface UserService {
     void updateUser(UpdateUserDTO request) throws AstraException, FirebaseAuthException;
 
     void createUser(CreateUserDTO request) throws AstraException, FirebaseAuthException;
+
+    void deleteUser() throws AstraException, FirebaseAuthException;
+
+    UserEntity getUser() throws AstraException;
 }

@@ -10,4 +10,6 @@ public interface AuthService {
     void updateUser(String uid, String newEmail, String newName) throws FirebaseAuthException;
 
     UserRecord createUser(String email, String password) throws FirebaseAuthException;
+
+    void deleteUser(String uid) throws FirebaseAuthException;
 }

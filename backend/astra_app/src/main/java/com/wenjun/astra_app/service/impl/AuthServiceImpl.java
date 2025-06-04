@@ -41,4 +41,9 @@ public class AuthServiceImpl implements AuthService {
         request.setPassword(password);
         return firebaseAuth.createUser(request);
     }
+
+    @Override
+    public void deleteUser(String uid) throws FirebaseAuthException {
+        firebaseAuth.deleteUser(uid);
+    }
 }
