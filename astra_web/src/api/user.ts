@@ -1,4 +1,3 @@
-import { ProfileFormSchema } from "@/component/user/ProfileForm";
 import { auth } from "@/firebase";
 import type { BaseResponse } from "@/model/base-response";
 import { axiosInstance } from "@/util/axios-instance";
@@ -27,7 +26,12 @@ export async function signin(email: string, password: string) {
   return userCredential.user;
 }
 
-export async function updateUser(payload: ProfileFormSchema) {
+export async function updateUser(payload: {
+  email: string;
+  name?: string;
+  bio?: string;
+  dob?: Date | null;
+}) {
   // Ensure the user is authenticated
   const headers = await auth.currentUser?.getIdToken(true);
   if (headers === undefined) {

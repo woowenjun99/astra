@@ -6,10 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { notifications } from "@mantine/notifications";
 import { auth } from "@/firebase";
 import { updateUser } from "@/api/user";
+import { DateInput, DateStringValue } from "@mantine/dates";
+import { useState } from "react";
+import dayjs from "dayjs";
 
 const schema = z.object({
   bio: z.string().max(500).optional(),
-  dateOfBirth: z.string().optional(),
   email: z.string().email("Invalid email address"),
   gender: z.string().optional(),
   name: z.string().optional(),
@@ -18,6 +20,7 @@ const schema = z.object({
 export type ProfileFormSchema = z.infer<typeof schema>;
 
 export default function ProfileForm() {
+  const [dob, setDob] = useState<DateStringValue | null>(null);
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -36,7 +39,12 @@ export default function ProfileForm() {
 
   const onSubmit = handleSubmit(async ({ email, name, bio }) => {
     try {
-      await updateUser({ email, name, bio });
+      await updateUser({
+        email,
+        name,
+        bio,
+        dob: dayjs(dob, "YYYY-MM-DD").toDate(),
+      });
     } catch (error) {
       notifications.show({
         color: "red",
@@ -53,10 +61,10 @@ export default function ProfileForm() {
       </Text>
       <form onSubmit={onSubmit}>
         <Grid>
-          <Grid.Col span={6}>
+          <Grid.Col span={{ sm: 12, md: 6 }}>
             <TextInput label="Name" {...register("name")} />
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={{ sm: 12, md: 6 }}>
             <TextInput
               label="Email"
               required
@@ -66,8 +74,11 @@ export default function ProfileForm() {
               }
             />
           </Grid.Col>
+          <Grid.Col span={{ sm: 12, md: 6 }}>
+            <DateInput label="Date of Birth" value={dob} onChange={setDob} />
+          </Grid.Col>
           <Grid.Col>
-            <Textarea label="Bio" />
+            <Textarea label="Bio" mb="lg" {...register("bio")} />
           </Grid.Col>
         </Grid>
         <Button type="submit" disabled={isSubmitting} loading={isSubmitting}>
