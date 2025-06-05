@@ -37,6 +37,8 @@
         <table tableName="users" domainObjectName="UserEntity" >
             <property name="useActualColumnNames" value="false"/>
             <columnOverride column="goal_weight" javaType="java.lang.Double" />
+            <columnOverride column="height" javaType="java.lang.Double" />
+            <columnOverride column="weight" javaType="java.lang.Double" />
         </table>
     </context>
 </generatorConfiguration>

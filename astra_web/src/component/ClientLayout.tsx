@@ -17,7 +17,7 @@ export default function ClientLayout({
       if (user === null && pathname !== "/auth") {
         router.push("/auth");
       } else if (user !== null && pathname === "/auth") {
-        router.push("/dashboard");
+        router.push("/");
       }
     });
 
