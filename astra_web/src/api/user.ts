@@ -26,15 +26,17 @@ export async function signin(email: string, password: string) {
   return userCredential.user;
 }
 
-export async function updateUser(payload: {
+type UpdateUserPayload = {
   email: string;
-  name?: string;
-  bio?: string;
-  dob?: Date | null;
-}) {
-  // Ensure the user is authenticated
-  const headers = await auth.currentUser?.getIdToken(true);
-  if (headers === undefined) {
+  name: string | null;
+  bio: string | null;
+  dob: Date | null;
+  gender: string | null;
+};
+
+export async function updateUser(payload: UpdateUserPayload) {
+  const jwt = await auth.currentUser?.getIdToken(true);
+  if (jwt === undefined) {
     throw new Error("User is not authenticated");
   }
 
@@ -43,7 +45,7 @@ export async function updateUser(payload: {
     "/users",
     payload,
     {
-      headers: { Authorization: headers },
+      headers: { Authorization: jwt },
     }
   );
   if (!data.success) {
