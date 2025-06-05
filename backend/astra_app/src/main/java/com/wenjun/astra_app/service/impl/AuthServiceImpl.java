@@ -27,10 +27,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void updateUser(String uid, String newEmail, String newName) throws FirebaseAuthException {
+    public void updateUser(String uid, String newEmail) throws FirebaseAuthException {
         UpdateRequest request = new UpdateRequest(uid);
         request.setEmail(newEmail);
-        request.setDisplayName(newName);
         firebaseAuth.updateUser(request);
     }
 

@@ -7,7 +7,7 @@ import com.google.firebase.auth.UserRecord;
 public interface AuthService {
     FirebaseToken validate(String idToken) throws FirebaseAuthException;
 
-    void updateUser(String uid, String newEmail, String newName) throws FirebaseAuthException;
+    void updateUser(String uid, String newEmail) throws FirebaseAuthException;
 
     UserRecord createUser(String email, String password) throws FirebaseAuthException;
 

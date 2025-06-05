@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum AstraExceptionEnum {
+    INVALID_PARAMETERS(400, "%s"),
     CONFLICT(409, "Existing %s found"),
     UNAUTHORIZED(401, "User is not logged in"),
     RESOURCE_NOT_FOUND_EXCEPTION(404, "%s cannot be found");

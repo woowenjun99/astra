@@ -4,6 +4,7 @@ import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
+import com.wenjun.astra_app.model.enums.users.Gender;
 import com.wenjun.astra_app.service.AuthService;
 import com.wenjun.astra_app.service.UserService;
 import com.wenjun.astra_persistence.models.UserEntity;
@@ -26,14 +27,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UpdateUserDTO request) throws AstraException, FirebaseAuthException {
         UserEntity user = getUser();
-        Boolean needChangeNameOrEmail = user.getFullName().equals(request.getName()) || user.getEmail().equals(request.getEmail());
+        Boolean didEmailChange = !user.getEmail().equalsIgnoreCase(request.getEmail().trim());
+
+        if (didEmailChange) {
+            // If the email is in use, we need to throw a 409 CONFLICT error to let the user know they cannot use that email
+            Boolean isEmailInUse = userRepository.isEmailInUse(request.getEmail().trim());
+            if (isEmailInUse) {
+                throw new AstraException(AstraExceptionEnum.CONFLICT, "Email");
+            }
+            // If the email is not in use, we need to update FirebaseAuth first
+            authService.updateUser(ThreadLocalUser.get().getUid(), request.getEmail().trim());
+        }
+
+        if (request.getGender() != null) {
+            user.setGender(Gender.getByAlias(request.getGender()).getCode());
+        }
+
+        user.setEmail(request.getEmail());
         user.setFullName(request.getName());
         user.setBio(request.getBio());
-        user.setEmail(request.getEmail());
+        user.setDateOfBirth(request.getDob());
         userRepository.updateByPrimaryKey(user);
-        if (needChangeNameOrEmail) {
-            authService.updateUser(user.getUid(), request.getEmail(), request.getName());
-        }
     }
 
     @Override

@@ -95,7 +95,7 @@ export default function ProfileForm() {
                 "Male",
                 "Female",
                 "Non-binary",
-                "Other",
+                "Others",
                 "Prefer not to say",
               ]}
             />
