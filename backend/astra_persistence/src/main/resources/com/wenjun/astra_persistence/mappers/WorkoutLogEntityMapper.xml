@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenjun.astra_persistence.mappers.WorkoutLogEntityMapper">
+  <resultMap id="BaseResultMap" type="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="calories_burnt" jdbcType="INTEGER" property="caloriesBurnt" />
+    <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
+    <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="intensity" jdbcType="INTEGER" property="intensity" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, calories_burnt, date_created, date_updated, duration, intensity, name, user_id
+  </sql>
+  <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from workout_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from workout_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from workout_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntityExample">
+    delete from workout_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+    insert into workout_log (id, calories_burnt, date_created, 
+      date_updated, duration, intensity, 
+      name, user_id)
+    values (#{id,jdbcType=BIGINT}, #{caloriesBurnt,jdbcType=INTEGER}, #{dateCreated,jdbcType=TIMESTAMP}, 
+      #{dateUpdated,jdbcType=TIMESTAMP}, #{duration,jdbcType=INTEGER}, #{intensity,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+    insert into workout_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="caloriesBurnt != null">
+        calories_burnt,
+      </if>
+      <if test="dateCreated != null">
+        date_created,
+      </if>
+      <if test="dateUpdated != null">
+        date_updated,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="intensity != null">
+        intensity,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="caloriesBurnt != null">
+        #{caloriesBurnt,jdbcType=INTEGER},
+      </if>
+      <if test="dateCreated != null">
+        #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateUpdated != null">
+        #{dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="intensity != null">
+        #{intensity,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntityExample" resultType="java.lang.Long">
+    select count(*) from workout_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update workout_log
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.caloriesBurnt != null">
+        calories_burnt = #{row.caloriesBurnt,jdbcType=INTEGER},
+      </if>
+      <if test="row.dateCreated != null">
+        date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.dateUpdated != null">
+        date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.duration != null">
+        duration = #{row.duration,jdbcType=INTEGER},
+      </if>
+      <if test="row.intensity != null">
+        intensity = #{row.intensity,jdbcType=INTEGER},
+      </if>
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.userId != null">
+        user_id = #{row.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update workout_log
+    set id = #{row.id,jdbcType=BIGINT},
+      calories_burnt = #{row.caloriesBurnt,jdbcType=INTEGER},
+      date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
+      duration = #{row.duration,jdbcType=INTEGER},
+      intensity = #{row.intensity,jdbcType=INTEGER},
+      name = #{row.name,jdbcType=VARCHAR},
+      user_id = #{row.userId,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+    update workout_log
+    <set>
+      <if test="caloriesBurnt != null">
+        calories_burnt = #{caloriesBurnt,jdbcType=INTEGER},
+      </if>
+      <if test="dateCreated != null">
+        date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateUpdated != null">
+        date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="intensity != null">
+        intensity = #{intensity,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+    update workout_log
+    set calories_burnt = #{caloriesBurnt,jdbcType=INTEGER},
+      date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
+      duration = #{duration,jdbcType=INTEGER},
+      intensity = #{intensity,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

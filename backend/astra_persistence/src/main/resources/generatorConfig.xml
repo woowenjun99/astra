@@ -34,9 +34,14 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="users" domainObjectName="UserEntity" >
+<!--        Uncomment when need to modify the table -->
+<!--        <table tableName="users" domainObjectName="UserEntity" >-->
+<!--            <property name="useActualColumnNames" value="false"/>-->
+<!--            <columnOverride column="goal_weight" javaType="java.lang.Double" />-->
+<!--        </table>-->
+
+        <table tableName="workout_log" domainObjectName="WorkoutLogEntity" >
             <property name="useActualColumnNames" value="false"/>
-            <columnOverride column="goal_weight" javaType="java.lang.Double" />
         </table>
     </context>
 </generatorConfiguration>

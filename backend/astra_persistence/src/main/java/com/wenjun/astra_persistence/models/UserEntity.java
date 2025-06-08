@@ -11,15 +11,11 @@ public class UserEntity {
 
     private String email;
 
-    private Boolean isProfilePublic;
-
     private Date dateOfBirth;
 
     private String fullName;
 
     private Integer gender;
-
-    private String profilePhotoUrl;
 
     private String bio;
 
@@ -59,14 +55,6 @@ public class UserEntity {
         this.email = email == null ? null : email.trim();
     }
 
-    public Boolean getIsProfilePublic() {
-        return isProfilePublic;
-    }
-
-    public void setIsProfilePublic(Boolean isProfilePublic) {
-        this.isProfilePublic = isProfilePublic;
-    }
-
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -89,14 +77,6 @@ public class UserEntity {
 
     public void setGender(Integer gender) {
         this.gender = gender;
-    }
-
-    public String getProfilePhotoUrl() {
-        return profilePhotoUrl;
-    }
-
-    public void setProfilePhotoUrl(String profilePhotoUrl) {
-        this.profilePhotoUrl = profilePhotoUrl == null ? null : profilePhotoUrl.trim();
     }
 
     public String getBio() {

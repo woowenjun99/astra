@@ -6,11 +6,9 @@
     <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
     <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="is_profile_public" jdbcType="BIT" property="isProfilePublic" />
     <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
     <result column="gender" jdbcType="INTEGER" property="gender" />
-    <result column="profile_photo_url" jdbcType="VARCHAR" property="profilePhotoUrl" />
     <result column="bio" jdbcType="VARCHAR" property="bio" />
     <result column="goal_weight" jdbcType="NUMERIC" property="goalWeight" />
     <result column="goal_date" jdbcType="DATE" property="goalDate" />
@@ -74,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    uid, date_created, date_updated, email, is_profile_public, date_of_birth, full_name, 
-    gender, profile_photo_url, bio, goal_weight, goal_date
+    uid, date_created, date_updated, email, date_of_birth, full_name, gender, bio, goal_weight, 
+    goal_date
   </sql>
   <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.UserEntityExample" resultMap="BaseResultMap">
     select
@@ -109,15 +107,13 @@
   </delete>
   <insert id="insert" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     insert into users (uid, date_created, date_updated, 
-      email, is_profile_public, date_of_birth, 
-      full_name, gender, profile_photo_url, 
-      bio, goal_weight, goal_date
-      )
+      email, date_of_birth, full_name, 
+      gender, bio, goal_weight, 
+      goal_date)
     values (#{uid,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}, 
-      #{email,jdbcType=VARCHAR}, #{isProfilePublic,jdbcType=BIT}, #{dateOfBirth,jdbcType=DATE}, 
-      #{fullName,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{profilePhotoUrl,jdbcType=VARCHAR}, 
-      #{bio,jdbcType=VARCHAR}, #{goalWeight,jdbcType=NUMERIC}, #{goalDate,jdbcType=DATE}
-      )
+      #{email,jdbcType=VARCHAR}, #{dateOfBirth,jdbcType=DATE}, #{fullName,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{bio,jdbcType=VARCHAR}, #{goalWeight,jdbcType=NUMERIC}, 
+      #{goalDate,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     insert into users
@@ -134,9 +130,6 @@
       <if test="email != null">
         email,
       </if>
-      <if test="isProfilePublic != null">
-        is_profile_public,
-      </if>
       <if test="dateOfBirth != null">
         date_of_birth,
       </if>
@@ -145,9 +138,6 @@
       </if>
       <if test="gender != null">
         gender,
-      </if>
-      <if test="profilePhotoUrl != null">
-        profile_photo_url,
       </if>
       <if test="bio != null">
         bio,
@@ -172,9 +162,6 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="isProfilePublic != null">
-        #{isProfilePublic,jdbcType=BIT},
-      </if>
       <if test="dateOfBirth != null">
         #{dateOfBirth,jdbcType=DATE},
       </if>
@@ -183,9 +170,6 @@
       </if>
       <if test="gender != null">
         #{gender,jdbcType=INTEGER},
-      </if>
-      <if test="profilePhotoUrl != null">
-        #{profilePhotoUrl,jdbcType=VARCHAR},
       </if>
       <if test="bio != null">
         #{bio,jdbcType=VARCHAR},
@@ -219,9 +203,6 @@
       <if test="row.email != null">
         email = #{row.email,jdbcType=VARCHAR},
       </if>
-      <if test="row.isProfilePublic != null">
-        is_profile_public = #{row.isProfilePublic,jdbcType=BIT},
-      </if>
       <if test="row.dateOfBirth != null">
         date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
       </if>
@@ -230,9 +211,6 @@
       </if>
       <if test="row.gender != null">
         gender = #{row.gender,jdbcType=INTEGER},
-      </if>
-      <if test="row.profilePhotoUrl != null">
-        profile_photo_url = #{row.profilePhotoUrl,jdbcType=VARCHAR},
       </if>
       <if test="row.bio != null">
         bio = #{row.bio,jdbcType=VARCHAR},
@@ -254,11 +232,9 @@
       date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
       date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
       email = #{row.email,jdbcType=VARCHAR},
-      is_profile_public = #{row.isProfilePublic,jdbcType=BIT},
       date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
       full_name = #{row.fullName,jdbcType=VARCHAR},
       gender = #{row.gender,jdbcType=INTEGER},
-      profile_photo_url = #{row.profilePhotoUrl,jdbcType=VARCHAR},
       bio = #{row.bio,jdbcType=VARCHAR},
       goal_weight = #{row.goalWeight,jdbcType=NUMERIC},
       goal_date = #{row.goalDate,jdbcType=DATE}
@@ -278,9 +254,6 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="isProfilePublic != null">
-        is_profile_public = #{isProfilePublic,jdbcType=BIT},
-      </if>
       <if test="dateOfBirth != null">
         date_of_birth = #{dateOfBirth,jdbcType=DATE},
       </if>
@@ -289,9 +262,6 @@
       </if>
       <if test="gender != null">
         gender = #{gender,jdbcType=INTEGER},
-      </if>
-      <if test="profilePhotoUrl != null">
-        profile_photo_url = #{profilePhotoUrl,jdbcType=VARCHAR},
       </if>
       <if test="bio != null">
         bio = #{bio,jdbcType=VARCHAR},
@@ -310,11 +280,9 @@
     set date_created = #{dateCreated,jdbcType=TIMESTAMP},
       date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
       email = #{email,jdbcType=VARCHAR},
-      is_profile_public = #{isProfilePublic,jdbcType=BIT},
       date_of_birth = #{dateOfBirth,jdbcType=DATE},
       full_name = #{fullName,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=INTEGER},
-      profile_photo_url = #{profilePhotoUrl,jdbcType=VARCHAR},
       bio = #{bio,jdbcType=VARCHAR},
       goal_weight = #{goalWeight,jdbcType=NUMERIC},
       goal_date = #{goalDate,jdbcType=DATE}
