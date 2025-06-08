@@ -5,13 +5,7 @@ import classes from "./Header.module.css";
 import Link from "next/link";
 
 const links = [
-  { link: "/", label: "Features" },
-  {
-    link: "#1",
-    label: "Learn",
-  },
-  { link: "/about", label: "About" },
-  { link: "/pricing", label: "Pricing" },
+  { link: "/", label: "Fitness" },
   {
     link: "/profile",
     label: "Settings",

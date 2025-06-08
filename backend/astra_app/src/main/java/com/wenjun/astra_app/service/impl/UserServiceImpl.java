@@ -2,6 +2,7 @@ package com.wenjun.astra_app.service.impl;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
+import com.wenjun.astra_app.model.dto.UpdateFitnessGoalsDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.model.enums.users.Gender;
@@ -81,5 +82,13 @@ public class UserServiceImpl implements UserService {
             throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");
         }
         return user;
+    }
+
+    @Override
+    public void updateFitnessGoals(UpdateFitnessGoalsDTO request) throws AstraException {
+        UserEntity user = getUser();
+        user.setGoalDate(request.getGoalDate());
+        user.setGoalWeight(request.getGoalWeight());
+        userRepository.updateByPrimaryKey(user);
     }
 }

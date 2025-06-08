@@ -10,9 +10,7 @@ CREATE TABLE users (
 	date_of_birth DATE,
 	full_name TEXT,
 	gender INTEGER,
-	height NUMERIC(6, 2),
 	profile_photo_url TEXT,
-	weight NUMERIC(6, 2),
 	bio TEXT,
 
 	-- Fitness Goals

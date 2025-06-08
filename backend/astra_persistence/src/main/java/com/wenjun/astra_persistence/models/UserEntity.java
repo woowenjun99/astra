@@ -19,11 +19,7 @@ public class UserEntity {
 
     private Integer gender;
 
-    private Double height;
-
     private String profilePhotoUrl;
-
-    private Double weight;
 
     private String bio;
 
@@ -95,28 +91,12 @@ public class UserEntity {
         this.gender = gender;
     }
 
-    public Double getHeight() {
-        return height;
-    }
-
-    public void setHeight(Double height) {
-        this.height = height;
-    }
-
     public String getProfilePhotoUrl() {
         return profilePhotoUrl;
     }
 
     public void setProfilePhotoUrl(String profilePhotoUrl) {
         this.profilePhotoUrl = profilePhotoUrl == null ? null : profilePhotoUrl.trim();
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
     }
 
     public String getBio() {

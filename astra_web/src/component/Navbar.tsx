@@ -1,11 +1,8 @@
 "use client";
 import { useState } from "react";
 import {
-  IconCalendar,
-  IconDatabaseImport,
   IconHome,
   IconLogout,
-  IconReceipt2,
   IconSettings,
   IconSwitchHorizontal,
 } from "@tabler/icons-react";
@@ -15,10 +12,7 @@ import { signout } from "@/api/user";
 import Link from "next/link";
 
 const data = [
-  { link: "/", label: "Dashboard", icon: IconHome },
-  { link: "", label: "Statistics", icon: IconReceipt2 },
-  { link: "", label: "Calendar", icon: IconCalendar },
-  { link: "", label: "Databases", icon: IconDatabaseImport },
+  { link: "/", label: "Fitness", icon: IconHome },
   { link: "/profile", label: "Settings", icon: IconSettings },
 ];
 
