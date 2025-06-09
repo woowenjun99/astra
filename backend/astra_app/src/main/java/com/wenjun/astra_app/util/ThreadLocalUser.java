@@ -1,4 +1,4 @@
-package com.wenjun.astra_app.service.impl;
+package com.wenjun.astra_app.util;
 
 import com.google.firebase.auth.FirebaseToken;
 

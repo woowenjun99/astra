@@ -8,6 +8,7 @@ import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.service.AuthService;
 import com.wenjun.astra_app.service.UserService;
+import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.UserEntity;
 import com.wenjun.astra_persistence.repository.UserRepository;
 

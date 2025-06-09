@@ -1,7 +1,7 @@
 package com.wenjun.astra_app.handler;
 
 import com.wenjun.astra_app.service.AuthService;
-import com.wenjun.astra_app.service.impl.ThreadLocalUser;
+import com.wenjun.astra_app.util.ThreadLocalUser;
 
 import com.google.firebase.auth.FirebaseToken;
 

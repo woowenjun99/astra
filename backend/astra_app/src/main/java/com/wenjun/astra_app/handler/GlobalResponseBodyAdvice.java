@@ -1,7 +1,7 @@
 package com.wenjun.astra_app.handler;
 
 import com.wenjun.astra_app.model.ResponseWrapper;
-import com.wenjun.astra_app.service.impl.ThreadLocalUser;
+import com.wenjun.astra_app.util.ThreadLocalUser;
 
 import lombok.AllArgsConstructor;
 
