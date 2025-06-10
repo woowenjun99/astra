@@ -6,15 +6,12 @@ import com.wenjun.astra_app.model.dto.UpdateFitnessGoalsDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.model.enums.users.Gender;
-import com.wenjun.astra_app.service.AuthService;
 import com.wenjun.astra_app.service.UserService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.UserEntity;
 import com.wenjun.astra_persistence.repository.UserRepository;
-
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.UserRecord;
+import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
+import com.wenjun.astra_third_party_services.firebase.service.FirebaseClient;
 
 import lombok.AllArgsConstructor;
 
@@ -23,11 +20,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    private final AuthService authService;
     private final UserRepository userRepository;
+    private final FirebaseClient firebaseClient;
 
     @Override
-    public void updateUser(UpdateUserDTO request) throws AstraException, FirebaseAuthException {
+    public void updateUser(UpdateUserDTO request) throws AstraException {
         UserEntity user = getUser();
         Boolean didEmailChange = !user.getEmail().equalsIgnoreCase(request.getEmail().trim());
 
@@ -38,7 +35,7 @@ public class UserServiceImpl implements UserService {
                 throw new AstraException(AstraExceptionEnum.CONFLICT, "Email");
             }
             // If the email is not in use, we need to update FirebaseAuth first
-            authService.updateUser(ThreadLocalUser.get().getUid(), request.getEmail().trim());
+            firebaseClient.updateUser(ThreadLocalUser.get().getUid(), request.getEmail().trim());
         }
 
         if (request.getGender() != null) {
@@ -53,32 +50,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(CreateUserDTO request) throws AstraException, FirebaseAuthException {
+    public void createUser(CreateUserDTO request) throws AstraException {
         boolean isEmailInUse = userRepository.isEmailInUse(request.getEmail());
         if (isEmailInUse) {
             throw new AstraException(AstraExceptionEnum.CONFLICT, "Email");
         }
-        UserRecord userRecord = authService.createUser(request.getEmail(), request.getPassword());
+        AuthenticatedUser authenticatedUser = firebaseClient.createUser(request.getEmail(), request.getPassword());
         UserEntity user = new UserEntity();
         user.setEmail(request.getEmail());
-        user.setUid(userRecord.getUid());
+        user.setUid(authenticatedUser.getUid());
         userRepository.insertSelective(user);
     }
 
     @Override
-    public void deleteUser() throws AstraException, FirebaseAuthException {
+    public void deleteUser() throws AstraException {
         UserEntity user = getUser();
         userRepository.deleteByUid(user.getUid());
-        authService.deleteUser(user.getUid());
+        firebaseClient.deleteUser(user.getUid());
     }
 
     @Override
     public UserEntity getUser() throws AstraException {
-        FirebaseToken firebaseToken = ThreadLocalUser.get();
-        if (firebaseToken == null) {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.get();
+        if (authenticatedUser == null) {
             throw new AstraException(AstraExceptionEnum.UNAUTHORIZED);
         }
-        UserEntity user = userRepository.getUserByUid(firebaseToken.getUid());
+        UserEntity user = userRepository.getUserByUid(authenticatedUser.getUid());
         if (user == null) {
             throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");
         }

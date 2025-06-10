@@ -35,12 +35,7 @@ type UpdateUserPayload = {
 };
 
 export async function updateUser(payload: UpdateUserPayload) {
-  const jwt = await auth.currentUser?.getIdToken(true);
-  if (jwt === undefined) {
-    throw new Error("User is not authenticated");
-  }
-
-  // Send the updated user data to the server
+  const jwt = await getJwtToken();
   const { data } = await axiosInstance.put<BaseResponse<void>>(
     "/users",
     payload,
@@ -55,4 +50,18 @@ export async function updateUser(payload: UpdateUserPayload) {
 
 export function signout() {
   return signOut(auth);
+}
+
+/**
+ * Get the JWT token for the current user
+ *
+ * @returns The JWT token
+ * @throws If the user is not logged in
+ */
+export async function getJwtToken(): Promise<string> {
+  const token = await auth.currentUser?.getIdToken(true);
+  if (token === undefined) {
+    throw new Error("User is not logged in");
+  }
+  return token;
 }

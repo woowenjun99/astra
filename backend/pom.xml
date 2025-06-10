@@ -11,5 +11,6 @@
     <modules>
         <module>astra_app</module>
         <module>astra_persistence</module>
+        <module>astra_third_party_services</module>
     </modules>
 </project>

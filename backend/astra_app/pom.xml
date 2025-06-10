@@ -38,11 +38,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.google.firebase</groupId>
-			<artifactId>firebase-admin</artifactId>
-			<version>9.5.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -59,6 +54,11 @@
 		<dependency>
 			<groupId>com.wenjun</groupId>
 			<artifactId>astra_persistence</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.wenjun</groupId>
+			<artifactId>astra_third_party_services</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

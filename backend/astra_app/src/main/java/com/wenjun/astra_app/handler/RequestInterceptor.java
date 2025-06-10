@@ -1,9 +1,8 @@
 package com.wenjun.astra_app.handler;
 
-import com.wenjun.astra_app.service.AuthService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
-
-import com.google.firebase.auth.FirebaseToken;
+import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
+import com.wenjun.astra_third_party_services.firebase.service.FirebaseClient;
 
 import lombok.AllArgsConstructor;
 
@@ -16,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 @Component
 public class RequestInterceptor implements HandlerInterceptor {
-    private AuthService authService;
+    private final FirebaseClient firebaseClient;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -25,8 +24,8 @@ public class RequestInterceptor implements HandlerInterceptor {
             return true;
         }
         String jwt = request.getHeader("Authorization");
-        FirebaseToken token = authService.validate(jwt);
-        ThreadLocalUser.set(token);
+        AuthenticatedUser user = firebaseClient.getUser(jwt);
+        ThreadLocalUser.set(user);
         return true;
     }
 }

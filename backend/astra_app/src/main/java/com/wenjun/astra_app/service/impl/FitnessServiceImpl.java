@@ -7,8 +7,7 @@ import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.repository.FitnessRepository;
-
-import com.google.firebase.auth.FirebaseToken;
+import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
 import lombok.AllArgsConstructor;
 
@@ -23,11 +22,11 @@ public class FitnessServiceImpl implements FitnessService {
 
     @Override
     public WorkoutPaginatedResponse getWorkouts(Long pageNo, Long pageSize) throws AstraException {
-        FirebaseToken firebaseToken = ThreadLocalUser.get();
-        if (firebaseToken == null) {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.get();
+        if (authenticatedUser == null) {
             throw new AstraException(AstraExceptionEnum.UNAUTHORIZED);
         }
-        String userId = firebaseToken.getUid();
+        String userId = authenticatedUser.getUid();
         List<WorkoutLogEntity> workoutLogs = fitnessRepository.getWorkoutLogEntity(userId, pageSize, pageNo - 1);
         Long total = fitnessRepository.getTotalWorkoutLogEntityCount(userId);
         return WorkoutPaginatedResponse
