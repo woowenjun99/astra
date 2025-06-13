@@ -15,7 +15,12 @@ class Astra extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'Astra',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: Color.fromRGBO(249, 250, 251, 1),
+        textTheme: TextTheme(),
+      ),
+      darkTheme: ThemeData(
+        scaffoldBackgroundColor: Color.fromRGBO(16, 24, 40, 1),
+        textTheme: TextTheme(),
       ),
       routerConfig: appRouter,
     );

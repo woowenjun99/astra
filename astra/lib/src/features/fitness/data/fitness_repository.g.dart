@@ -42,5 +42,23 @@ final workoutLogsProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef WorkoutLogsRef = AutoDisposeFutureProviderRef<List<WorkoutLog>>;
+String _$fitnessGoalsHash() => r'e3d465cf07da6f985a1d4d0ef3c4f12c46dda23c';
+
+/// See also [fitnessGoals].
+@ProviderFor(fitnessGoals)
+final fitnessGoalsProvider =
+    AutoDisposeFutureProvider<List<FitnessGoal>>.internal(
+      fitnessGoals,
+      name: r'fitnessGoalsProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$fitnessGoalsHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FitnessGoalsRef = AutoDisposeFutureProviderRef<List<FitnessGoal>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

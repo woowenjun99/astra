@@ -36,17 +36,9 @@ class FitnessRepository {
     ];
   }
 
-  Future<FitnessGoal> getFitnessGoal() async {
+  Future<List<FitnessGoal>> getFitnessGoals() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    return FitnessGoal(
-      startWeight: 85,
-      goalWeight: 75,
-      currentWeight: 85,
-      currentWeeklyWorkout: 0,
-      goalWeeklyWorkout: 10,
-      currentRunningDistance: 0,
-      goalRunningDistance: 100,
-    );
+    return [];
   }
 }
 
@@ -59,4 +51,10 @@ FitnessRepository fitnessRepository(Ref ref) {
 Future<List<WorkoutLog>> workoutLogs(Ref ref) async {
   FitnessRepository fitnessRepository = ref.watch(fitnessRepositoryProvider);
   return fitnessRepository.getWorkoutLogs();
+}
+
+@Riverpod(keepAlive: false)
+Future<List<FitnessGoal>> fitnessGoals(Ref ref) async {
+  FitnessRepository fitnessRepository = ref.watch(fitnessRepositoryProvider);
+  return fitnessRepository.getFitnessGoals();
 }

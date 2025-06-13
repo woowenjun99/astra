@@ -1,38 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import 'package:astra/src/features/fitness/presentation/workout_cards.dart';
+import 'package:astra/src/features/fitness/presentation/fitness_goal_progress.dart';
+import 'package:astra/src/routing/app_router.dart';
 import 'package:astra/src/widgets/gf_outlined_button.dart';
 
-class RecentWorkoutCard extends StatelessWidget {
-  const RecentWorkoutCard({super.key});
+class FitnessGoalProgressCard extends StatelessWidget {
+  const FitnessGoalProgressCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(8),
-        border: BoxBorder.all(color: Colors.grey),
-        color: Colors.white,
       ),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        margin: EdgeInsets.all(12),
         width: double.infinity,
         child: Column(
-          spacing: 6,
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 6,
           children: [
             Text(
-              "Recent Workouts",
+              "Goals Progress",
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
             ),
             Text(
-              "Your latest training sessions",
+              "Track your fitness goals",
               style: TextStyle(fontWeight: FontWeight.w300),
             ),
-            WorkoutCards(),
+            FitnessGoalProgress(),
             GFOutlinedButton(
-              onPressed: () {},
-              buttonText: "View Workout History",
+              onPressed: () => context.goNamed(AppRoute.fitnessGoal.name),
+              buttonText: "Manage Goals",
             ),
           ],
         ),

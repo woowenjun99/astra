@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:astra/src/features/fitness/presentation/fitness_goal_progress_card.dart';
 import 'package:astra/src/features/fitness/presentation/recent_workout_card.dart';
 
 class FitnessDashboard extends ConsumerWidget {
@@ -13,7 +14,10 @@ class FitnessDashboard extends ConsumerWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsetsGeometry.all(16),
-            child: Column(children: [RecentWorkoutCard()]),
+            child: Column(
+              spacing: 12,
+              children: [RecentWorkoutCard(), FitnessGoalProgressCard()],
+            ),
           ),
         ),
       ),

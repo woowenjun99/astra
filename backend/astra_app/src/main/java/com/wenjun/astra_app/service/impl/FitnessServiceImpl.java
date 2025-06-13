@@ -22,8 +22,10 @@ public class FitnessServiceImpl implements FitnessService {
     /**
      * Create a fitness goal for the user.
      *
-     * @param request
-     * @throws AstraException
+     * @param request The payload passed from the frontend
+     * @throws AstraException If the user is not logged in
+     * @throws AstraException If the fitness goal category is invalid
+     * @throws AstraException If the fitness goal already exist for the user
      */
     @Override
     public void createFitnessGoal(CreateFitnessGoalDTO request) throws AstraException {

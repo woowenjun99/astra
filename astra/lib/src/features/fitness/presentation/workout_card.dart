@@ -16,11 +16,11 @@ class WorkoutCard extends StatelessWidget {
 
   Color _determineIntensityColor() {
     if (intensity == "High") {
-      return Colors.red;
+      return Color.fromRGBO(231, 0, 11, 1);
     } else if (intensity == "Medium") {
-      return Colors.orangeAccent;
+      return Color.fromRGBO(245, 74, 0, 1);
     }
-    return Colors.green;
+    return Color.fromRGBO(0, 166, 62, 1);
   }
 
   @override
@@ -30,6 +30,7 @@ class WorkoutCard extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
       ),
       child: Column(
         spacing: 8,
