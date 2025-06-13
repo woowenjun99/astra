@@ -5,23 +5,19 @@ import java.util.Date;
 public class UserEntity {
     private String uid;
 
+    private String bio;
+
     private Date dateCreated;
+
+    private Date dateOfBirth;
 
     private Date dateUpdated;
 
     private String email;
 
-    private Date dateOfBirth;
-
     private String fullName;
 
-    private Integer gender;
-
-    private String bio;
-
-    private Double goalWeight;
-
-    private Date goalDate;
+    private String gender;
 
     public String getUid() {
         return uid;
@@ -31,12 +27,28 @@ public class UserEntity {
         this.uid = uid == null ? null : uid.trim();
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio == null ? null : bio.trim();
+    }
+
     public Date getDateCreated() {
         return dateCreated;
     }
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Date getDateUpdated() {
@@ -55,14 +67,6 @@ public class UserEntity {
         this.email = email == null ? null : email.trim();
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getFullName() {
         return fullName;
     }
@@ -71,35 +75,11 @@ public class UserEntity {
         this.fullName = fullName == null ? null : fullName.trim();
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio == null ? null : bio.trim();
-    }
-
-    public Double getGoalWeight() {
-        return goalWeight;
-    }
-
-    public void setGoalWeight(Double goalWeight) {
-        this.goalWeight = goalWeight;
-    }
-
-    public Date getGoalDate() {
-        return goalDate;
-    }
-
-    public void setGoalDate(Date goalDate) {
-        this.goalDate = goalDate;
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
     }
 }

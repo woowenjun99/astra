@@ -202,6 +202,76 @@ public class UserEntityExample {
             return (Criteria) this;
         }
 
+        public Criteria andBioIsNull() {
+            addCriterion("bio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioIsNotNull() {
+            addCriterion("bio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioEqualTo(String value) {
+            addCriterion("bio =", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioNotEqualTo(String value) {
+            addCriterion("bio <>", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioGreaterThan(String value) {
+            addCriterion("bio >", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioGreaterThanOrEqualTo(String value) {
+            addCriterion("bio >=", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioLessThan(String value) {
+            addCriterion("bio <", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioLessThanOrEqualTo(String value) {
+            addCriterion("bio <=", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioLike(String value) {
+            addCriterion("bio like", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioNotLike(String value) {
+            addCriterion("bio not like", value, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioIn(List<String> values) {
+            addCriterion("bio in", values, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioNotIn(List<String> values) {
+            addCriterion("bio not in", values, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioBetween(String value1, String value2) {
+            addCriterion("bio between", value1, value2, "bio");
+            return (Criteria) this;
+        }
+
+        public Criteria andBioNotBetween(String value1, String value2) {
+            addCriterion("bio not between", value1, value2, "bio");
+            return (Criteria) this;
+        }
+
         public Criteria andDateCreatedIsNull() {
             addCriterion("date_created is null");
             return (Criteria) this;
@@ -259,6 +329,66 @@ public class UserEntityExample {
 
         public Criteria andDateCreatedNotBetween(Date value1, Date value2) {
             addCriterion("date_created not between", value1, value2, "dateCreated");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthIsNull() {
+            addCriterion("date_of_birth is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthIsNotNull() {
+            addCriterion("date_of_birth is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth =", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthNotEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth <>", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthGreaterThan(Date value) {
+            addCriterionForJDBCDate("date_of_birth >", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth >=", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthLessThan(Date value) {
+            addCriterionForJDBCDate("date_of_birth <", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("date_of_birth <=", value, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthIn(List<Date> values) {
+            addCriterionForJDBCDate("date_of_birth in", values, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthNotIn(List<Date> values) {
+            addCriterionForJDBCDate("date_of_birth not in", values, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("date_of_birth between", value1, value2, "dateOfBirth");
+            return (Criteria) this;
+        }
+
+        public Criteria andDateOfBirthNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("date_of_birth not between", value1, value2, "dateOfBirth");
             return (Criteria) this;
         }
 
@@ -392,66 +522,6 @@ public class UserEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andDateOfBirthIsNull() {
-            addCriterion("date_of_birth is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthIsNotNull() {
-            addCriterion("date_of_birth is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthEqualTo(Date value) {
-            addCriterionForJDBCDate("date_of_birth =", value, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthNotEqualTo(Date value) {
-            addCriterionForJDBCDate("date_of_birth <>", value, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthGreaterThan(Date value) {
-            addCriterionForJDBCDate("date_of_birth >", value, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("date_of_birth >=", value, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthLessThan(Date value) {
-            addCriterionForJDBCDate("date_of_birth <", value, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("date_of_birth <=", value, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthIn(List<Date> values) {
-            addCriterionForJDBCDate("date_of_birth in", values, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthNotIn(List<Date> values) {
-            addCriterionForJDBCDate("date_of_birth not in", values, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("date_of_birth between", value1, value2, "dateOfBirth");
-            return (Criteria) this;
-        }
-
-        public Criteria andDateOfBirthNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("date_of_birth not between", value1, value2, "dateOfBirth");
-            return (Criteria) this;
-        }
-
         public Criteria andFullNameIsNull() {
             addCriterion("full_name is null");
             return (Criteria) this;
@@ -532,243 +602,63 @@ public class UserEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andGenderEqualTo(Integer value) {
+        public Criteria andGenderEqualTo(String value) {
             addCriterion("gender =", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotEqualTo(Integer value) {
+        public Criteria andGenderNotEqualTo(String value) {
             addCriterion("gender <>", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderGreaterThan(Integer value) {
+        public Criteria andGenderGreaterThan(String value) {
             addCriterion("gender >", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderGreaterThanOrEqualTo(Integer value) {
+        public Criteria andGenderGreaterThanOrEqualTo(String value) {
             addCriterion("gender >=", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderLessThan(Integer value) {
+        public Criteria andGenderLessThan(String value) {
             addCriterion("gender <", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderLessThanOrEqualTo(Integer value) {
+        public Criteria andGenderLessThanOrEqualTo(String value) {
             addCriterion("gender <=", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderIn(List<Integer> values) {
+        public Criteria andGenderLike(String value) {
+            addCriterion("gender like", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderNotLike(String value) {
+            addCriterion("gender not like", value, "gender");
+            return (Criteria) this;
+        }
+
+        public Criteria andGenderIn(List<String> values) {
             addCriterion("gender in", values, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotIn(List<Integer> values) {
+        public Criteria andGenderNotIn(List<String> values) {
             addCriterion("gender not in", values, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderBetween(Integer value1, Integer value2) {
+        public Criteria andGenderBetween(String value1, String value2) {
             addCriterion("gender between", value1, value2, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotBetween(Integer value1, Integer value2) {
+        public Criteria andGenderNotBetween(String value1, String value2) {
             addCriterion("gender not between", value1, value2, "gender");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioIsNull() {
-            addCriterion("bio is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioIsNotNull() {
-            addCriterion("bio is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioEqualTo(String value) {
-            addCriterion("bio =", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioNotEqualTo(String value) {
-            addCriterion("bio <>", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioGreaterThan(String value) {
-            addCriterion("bio >", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioGreaterThanOrEqualTo(String value) {
-            addCriterion("bio >=", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioLessThan(String value) {
-            addCriterion("bio <", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioLessThanOrEqualTo(String value) {
-            addCriterion("bio <=", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioLike(String value) {
-            addCriterion("bio like", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioNotLike(String value) {
-            addCriterion("bio not like", value, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioIn(List<String> values) {
-            addCriterion("bio in", values, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioNotIn(List<String> values) {
-            addCriterion("bio not in", values, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioBetween(String value1, String value2) {
-            addCriterion("bio between", value1, value2, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andBioNotBetween(String value1, String value2) {
-            addCriterion("bio not between", value1, value2, "bio");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightIsNull() {
-            addCriterion("goal_weight is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightIsNotNull() {
-            addCriterion("goal_weight is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightEqualTo(Double value) {
-            addCriterion("goal_weight =", value, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightNotEqualTo(Double value) {
-            addCriterion("goal_weight <>", value, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightGreaterThan(Double value) {
-            addCriterion("goal_weight >", value, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightGreaterThanOrEqualTo(Double value) {
-            addCriterion("goal_weight >=", value, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightLessThan(Double value) {
-            addCriterion("goal_weight <", value, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightLessThanOrEqualTo(Double value) {
-            addCriterion("goal_weight <=", value, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightIn(List<Double> values) {
-            addCriterion("goal_weight in", values, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightNotIn(List<Double> values) {
-            addCriterion("goal_weight not in", values, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightBetween(Double value1, Double value2) {
-            addCriterion("goal_weight between", value1, value2, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalWeightNotBetween(Double value1, Double value2) {
-            addCriterion("goal_weight not between", value1, value2, "goalWeight");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateIsNull() {
-            addCriterion("goal_date is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateIsNotNull() {
-            addCriterion("goal_date is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateEqualTo(Date value) {
-            addCriterionForJDBCDate("goal_date =", value, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("goal_date <>", value, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("goal_date >", value, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("goal_date >=", value, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateLessThan(Date value) {
-            addCriterionForJDBCDate("goal_date <", value, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("goal_date <=", value, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateIn(List<Date> values) {
-            addCriterionForJDBCDate("goal_date in", values, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("goal_date not in", values, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("goal_date between", value1, value2, "goalDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoalDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("goal_date not between", value1, value2, "goalDate");
             return (Criteria) this;
         }
     }

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FitnessDashboard extends StatelessWidget {
+import 'package:astra/src/features/fitness/presentation/recent_workout_card.dart';
+
+class FitnessDashboard extends ConsumerWidget {
   const FitnessDashboard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsetsGeometry.all(16),
-            child: SizedBox(width: double.infinity, child: Container()),
+            child: Column(children: [RecentWorkoutCard()]),
           ),
         ),
       ),

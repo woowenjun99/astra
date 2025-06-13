@@ -1,25 +1,22 @@
 CREATE TABLE users (
+	bio VARCHAR(500),
 	date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	uid TEXT PRIMARY KEY,
-	email TEXT NOT NULL,
 	date_of_birth DATE,
-	full_name TEXT,
-	gender INTEGER,
-	bio TEXT,
-    goal_weight NUMERIC(6, 2),
-    goal_date DATE,
-    CHECK (goal_weight > 0),
-    CHECK (goal_date > CURRENT_DATE)
+	date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	email VARCHAR(50) NOT NULL,
+	full_name VARCHAR(50),
+	gender VARCHAR(20),
+	uid VARCHAR(30) PRIMARY KEY
 );
 
-CREATE TABLE workout_log (
-    calories_burnt INTEGER NOT NULL,
+CREATE TABLE fitness_goals (
+    category VARCHAR(10) NOT NULL,
     date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    duration INTEGER NOT NULL,
-    id BIGSERIAL PRIMARY KEY,
-    intensity INTEGER NOT NULL DEFAULT 0,
-    name TEXT,
-    user_id TEXT NOT NULL REFERENCES users ON DELETE CASCADE
+    description VARCHAR(500),
+    target_date DATE NOT NULL,
+    target_value NUMERIC(10, 2) NOT NULL,
+    title VARCHAR(30) NOT NULL,
+    uid VARCHAR(30) NOT NULL REFERENCES users,
+    PRIMARY KEY (category, uid)
 );

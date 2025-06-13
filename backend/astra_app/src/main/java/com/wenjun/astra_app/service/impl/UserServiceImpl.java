@@ -2,10 +2,8 @@ package com.wenjun.astra_app.service.impl;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
-import com.wenjun.astra_app.model.dto.UpdateFitnessGoalsDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
-import com.wenjun.astra_app.model.enums.users.Gender;
 import com.wenjun.astra_app.service.UserService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.UserEntity;
@@ -39,7 +37,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (request.getGender() != null) {
-            user.setGender(Gender.getByAlias(request.getGender()).getCode());
+            user.setGender(request.getGender());
         }
 
         user.setEmail(request.getEmail());
@@ -80,13 +78,5 @@ public class UserServiceImpl implements UserService {
             throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");
         }
         return user;
-    }
-
-    @Override
-    public void updateFitnessGoals(UpdateFitnessGoalsDTO request) throws AstraException {
-        UserEntity user = getUser();
-        user.setGoalDate(request.getGoalDate());
-        user.setGoalWeight(request.getGoalWeight());
-        userRepository.updateByPrimaryKey(user);
     }
 }

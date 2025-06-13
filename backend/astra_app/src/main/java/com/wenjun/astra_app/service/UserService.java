@@ -2,7 +2,6 @@ package com.wenjun.astra_app.service;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
-import com.wenjun.astra_app.model.dto.UpdateFitnessGoalsDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_persistence.models.UserEntity;
 
@@ -20,6 +19,4 @@ public interface UserService {
     void deleteUser() throws AstraException;
 
     UserEntity getUser() throws AstraException;
-
-    void updateFitnessGoals(UpdateFitnessGoalsDTO request) throws AstraException;
 }

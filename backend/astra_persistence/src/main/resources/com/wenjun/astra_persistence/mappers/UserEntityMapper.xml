@@ -3,15 +3,13 @@
 <mapper namespace="com.wenjun.astra_persistence.mappers.UserEntityMapper">
   <resultMap id="BaseResultMap" type="com.wenjun.astra_persistence.models.UserEntity">
     <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="bio" jdbcType="VARCHAR" property="bio" />
     <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
+    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
     <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
-    <result column="gender" jdbcType="INTEGER" property="gender" />
-    <result column="bio" jdbcType="VARCHAR" property="bio" />
-    <result column="goal_weight" jdbcType="NUMERIC" property="goalWeight" />
-    <result column="goal_date" jdbcType="DATE" property="goalDate" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,8 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    uid, date_created, date_updated, email, date_of_birth, full_name, gender, bio, goal_weight, 
-    goal_date
+    uid, bio, date_created, date_of_birth, date_updated, email, full_name, gender
   </sql>
   <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.UserEntityExample" resultMap="BaseResultMap">
     select
@@ -106,14 +103,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.wenjun.astra_persistence.models.UserEntity">
-    insert into users (uid, date_created, date_updated, 
-      email, date_of_birth, full_name, 
-      gender, bio, goal_weight, 
-      goal_date)
-    values (#{uid,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}, 
-      #{email,jdbcType=VARCHAR}, #{dateOfBirth,jdbcType=DATE}, #{fullName,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=INTEGER}, #{bio,jdbcType=VARCHAR}, #{goalWeight,jdbcType=NUMERIC}, 
-      #{goalDate,jdbcType=DATE})
+    insert into users (uid, bio, date_created, 
+      date_of_birth, date_updated, email, 
+      full_name, gender)
+    values (#{uid,jdbcType=VARCHAR}, #{bio,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, 
+      #{dateOfBirth,jdbcType=DATE}, #{dateUpdated,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
+      #{fullName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     insert into users
@@ -121,8 +116,14 @@
       <if test="uid != null">
         uid,
       </if>
+      <if test="bio != null">
+        bio,
+      </if>
       <if test="dateCreated != null">
         date_created,
+      </if>
+      <if test="dateOfBirth != null">
+        date_of_birth,
       </if>
       <if test="dateUpdated != null">
         date_updated,
@@ -130,31 +131,25 @@
       <if test="email != null">
         email,
       </if>
-      <if test="dateOfBirth != null">
-        date_of_birth,
-      </if>
       <if test="fullName != null">
         full_name,
       </if>
       <if test="gender != null">
         gender,
       </if>
-      <if test="bio != null">
-        bio,
-      </if>
-      <if test="goalWeight != null">
-        goal_weight,
-      </if>
-      <if test="goalDate != null">
-        goal_date,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uid != null">
         #{uid,jdbcType=VARCHAR},
       </if>
+      <if test="bio != null">
+        #{bio,jdbcType=VARCHAR},
+      </if>
       <if test="dateCreated != null">
         #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateOfBirth != null">
+        #{dateOfBirth,jdbcType=DATE},
       </if>
       <if test="dateUpdated != null">
         #{dateUpdated,jdbcType=TIMESTAMP},
@@ -162,23 +157,11 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="dateOfBirth != null">
-        #{dateOfBirth,jdbcType=DATE},
-      </if>
       <if test="fullName != null">
         #{fullName,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        #{gender,jdbcType=INTEGER},
-      </if>
-      <if test="bio != null">
-        #{bio,jdbcType=VARCHAR},
-      </if>
-      <if test="goalWeight != null">
-        #{goalWeight,jdbcType=NUMERIC},
-      </if>
-      <if test="goalDate != null">
-        #{goalDate,jdbcType=DATE},
+        #{gender,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -194,8 +177,14 @@
       <if test="row.uid != null">
         uid = #{row.uid,jdbcType=VARCHAR},
       </if>
+      <if test="row.bio != null">
+        bio = #{row.bio,jdbcType=VARCHAR},
+      </if>
       <if test="row.dateCreated != null">
         date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.dateOfBirth != null">
+        date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
       </if>
       <if test="row.dateUpdated != null">
         date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
@@ -203,23 +192,11 @@
       <if test="row.email != null">
         email = #{row.email,jdbcType=VARCHAR},
       </if>
-      <if test="row.dateOfBirth != null">
-        date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
-      </if>
       <if test="row.fullName != null">
         full_name = #{row.fullName,jdbcType=VARCHAR},
       </if>
       <if test="row.gender != null">
-        gender = #{row.gender,jdbcType=INTEGER},
-      </if>
-      <if test="row.bio != null">
-        bio = #{row.bio,jdbcType=VARCHAR},
-      </if>
-      <if test="row.goalWeight != null">
-        goal_weight = #{row.goalWeight,jdbcType=NUMERIC},
-      </if>
-      <if test="row.goalDate != null">
-        goal_date = #{row.goalDate,jdbcType=DATE},
+        gender = #{row.gender,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="example != null">
@@ -229,15 +206,13 @@
   <update id="updateByExample" parameterType="map">
     update users
     set uid = #{row.uid,jdbcType=VARCHAR},
+      bio = #{row.bio,jdbcType=VARCHAR},
       date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
       date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
       email = #{row.email,jdbcType=VARCHAR},
-      date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
       full_name = #{row.fullName,jdbcType=VARCHAR},
-      gender = #{row.gender,jdbcType=INTEGER},
-      bio = #{row.bio,jdbcType=VARCHAR},
-      goal_weight = #{row.goalWeight,jdbcType=NUMERIC},
-      goal_date = #{row.goalDate,jdbcType=DATE}
+      gender = #{row.gender,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -245,8 +220,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     update users
     <set>
+      <if test="bio != null">
+        bio = #{bio,jdbcType=VARCHAR},
+      </if>
       <if test="dateCreated != null">
         date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateOfBirth != null">
+        date_of_birth = #{dateOfBirth,jdbcType=DATE},
       </if>
       <if test="dateUpdated != null">
         date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
@@ -254,38 +235,24 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="dateOfBirth != null">
-        date_of_birth = #{dateOfBirth,jdbcType=DATE},
-      </if>
       <if test="fullName != null">
         full_name = #{fullName,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        gender = #{gender,jdbcType=INTEGER},
-      </if>
-      <if test="bio != null">
-        bio = #{bio,jdbcType=VARCHAR},
-      </if>
-      <if test="goalWeight != null">
-        goal_weight = #{goalWeight,jdbcType=NUMERIC},
-      </if>
-      <if test="goalDate != null">
-        goal_date = #{goalDate,jdbcType=DATE},
+        gender = #{gender,jdbcType=VARCHAR},
       </if>
     </set>
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     update users
-    set date_created = #{dateCreated,jdbcType=TIMESTAMP},
+    set bio = #{bio,jdbcType=VARCHAR},
+      date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      date_of_birth = #{dateOfBirth,jdbcType=DATE},
       date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
       email = #{email,jdbcType=VARCHAR},
-      date_of_birth = #{dateOfBirth,jdbcType=DATE},
       full_name = #{fullName,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=INTEGER},
-      bio = #{bio,jdbcType=VARCHAR},
-      goal_weight = #{goalWeight,jdbcType=NUMERIC},
-      goal_date = #{goalDate,jdbcType=DATE}
+      gender = #{gender,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>
