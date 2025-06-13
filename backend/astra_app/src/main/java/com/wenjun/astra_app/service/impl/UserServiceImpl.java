@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
                 throw new AstraException(AstraExceptionEnum.CONFLICT, "Email");
             }
             // If the email is not in use, we need to update FirebaseAuth first
-            firebaseClient.updateUser(ThreadLocalUser.get().getUid(), request.getEmail().trim());
+            firebaseClient.updateUser(ThreadLocalUser.getAuthenticatedUser().getUid(), request.getEmail().trim());
         }
 
         if (request.getGender() != null) {
@@ -71,10 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUser() throws AstraException {
-        AuthenticatedUser authenticatedUser = ThreadLocalUser.get();
-        if (authenticatedUser == null) {
-            throw new AstraException(AstraExceptionEnum.UNAUTHORIZED);
-        }
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         UserEntity user = userRepository.getUserByUid(authenticatedUser.getUid());
         if (user == null) {
             throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");

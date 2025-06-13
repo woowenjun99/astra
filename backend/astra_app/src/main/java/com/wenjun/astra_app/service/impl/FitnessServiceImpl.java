@@ -4,6 +4,7 @@ import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.model.enums.fitness_goals.FitnessGoalCategory;
+import com.wenjun.astra_app.model.vo.FitnessGoal;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.FitnessGoalEntity;
@@ -13,6 +14,9 @@ import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -30,10 +34,7 @@ public class FitnessServiceImpl implements FitnessService {
     @Override
     public void createFitnessGoal(CreateFitnessGoalDTO request) throws AstraException {
         FitnessGoalCategory fitnessGoalCategory = FitnessGoalCategory.getByAlias(request.getCategory());
-        AuthenticatedUser user = ThreadLocalUser.get();
-        if (user == null) {
-            throw new AstraException(AstraExceptionEnum.UNAUTHORIZED);
-        }
+        AuthenticatedUser user = ThreadLocalUser.getAuthenticatedUser();
         FitnessGoalEntity existingGoal = fitnessRepository.getByPrimaryKey(fitnessGoalCategory.getAlias(), user.getUid());
         if (existingGoal != null) {
             throw new AstraException(AstraExceptionEnum.CONFLICT, "fitness goal for the user");
@@ -45,5 +46,36 @@ public class FitnessServiceImpl implements FitnessService {
         entity.setTargetDate(request.getTargetDate());
         entity.setTargetValue(request.getTargetValue());
         fitnessRepository.insertFitnessGoalSelective(entity);
+    }
+
+    private FitnessGoal convertToFitnessGoal(FitnessGoalEntity fitnessGoalEntity) throws AstraException {
+        FitnessGoalCategory category = FitnessGoalCategory.getByAlias(fitnessGoalEntity.getCategory());
+        FitnessGoal fitnessGoal = FitnessGoal
+                .builder()
+                .currentValue(0.00)
+                .description(fitnessGoalEntity.getDescription())
+                .targetDate(fitnessGoalEntity.getTargetDate())
+                .targetValue(fitnessGoalEntity.getTargetValue())
+                .title(fitnessGoalEntity.getTitle())
+                .build();
+        return fitnessGoal;
+    }
+
+    /**
+     * Get all the fitness goals for the user
+     *
+     * @return a list of fitness goals
+     * @throws AstraException If the user is not logged in
+     */
+    @Override
+    public List<FitnessGoal> getFitnessGoals() throws AstraException {
+        AuthenticatedUser user = ThreadLocalUser.getAuthenticatedUser();
+        List<FitnessGoalEntity> fitnessGoals = fitnessRepository.getFitnessGoalsByUid(user.getUid());
+        List<FitnessGoal> response = new ArrayList<>();
+        for (FitnessGoalEntity fitnessGoalEntity: fitnessGoals) {
+            FitnessGoal fitnessGoal = convertToFitnessGoal(fitnessGoalEntity);
+            response.add(fitnessGoal);
+        }
+        return response;
     }
 }

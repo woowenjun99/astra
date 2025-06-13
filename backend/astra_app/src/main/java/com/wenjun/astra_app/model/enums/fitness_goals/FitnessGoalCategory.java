@@ -9,15 +9,17 @@ import java.util.HashMap;
 
 @Getter
 public enum FitnessGoalCategory {
-    DISTANCE("Distance"),
-    FREQUENCY("Frequency"),
-    WEIGHT("Weight");
+    DISTANCE("Distance", "Km"),
+    FREQUENCY("Frequency", ""),
+    WEIGHT("Weight", "Kg");
 
     private final String alias;
+    private final String unit;
     private static HashMap<String, FitnessGoalCategory> mappers;
 
-    FitnessGoalCategory(String alias) {
+    FitnessGoalCategory(String alias, String unit) {
         this.alias = alias;
+        this.unit = unit;
     }
 
     static {

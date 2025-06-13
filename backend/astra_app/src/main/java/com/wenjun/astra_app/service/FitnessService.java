@@ -2,6 +2,9 @@ package com.wenjun.astra_app.service;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
+import com.wenjun.astra_app.model.vo.FitnessGoal;
+
+import java.util.List;
 
 public interface FitnessService {
     /**
@@ -13,4 +16,11 @@ public interface FitnessService {
      * @throws AstraException If the fitness goal already exist for the user
      */
     void createFitnessGoal(CreateFitnessGoalDTO request) throws AstraException;
+
+    /**
+     * Get all the fitness goals for the user
+     *
+     * @return a list of fitness goals
+     */
+    List<FitnessGoal> getFitnessGoals() throws AstraException;
 }
