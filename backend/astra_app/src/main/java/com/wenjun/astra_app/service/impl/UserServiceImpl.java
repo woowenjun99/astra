@@ -4,6 +4,7 @@ import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
+import com.wenjun.astra_app.model.enums.users.Gender;
 import com.wenjun.astra_app.service.UserService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.UserEntity;
@@ -37,7 +38,8 @@ public class UserServiceImpl implements UserService {
         }
 
         if (request.getGender() != null) {
-            user.setGender(request.getGender());
+            Gender gender = Gender.getByAlias(request.getGender());
+            user.setGender(gender.getAlias());
         }
 
         user.setEmail(request.getEmail());
