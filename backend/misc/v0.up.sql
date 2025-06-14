@@ -21,7 +21,7 @@ CREATE TABLE fitness_goals (
     PRIMARY KEY (category, uid)
 );
 
-CREATE TABLE fitness_log (
+CREATE TABLE fitness_logs (
     category VARCHAR(10) NOT NULL,
     date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),

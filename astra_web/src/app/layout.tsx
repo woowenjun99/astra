@@ -20,12 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClientLayout>
-          <MantineProvider>
-            <body>{children}</body>
+        <MantineProvider>
+          <ClientLayout>
+            {children}
             <Notifications />
-          </MantineProvider>
-        </ClientLayout>
+          </ClientLayout>
+        </MantineProvider>
       </body>
     </html>
   );

@@ -26,28 +26,6 @@ export async function signin(email: string, password: string) {
   return userCredential.user;
 }
 
-type UpdateUserPayload = {
-  email: string;
-  name: string | null;
-  bio: string | null;
-  dob: Date | null;
-  gender: string | null;
-};
-
-export async function updateUser(payload: UpdateUserPayload) {
-  const jwt = await getJwtToken();
-  const { data } = await axiosInstance.put<BaseResponse<void>>(
-    "/users",
-    payload,
-    {
-      headers: { Authorization: jwt },
-    }
-  );
-  if (!data.success) {
-    throw new Error(data.message);
-  }
-}
-
 export function signout() {
   return signOut(auth);
 }
