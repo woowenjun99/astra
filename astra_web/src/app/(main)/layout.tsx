@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", backgroundColor: "#F9FAFB" }}>
         <NavbarSimple />
         {children}
       </div>

@@ -5,15 +5,15 @@ import com.wenjun.astra_persistence.models.FitnessGoalEntity;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
 
-import lombok.AllArgsConstructor;
-
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@AllArgsConstructor
+import jakarta.annotation.Resource;
+
 @Repository
 public class FitnessRepository {
+    @Resource
     private FitnessGoalEntityMapper fitnessGoalEntityMapper;
 
     public void insertFitnessGoalSelective(FitnessGoalEntity fitnessGoalEntity) {

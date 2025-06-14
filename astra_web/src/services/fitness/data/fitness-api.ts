@@ -26,12 +26,14 @@ export async function createFitnessGoal(payload: CreateFitnessGoalDTO) {
   }
 }
 
-export async function getFitnessGoals(): Promise<FitnessGoal[]> {
+export async function getFitnessGoals(
+  endpoint: string
+): Promise<FitnessGoal[]> {
   const jwt = await getJwtToken();
   const response = await axiosInstance.get<
     CreateFitnessGoalDTO,
     BaseResponse<FitnessGoal[]>
-  >("/fitness/goals", {
+  >(endpoint, {
     headers: { Authorization: jwt },
   });
   return response.data;
