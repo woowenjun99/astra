@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FitnessGoalScreen extends ConsumerWidget {
+class FitnessGoalScreen extends StatefulWidget {
   const FitnessGoalScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  State<FitnessGoalScreen> createState() => _FitnessGoalScreenState();
+}
+
+class _FitnessGoalScreenState extends State<FitnessGoalScreen> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold();
   }
 }
