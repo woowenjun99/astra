@@ -20,15 +20,3 @@ CREATE TABLE fitness_goals (
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE,
     PRIMARY KEY (category, uid)
 );
-
-CREATE TABLE fitness_logs (
-    category VARCHAR(10) NOT NULL,
-    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    date_logged DATE NOT NULL,
-    description VARCHAR(500),
-    id BIGSERIAL PRIMARY KEY,
-    title VARCHAR(30) NOT NULL,
-    uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE,
-    value NUMERIC(10, 2) NOT NULL
-);

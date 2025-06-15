@@ -1,11 +1,11 @@
-import { getJwtToken } from "@/api/user";
+import { getJwtToken } from "@/services/authentication/data/authentication-api";
 import type { BaseResponse } from "@/model/base-response";
 import { axiosInstance } from "@/util/axios-instance";
 import type { FitnessGoal } from "../domain/fitness-goal";
 
 export interface CreateFitnessGoalDTO {
   category: string;
-  description: string;
+  description: string | null;
   targetDate: Date;
   targetValue: number;
   title: string;

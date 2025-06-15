@@ -42,10 +42,5 @@
 <!--            <property name="useActualColumnNames" value="false"/>-->
 <!--            <columnOverride column="target_value" javaType="java.lang.Double" />-->
 <!--        </table>-->
-
-        <table tableName="fitness_logs" domainObjectName="FitnessLogEntity" >
-            <property name="useActualColumnNames" value="false"/>
-            <columnOverride column="value" javaType="java.lang.Double" />
-        </table>
     </context>
 </generatorConfiguration>

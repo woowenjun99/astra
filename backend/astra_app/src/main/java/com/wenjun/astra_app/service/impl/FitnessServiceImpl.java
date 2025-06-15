@@ -5,6 +5,8 @@ import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.model.enums.fitness_goals.FitnessGoalCategory;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
+import com.wenjun.astra_app.plugins.fitness_goals.FitnessGoalPlugin;
+import com.wenjun.astra_app.plugins.fitness_goals.FitnessGoalPlugins;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.FitnessGoalEntity;
@@ -22,6 +24,7 @@ import java.util.List;
 @Service
 public class FitnessServiceImpl implements FitnessService {
     private final FitnessRepository fitnessRepository;
+    private final FitnessGoalPlugins fitnessGoalPlugins;
 
     /**
      * Create a fitness goal for the user.
@@ -50,9 +53,11 @@ public class FitnessServiceImpl implements FitnessService {
 
     private FitnessGoal convertToFitnessGoal(FitnessGoalEntity fitnessGoalEntity) throws AstraException {
         FitnessGoalCategory category = FitnessGoalCategory.getByAlias(fitnessGoalEntity.getCategory());
+        FitnessGoalPlugin plugin = fitnessGoalPlugins.getPlugin(category);
+        Double currentValue = plugin.getCurrentValue();
         FitnessGoal fitnessGoal = FitnessGoal
                 .builder()
-                .currentValue(0.00)
+                .currentValue(currentValue)
                 .description(fitnessGoalEntity.getDescription())
                 .targetDate(fitnessGoalEntity.getTargetDate())
                 .targetValue(fitnessGoalEntity.getTargetValue())

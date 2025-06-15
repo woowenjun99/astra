@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 import { Code, Group } from "@mantine/core";
 import classes from "./Navbar.module.css";
-import { signout } from "@/api/user";
+import { signout } from "@/services/authentication/data/authentication-api";
 import Link from "next/link";
 
 const data = [

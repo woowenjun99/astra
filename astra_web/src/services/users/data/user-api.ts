@@ -1,7 +1,7 @@
 import type { BaseResponse } from "@/model/base-response";
 import type { User } from "../domain/user";
 import { axiosInstance } from "@/util/axios-instance";
-import { getJwtToken } from "@/api/user";
+import { getJwtToken } from "@/services/authentication/data/authentication-api";
 import dayjs from "dayjs";
 
 /**

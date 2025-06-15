@@ -5,14 +5,7 @@ import { Card, Grid, Title, Text, Button } from "@mantine/core";
 
 export default function Page() {
   return (
-    <div
-      style={{
-        width: "70%",
-        marginLeft: "auto",
-        marginRight: "auto",
-        paddingTop: 20,
-      }}
-    >
+    <div>
       <Grid>
         <Grid.Col span={{ sm: 12, md: 8 }}>
           <Card withBorder>

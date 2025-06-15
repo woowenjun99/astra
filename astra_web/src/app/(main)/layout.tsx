@@ -7,7 +7,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Header />
       <div style={{ display: "flex", backgroundColor: "#F9FAFB" }}>
         <NavbarSimple />
-        {children}
+        <div
+          style={{
+            width: "75%",
+            marginLeft: "auto",
+            marginRight: "auto",
+            paddingTop: 20,
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

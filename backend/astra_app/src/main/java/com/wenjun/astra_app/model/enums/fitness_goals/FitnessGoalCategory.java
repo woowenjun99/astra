@@ -10,7 +10,7 @@ import java.util.HashMap;
 @Getter
 public enum FitnessGoalCategory {
     DISTANCE("Distance", "Km"),
-    FREQUENCY("Frequency", ""),
+    FREQUENCY("Frequency", "times a week"),
     WEIGHT("Weight", "Kg");
 
     private final String alias;

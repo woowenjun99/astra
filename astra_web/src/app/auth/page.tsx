@@ -12,7 +12,10 @@ import classes from "./AuthenticationImage.module.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { createUser, signin } from "@/api/user";
+import {
+  createUser,
+  signin,
+} from "@/services/authentication/data/authentication-api";
 import { useState } from "react";
 import { notifications } from "@mantine/notifications";
 
