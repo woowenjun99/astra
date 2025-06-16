@@ -2,6 +2,7 @@
   background-color: white;
   height: 100dvh;
   width: 300px;
+  margin-right: 16px;
   padding: var(--mantine-spacing-md);
   display: flex;
   flex-direction: column;

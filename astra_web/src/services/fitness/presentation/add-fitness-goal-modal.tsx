@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { notifications } from "@mantine/notifications";
 import { createFitnessGoal } from "../data/fitness-api";
 import dayjs from "dayjs";
+import { useMediaQuery } from "@mantine/hooks";
 
 const schema = z.object({
   category: z.string(),
@@ -30,9 +31,10 @@ type Schema = z.infer<typeof schema>;
 
 export default function AddFitnessGoalModal() {
   const [opened, { open, close }] = useDisclosure(false);
+  const isMdScreen = useMediaQuery("(min-width: 62em)");
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
     watch,
     setValue,
@@ -111,6 +113,12 @@ export default function AddFitnessGoalModal() {
                 allowNegative={false}
                 decimalScale={2}
                 value={watch("targetValue")}
+                error={errors.targetValue?.message}
+                onChange={(value) => {
+                  if (value === null) return;
+                  if (typeof value === "string") setValue("targetValue", 0);
+                  else setValue("targetValue", value);
+                }}
               />
             </Grid.Col>
             <Grid.Col>
@@ -138,13 +146,24 @@ export default function AddFitnessGoalModal() {
             >
               Cancel
             </Button>
-            <Button color="black" type="submit" mt="lg">
+            <Button
+              color="black"
+              type="submit"
+              mt="lg"
+              loading={isSubmitting}
+              disabled={isSubmitting}
+            >
               Create Goal
             </Button>
           </div>
         </form>
       </Modal>
-      <Button onClick={open} color="black" leftSection={<IconPlus />}>
+      <Button
+        onClick={open}
+        color="black"
+        leftSection={<IconPlus />}
+        fullWidth={!isMdScreen}
+      >
         Add New Goals
       </Button>
     </>

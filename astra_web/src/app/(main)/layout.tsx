@@ -5,7 +5,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex", backgroundColor: "#F9FAFB" }}>
+      <div
+        style={{
+          display: "flex",
+          backgroundColor: "#F9FAFB",
+          height: "100dvh",
+        }}
+      >
         <NavbarSimple />
         <div
           style={{

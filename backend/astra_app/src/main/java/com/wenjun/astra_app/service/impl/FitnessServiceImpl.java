@@ -44,6 +44,7 @@ public class FitnessServiceImpl implements FitnessService {
         }
         FitnessGoalEntity entity = new FitnessGoalEntity();
         entity.setUid(user.getUid());
+        entity.setTitle(request.getTitle());
         entity.setCategory(fitnessGoalCategory.getAlias());
         entity.setTargetValue(request.getTargetValue());
         entity.setTargetDate(request.getTargetDate());

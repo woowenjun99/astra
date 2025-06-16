@@ -14,15 +14,14 @@ export interface CreateFitnessGoalDTO {
 export async function createFitnessGoal(payload: CreateFitnessGoalDTO) {
   const jwt = await getJwtToken();
 
-  const response = await axiosInstance.post<
-    CreateFitnessGoalDTO,
-    BaseResponse<void>
-  >("/fitness/goals", payload, {
+  const response = await axiosInstance.post("/fitness/goals", payload, {
     headers: { Authorization: jwt },
   });
 
-  if (!response.success) {
-    throw new Error(response.message);
+  const data = response.data as BaseResponse<void>;
+
+  if (!data.success) {
+    throw new Error(data.message);
   }
 }
 

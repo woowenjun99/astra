@@ -78,7 +78,6 @@ export default function ProfileForm() {
   return (
     <div
       style={{
-        width: "80%",
         marginLeft: "auto",
         marginRight: "auto",
         marginTop: 16,
