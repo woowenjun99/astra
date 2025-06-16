@@ -20,7 +20,11 @@ import {
 import { useCallback, useState } from "react";
 import { notifications } from "@mantine/notifications";
 import { IconBrandGoogle } from "@tabler/icons-react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getRedirectResult,
+  GoogleAuthProvider,
+  signInWithRedirect,
+} from "firebase/auth";
 import { auth } from "@/firebase";
 
 const schema = z.object({
@@ -46,7 +50,9 @@ export default function AuthenticationImage() {
 
   const submit = handleSubmit(async ({ email, password }) => {
     try {
-      if (!isLogin) await createUser(email, password);
+      if (!isLogin) {
+        await createUser({ email, password, provider: "password", uid: null });
+      }
       await signin(email, password);
     } catch (e) {
       notifications.show({
@@ -59,7 +65,14 @@ export default function AuthenticationImage() {
 
   const signInWithGoogle = useCallback(async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
+    const result = await getRedirectResult(auth);
+    await createUser({
+      email: result?.user.email ?? "",
+      password: null,
+      provider: "google.com",
+      uid: result?.user.uid ?? null,
+    });
   }, []);
 
   return (

@@ -3,13 +3,17 @@ import type { BaseResponse } from "@/model/base-response";
 import { axiosInstance } from "@/util/axios-instance";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-export async function createUser(email: string, password: string) {
+interface CreateUserDTO {
+  email: string;
+  password: string | null;
+  provider: "password" | "google.com";
+  uid: string | null;
+}
+
+export async function createUser(payload: CreateUserDTO) {
   const response = await axiosInstance.post<BaseResponse<void>>(
     "/users/register",
-    {
-      email,
-      password,
-    }
+    payload
   );
 
   if (!response.data.success) {

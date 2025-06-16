@@ -1,12 +1,11 @@
 package com.wenjun.astra_app.service.impl;
 
 import com.wenjun.astra_app.model.AstraException;
-import com.wenjun.astra_app.model.dto.CreateUserDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
+import com.wenjun.astra_app.plugins.accounts.ProviderPlugins;
 import com.wenjun.astra_app.service.UserService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.UserEntity;
-import com.wenjun.astra_persistence.repository.AccountRepository;
 import com.wenjun.astra_persistence.repository.UserRepository;
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 import com.wenjun.astra_third_party_services.firebase.service.FirebaseClient;
@@ -26,7 +25,7 @@ public class UserServiceImplTest {
     @Mock
     private FirebaseClient firebaseClient;
     @Mock
-    private AccountRepository accountRepository;
+    private ProviderPlugins providerPlugins;
 
     @Test
     public void getUser_userNotFound_shouldThrow() {
@@ -34,7 +33,7 @@ public class UserServiceImplTest {
             AuthenticatedUser authenticatedUser = new AuthenticatedUser("userId");
             mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(authenticatedUser);
             Mockito.when(userRepository.getUserByUid("userId")).thenReturn(null);
-            UserService userService = new UserServiceImpl(userRepository, accountRepository, firebaseClient);
+            UserService userService = new UserServiceImpl(userRepository, firebaseClient, providerPlugins);
             Throwable exception = Assertions.assertThrows(AstraException.class, () -> userService.getUser());
             Assertions.assertEquals("User cannot be found", exception.getMessage());
         }
@@ -48,36 +47,10 @@ public class UserServiceImplTest {
             UserEntity user = new UserEntity();
             user.setUid("userId");
             Mockito.when(userRepository.getUserByUid("userId")).thenReturn(user);
-            UserService userService = new UserServiceImpl(userRepository, accountRepository, firebaseClient);
+            UserService userService = new UserServiceImpl(userRepository, firebaseClient, providerPlugins);
             Assertions.assertDoesNotThrow(() -> userService.deleteUser());
             Mockito.verify(userRepository, Mockito.times(1)).deleteByUid("userId");
         }
-    }
-
-    @Test
-    public void createUser_ifEmailInUse_throwError() {
-        Mockito.when(userRepository.isEmailInUse("woowenjun99@gmail.com")).thenReturn(true);
-        UserService userService = new UserServiceImpl(userRepository, accountRepository, firebaseClient);
-        CreateUserDTO request = new CreateUserDTO("woowenjun99@gmail.com", "123456");
-        Throwable exception = Assertions.assertThrows(AstraException.class, () -> userService.createUserWithEmailAndPassword(request));
-        Assertions.assertEquals("Existing Email found", exception.getMessage());
-    }
-
-    @Test
-    public void createUser_ifEmailNotInUse_shouldSave() {
-        // Arrange
-        AuthenticatedUser authenticatedUser = new AuthenticatedUser("userId");
-        Mockito.when(userRepository.isEmailInUse("woowenjun99@gmail.com")).thenReturn(false);
-        Mockito.when(firebaseClient.createUser("woowenjun99@gmail.com", "123456")).thenReturn(authenticatedUser);
-        UserService userService = new UserServiceImpl(userRepository, accountRepository, firebaseClient);
-        CreateUserDTO request = new CreateUserDTO("woowenjun99@gmail.com", "123456");
-
-        // Act
-        Assertions.assertDoesNotThrow(() -> userService.createUserWithEmailAndPassword(request));
-
-        // Assert
-        Mockito.verify(firebaseClient, Mockito.times(1)).createUser("woowenjun99@gmail.com", "123456");
-        Mockito.verify(userRepository, Mockito.times(1)).insertSelective(Mockito.any(UserEntity.class));
     }
 
     @Test
@@ -93,7 +66,7 @@ public class UserServiceImplTest {
             Mockito.when(userRepository.isEmailInUse("woowenjun99@gmail.com")).thenReturn(true);
 
             // Act
-            UserService userService = new UserServiceImpl(userRepository, accountRepository, firebaseClient);
+            UserService userService = new UserServiceImpl(userRepository, firebaseClient, providerPlugins);
             Throwable exception = Assertions.assertThrows(AstraException.class, () -> userService.updateUser(request));
 
             // Assertions
@@ -114,7 +87,7 @@ public class UserServiceImplTest {
             Mockito.when(userRepository.isEmailInUse("woowenjun99@gmail.com")).thenReturn(false);
 
             // Act
-            UserService userService = new UserServiceImpl(userRepository, accountRepository, firebaseClient);
+            UserService userService = new UserServiceImpl(userRepository, firebaseClient, providerPlugins);
             Assertions.assertDoesNotThrow(() -> userService.updateUser(request));
 
             // Assertions
@@ -135,7 +108,7 @@ public class UserServiceImplTest {
             UpdateUserDTO request = new UpdateUserDTO(null, "woowenjun98@gmail.com", null, null, null);
 
             // Act
-            UserService userService = new UserServiceImpl(userRepository, accountRepository, firebaseClient);
+            UserService userService = new UserServiceImpl(userRepository, firebaseClient, providerPlugins);
             Assertions.assertDoesNotThrow(() -> userService.updateUser(request));
 
             // Assertions
