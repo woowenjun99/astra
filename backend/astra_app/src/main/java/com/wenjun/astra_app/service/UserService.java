@@ -14,9 +14,16 @@ public interface UserService {
      */
     void updateUser(UpdateUserDTO request) throws AstraException;
 
-    void createUser(CreateUserDTO request) throws AstraException;
+    void createUserWithEmailAndPassword(CreateUserDTO request) throws AstraException;
 
     void deleteUser() throws AstraException;
 
     UserEntity getUser() throws AstraException;
+
+    /**
+     * Create a new user with the following provider
+     *
+     * @throws AstraException
+     */
+    void createUserWithProvider() throws AstraException;
 }

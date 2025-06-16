@@ -6,10 +6,9 @@ import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.service.UserService;
 import com.wenjun.astra_persistence.models.UserEntity;
 
-import com.google.firebase.auth.FirebaseAuthException;
-
 import lombok.AllArgsConstructor;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,17 +26,18 @@ public class UserController {
     private final UserService userService;
 
     @PutMapping
-    private void updateUser(@Valid @RequestBody UpdateUserDTO request) throws AstraException, FirebaseAuthException {
+    private void updateUser(@Valid @RequestBody UpdateUserDTO request) throws AstraException {
         userService.updateUser(request);
     }
 
+    @Transactional
     @PostMapping("/register")
-    private void createUser(@Valid @RequestBody CreateUserDTO request) throws AstraException, FirebaseAuthException {
-        userService.createUser(request);
+    public void createUser(@Valid @RequestBody CreateUserDTO request) throws AstraException {
+        userService.createUserWithEmailAndPassword(request);
     }
 
     @DeleteMapping
-    private void deleteUser() throws AstraException, FirebaseAuthException {
+    private void deleteUser() throws AstraException {
         userService.deleteUser();
     }
 

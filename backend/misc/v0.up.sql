@@ -9,6 +9,14 @@ CREATE TABLE users (
 	uid VARCHAR(30) PRIMARY KEY
 );
 
+CREATE TABLE accounts (
+	date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    id BIGSERIAL PRIMARY KEY,
+    provider_id VARCHAR(30) NOT NULL,
+    uid VARCHAR(30) NOT NULL REFERENCES users
+);
+
 CREATE TABLE fitness_goals (
     category VARCHAR(10) NOT NULL,
     date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),

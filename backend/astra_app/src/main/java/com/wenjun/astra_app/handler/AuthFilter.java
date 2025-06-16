@@ -1,10 +1,11 @@
 package com.wenjun.astra_app.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wenjun.astra_app.model.ResponseWrapper;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 import com.wenjun.astra_third_party_services.firebase.service.FirebaseClient;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -20,7 +21,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import static io.opentelemetry.instrumentation.api.incubator.log.LoggingContextConstants.TRACE_ID;
 
 @Component

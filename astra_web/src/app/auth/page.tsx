@@ -2,6 +2,7 @@
 import {
   Anchor,
   Button,
+  Divider,
   Paper,
   PasswordInput,
   Text,
@@ -16,8 +17,11 @@ import {
   createUser,
   signin,
 } from "@/services/authentication/data/authentication-api";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { notifications } from "@mantine/notifications";
+import { IconBrandGoogle } from "@tabler/icons-react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/firebase";
 
 const schema = z.object({
   email: z.string().email(),
@@ -52,6 +56,11 @@ export default function AuthenticationImage() {
       });
     }
   });
+
+  const signInWithGoogle = useCallback(async () => {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  }, []);
 
   return (
     <form onSubmit={submit}>
@@ -95,6 +104,7 @@ export default function AuthenticationImage() {
             radius="md"
             type="submit"
             loading={isSubmitting}
+            color="black"
           >
             {isLogin ? "Login" : "Register"}
           </Button>
@@ -112,6 +122,20 @@ export default function AuthenticationImage() {
               {isLogin ? "Register" : "Login"}
             </Anchor>
           </Text>
+
+          <Divider my={16} />
+          <Button
+            fullWidth
+            size="md"
+            radius="md"
+            variant="outline"
+            color="black"
+            type="button"
+            leftSection={<IconBrandGoogle />}
+            onClick={signInWithGoogle}
+          >
+            Sign In With Google
+          </Button>
         </Paper>
       </div>
     </form>

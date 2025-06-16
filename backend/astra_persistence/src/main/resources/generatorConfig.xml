@@ -37,6 +37,9 @@
 <!--        <table tableName="users" domainObjectName="UserEntity" >-->
 <!--            <property name="useActualColumnNames" value="false"/>-->
 <!--        </table>-->
+                <table tableName="accounts" domainObjectName="AccountEntity" >
+                    <property name="useActualColumnNames" value="false"/>
+                </table>
 
 <!--        <table tableName="fitness_goals" domainObjectName="FitnessGoalEntity" >-->
 <!--            <property name="useActualColumnNames" value="false"/>-->
