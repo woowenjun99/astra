@@ -18,6 +18,11 @@ public class GoogleProviderPlugin implements ProviderPlugin {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
 
+    private boolean doesAccountExist(CreateUserDTO request) throws AstraException {
+        Provider provider = Provider.getByProviderId(request.getProvider());
+        return accountRepository.doesAccountExist(request.getUid(), provider.getProviderId());
+    }
+
     @Override
     public Provider getProvider() {
         return Provider.GOOGLE;
@@ -25,14 +30,19 @@ public class GoogleProviderPlugin implements ProviderPlugin {
 
     @Override
     public void createUser(CreateUserDTO request) throws AstraException {
-        AccountEntity account = new AccountEntity();
-        account.setUid(request.getUid());
-        account.setProviderId(Provider.GOOGLE.getProviderId());
-        accountRepository.insertSelective(account);
+        boolean doesAccountExist = doesAccountExist(request);
+        if (doesAccountExist) {
+            return;
+        }
 
         UserEntity user = new UserEntity();
         user.setEmail(request.getEmail());
         user.setUid(request.getUid());
         userRepository.insertSelective(user);
+
+        AccountEntity account = new AccountEntity();
+        account.setUid(request.getUid());
+        account.setProviderId(Provider.GOOGLE.getProviderId());
+        accountRepository.insertSelective(account);
     }
 }
