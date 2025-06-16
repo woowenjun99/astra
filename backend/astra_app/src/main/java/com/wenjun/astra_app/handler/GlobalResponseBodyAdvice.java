@@ -5,6 +5,7 @@ import com.wenjun.astra_app.util.ThreadLocalUser;
 
 import lombok.AllArgsConstructor;
 
+import org.slf4j.MDC;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -12,6 +13,8 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import static io.opentelemetry.instrumentation.api.incubator.log.LoggingContextConstants.TRACE_ID;
 
 @AllArgsConstructor
 @RestControllerAdvice
@@ -35,6 +38,12 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice {
             ThreadLocalUser.clear();
         }
 
+        // Clear the trace id
+        String traceId = MDC.get(TRACE_ID);
+        if (traceId != null) {
+            MDC.remove(TRACE_ID);
+        }
+
         // Double wrapping might occur when we throw an exception
         // We need to handle the status code as well
         if (body instanceof ResponseWrapper<?>) {
@@ -42,6 +51,6 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice {
             return body;
         }
 
-        return new ResponseWrapper<>(body, true, "", 200);
+        return new ResponseWrapper<>(body, true, "", 200, traceId);
     }
 }
