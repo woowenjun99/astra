@@ -16,6 +16,8 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,6 +48,7 @@ public class UserServiceImpl implements UserService {
         user.setFullName(request.getName());
         user.setBio(request.getBio());
         user.setDateOfBirth(request.getDob());
+        user.setDateUpdated(new Date());
         userRepository.updateByPrimaryKey(user);
     }
 
