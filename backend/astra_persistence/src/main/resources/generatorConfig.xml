@@ -37,13 +37,18 @@
 <!--        <table tableName="users" domainObjectName="UserEntity" >-->
 <!--            <property name="useActualColumnNames" value="false"/>-->
 <!--        </table>-->
-                <table tableName="accounts" domainObjectName="AccountEntity" >
-                    <property name="useActualColumnNames" value="false"/>
-                </table>
+<!--                <table tableName="accounts" domainObjectName="AccountEntity" >-->
+<!--                    <property name="useActualColumnNames" value="false"/>-->
+<!--                </table>-->
 
 <!--        <table tableName="fitness_goals" domainObjectName="FitnessGoalEntity" >-->
 <!--            <property name="useActualColumnNames" value="false"/>-->
 <!--            <columnOverride column="target_value" javaType="java.lang.Double" />-->
 <!--        </table>-->
+
+            <table tableName="daily_logs" domainObjectName="DailyLogEntity" >
+                <property name="useActualColumnNames" value="false"/>
+                <columnOverride column="weight" javaType="java.lang.Double" />
+            </table>
     </context>
 </generatorConfiguration>

@@ -1,6 +1,8 @@
 package com.wenjun.astra_persistence.repository;
 
 import com.wenjun.astra_persistence.mappers.FitnessGoalEntityMapper;
+import com.wenjun.astra_persistence.mappers.manual.ManualDailyLogEntityMapper;
+import com.wenjun.astra_persistence.models.DailyLogEntity;
 import com.wenjun.astra_persistence.models.FitnessGoalEntity;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
@@ -15,6 +17,9 @@ import jakarta.annotation.Resource;
 public class FitnessRepository {
     @Resource
     private FitnessGoalEntityMapper fitnessGoalEntityMapper;
+
+    @Resource
+    private ManualDailyLogEntityMapper manualDailyLogEntityMapper;
 
     public void insertFitnessGoalSelective(FitnessGoalEntity fitnessGoalEntity) {
         fitnessGoalEntityMapper.insertSelective(fitnessGoalEntity);
@@ -31,5 +36,9 @@ public class FitnessRepository {
         FitnessGoalEntityExample example = new FitnessGoalEntityExample();
         example.createCriteria().andUidEqualTo(uid);
         return fitnessGoalEntityMapper.selectByExample(example);
+    }
+
+    public DailyLogEntity getRecentDailyLogsByUserId(String uid, Boolean isDescending) {
+        return manualDailyLogEntityMapper.getMostRecentDailyLog(uid, isDescending);
     }
 }

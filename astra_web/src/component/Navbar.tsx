@@ -1,11 +1,6 @@
 "use client";
 import { useState } from "react";
-import {
-  IconHome,
-  IconLogout,
-  IconSettings,
-  IconSwitchHorizontal,
-} from "@tabler/icons-react";
+import { IconHome, IconLogout, IconSettings } from "@tabler/icons-react";
 import { Code, Group } from "@mantine/core";
 import classes from "./Navbar.module.css";
 import { signout } from "@/services/authentication/data/authentication-api";
@@ -42,15 +37,6 @@ export function NavbarSimple() {
       </div>
 
       <div className={classes.footer}>
-        <a
-          href="#"
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
-        </a>
-
         <a href="#" className={classes.link} onClick={signout}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>

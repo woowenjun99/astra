@@ -28,3 +28,13 @@ CREATE TABLE fitness_goals (
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE,
     PRIMARY KEY (category, uid)
 );
+
+CREATE TABLE daily_logs (
+    comments VARCHAR(500),
+    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    date DATE NOT NULL DEFAULT current_date,
+    id BIGSERIAL PRIMARY KEY,
+    uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE,
+    weight NUMERIC(10, 2)
+)

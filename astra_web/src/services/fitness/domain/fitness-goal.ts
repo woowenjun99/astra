@@ -4,4 +4,5 @@ export interface FitnessGoal {
   targetDate: Date;
   targetValue: number;
   title: string;
+  unit: string;
 }

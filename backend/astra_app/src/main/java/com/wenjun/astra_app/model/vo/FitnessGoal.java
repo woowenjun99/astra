@@ -19,4 +19,8 @@ public class FitnessGoal {
     private Double currentValue;
 
     private String category;
+
+    private String unit;
+
+    private Double startingValue;
 }

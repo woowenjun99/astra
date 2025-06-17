@@ -121,6 +121,7 @@ export default function AuthenticationImage() {
             {isLogin ? "Don't have an account? " : "Already have an account? "}
             <Anchor
               href="#"
+              c="black"
               fw={500}
               onClick={(event) => {
                 event.preventDefault();

@@ -29,11 +29,9 @@ export async function getFitnessGoals(
   endpoint: string
 ): Promise<FitnessGoal[]> {
   const jwt = await getJwtToken();
-  const response = await axiosInstance.get<
-    CreateFitnessGoalDTO,
-    BaseResponse<FitnessGoal[]>
-  >(endpoint, {
+  const response = await axiosInstance.get(endpoint, {
     headers: { Authorization: jwt },
   });
-  return response.data;
+  const data = response.data as BaseResponse<FitnessGoal[]>;
+  return data.data;
 }

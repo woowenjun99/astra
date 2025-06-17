@@ -58,11 +58,14 @@ public class FitnessServiceImpl implements FitnessService {
         Double currentValue = plugin.getCurrentValue();
         FitnessGoal fitnessGoal = FitnessGoal
                 .builder()
+                .category(category.getAlias())
                 .currentValue(currentValue)
                 .description(fitnessGoalEntity.getDescription())
+                .startingValue(plugin.getStartingValue())
                 .targetDate(fitnessGoalEntity.getTargetDate())
                 .targetValue(fitnessGoalEntity.getTargetValue())
                 .title(fitnessGoalEntity.getTitle())
+                .unit(category.getUnit())
                 .build();
         return fitnessGoal;
     }
