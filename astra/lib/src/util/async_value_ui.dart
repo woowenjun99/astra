@@ -14,6 +14,10 @@ extension AsyncValueUI on AsyncValue {
         context: context,
         description: Text(message),
         title: Text("Error"),
+        showProgressBar: true,
+        alignment: Alignment.bottomCenter,
+        showIcon: false,
+        autoCloseDuration: Duration(seconds: 3),
       );
     }
   }
