@@ -17,7 +17,7 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({
   calories,
 }) => {
   return (
-    <Card withBorder>
+    <Card withBorder h={100}>
       <Stack>
         <Group justify="space-between">
           <Text fw="bold">{title}</Text>
@@ -30,12 +30,12 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({
             <span>{duration}</span>
           </Group>
 
-          <Group flex="wrap" gap={4}>
+          <Group flex="wrap" gap={1.5}>
             <IconFlame color="orange" />
             <span>{calories} kcal</span>
           </Group>
 
-          <Group flex="wrap" gap={4}>
+          <Group flex="wrap" gap={1.5}>
             <IconGauge />
             <span>{intensity}</span>
           </Group>

@@ -1,7 +1,8 @@
 import { getJwtToken } from "@/services/authentication/data/authentication-api";
-import type { BaseResponse } from "@/model/base-response";
 import { axiosInstance } from "@/util/axios-instance";
 import type { FitnessGoal } from "../domain/fitness-goal";
+import type { Workout } from "../domain/workout";
+import type { BaseResponse } from "@/model/base-response";
 
 export interface CreateFitnessGoalDTO {
   category: string;
@@ -33,5 +34,15 @@ export async function getFitnessGoals(
     headers: { Authorization: jwt },
   });
   const data = response.data as BaseResponse<FitnessGoal[]>;
+  return data.data;
+}
+
+// TODO: Implement /workouts
+export async function getRecentWorkouts(endpoint: string) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.get(endpoint, {
+    headers: { Authorization: jwt },
+  });
+  const data = response.data as BaseResponse<Workout[]>;
   return data.data;
 }

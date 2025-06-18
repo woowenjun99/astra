@@ -45,7 +45,7 @@ export default function FitnessGoalDashboardCard() {
   }
 
   return (
-    <Card withBorder h={500}>
+    <Card withBorder mah={550}>
       <Title order={2}>Goals Progress</Title>
       <Text>Track your fitness goals</Text>
       {displayProgressBars()}
