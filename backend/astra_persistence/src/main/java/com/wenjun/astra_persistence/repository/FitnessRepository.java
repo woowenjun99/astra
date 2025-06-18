@@ -41,4 +41,11 @@ public class FitnessRepository {
     public DailyLogEntity getRecentDailyLogsByUserId(String uid, Boolean isDescending) {
         return manualDailyLogEntityMapper.getMostRecentDailyLog(uid, isDescending);
     }
+
+    public void deleteFitnessGoal(String userId, String category) {
+        FitnessGoalEntityKey primaryKey = new FitnessGoalEntityKey();
+        primaryKey.setUid(userId);
+        primaryKey.setCategory(category);
+        fitnessGoalEntityMapper.deleteByPrimaryKey(primaryKey);
+    }
 }

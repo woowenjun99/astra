@@ -87,4 +87,12 @@ public class FitnessServiceImpl implements FitnessService {
         }
         return response;
     }
+
+    @Override
+    public void deleteFitnessGoal(String category) throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+        FitnessGoalCategory fitnessGoalCategory = FitnessGoalCategory.getByAlias(category);
+        fitnessRepository.deleteFitnessGoal(userId, fitnessGoalCategory.getAlias());
+    }
 }

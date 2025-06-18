@@ -7,7 +7,9 @@ import com.wenjun.astra_app.service.FitnessService;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,5 +33,10 @@ public class FitnessController {
     @GetMapping("/goals")
     private List<FitnessGoal> getFitnessGoals() throws AstraException {
         return fitnessService.getFitnessGoals();
+    }
+
+    @DeleteMapping("/goals/{category}")
+    private void deleteFitnessGoal(@PathVariable("category") String category) throws AstraException {
+        fitnessService.deleteFitnessGoal(category);
     }
 }

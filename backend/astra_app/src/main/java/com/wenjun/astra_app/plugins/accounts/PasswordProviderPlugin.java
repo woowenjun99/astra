@@ -42,14 +42,14 @@ public class PasswordProviderPlugin implements ProviderPlugin {
         }
 
         AuthenticatedUser authenticatedUser = firebaseClient.createUser(request.getEmail(), request.getPassword());
-        AccountEntity account = new AccountEntity();
-        account.setProviderId(Provider.PASSWORD.getProviderId());
-        account.setUid(authenticatedUser.getUid());
-        accountRepository.insertSelective(account);
-
         UserEntity user = new UserEntity();
         user.setEmail(request.getEmail());
         user.setUid(authenticatedUser.getUid());
         userRepository.insertSelective(user);
+
+        AccountEntity account = new AccountEntity();
+        account.setProviderId(Provider.PASSWORD.getProviderId());
+        account.setUid(authenticatedUser.getUid());
+        accountRepository.insertSelective(account);
     }
 }

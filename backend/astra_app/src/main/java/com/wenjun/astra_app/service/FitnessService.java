@@ -23,4 +23,6 @@ public interface FitnessService {
      * @return a list of fitness goals
      */
     List<FitnessGoal> getFitnessGoals() throws AstraException;
+
+    void deleteFitnessGoal(String category) throws AstraException;
 }
