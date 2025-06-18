@@ -33,4 +33,10 @@ public class AccountRepository {
         Long count = manualAccountEntityMapper.countByEmailAndPasswordProvider(email);
         return count != 0;
     }
+
+    public void deleteByUidAndProvider(String uid, String provider) {
+        AccountEntityExample example = new AccountEntityExample();
+        example.createCriteria().andUidEqualTo(uid).andProviderIdEqualTo(provider);
+        accountEntityMapper.deleteByExample(example);
+    }
 }
