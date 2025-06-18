@@ -17,7 +17,9 @@ public class WeightFitnessGoalPlugin implements FitnessGoalPlugin {
     private final FitnessRepository fitnessRepository;
 
     /**
-     * @return
+     * The enum of fitness goal category that the plguin belongs to
+     *
+     * @return The enum of fitness goal category that the plguin belongs to
      */
     @Override
     public FitnessGoalCategory getCategory() {

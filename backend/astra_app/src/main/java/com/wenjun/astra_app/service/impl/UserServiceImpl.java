@@ -79,12 +79,4 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
-
-    /**
-     * Create a new user with the following provider
-     *
-     * @throws AstraException
-     */
-    @Override
-    public void createUserWithProvider() throws AstraException {}
 }

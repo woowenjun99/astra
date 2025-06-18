@@ -2,14 +2,22 @@ package com.wenjun.astra_app.plugins.fitness_goals;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.enums.fitness_goals.FitnessGoalCategory;
+import com.wenjun.astra_app.util.ThreadLocalUser;
+import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
-public interface FitnessGoalPlugin {
+import org.springframework.stereotype.Service;
+
+@Service
+public class FrequencyFitnessGoalPlugin implements FitnessGoalPlugin {
     /**
      * The enum of fitness goal category that the plguin belongs to
      *
      * @return The enum of fitness goal category that the plguin belongs to
      */
-    FitnessGoalCategory getCategory();
+    @Override
+    public FitnessGoalCategory getCategory() {
+        return FitnessGoalCategory.FREQUENCY;
+    }
 
     /**
      * Retrieves the current progress of the user for the goal category.
@@ -17,7 +25,12 @@ public interface FitnessGoalPlugin {
      * @return The current progress of the user.
      * @throws AstraException If the user is not logged in
      */
-    Double getCurrentValue() throws AstraException;
+    @Override
+    public Double getCurrentValue() throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+        return null;
+    }
 
     /**
      * In order to track the progress, we need to have a benchmark (or a starting value)
@@ -25,5 +38,8 @@ public interface FitnessGoalPlugin {
      * @return The starting value of the goal
      * @throws AstraException If the user is not logged in
      */
-    Double getStartingValue() throws AstraException;
+    @Override
+    public Double getStartingValue() throws AstraException {
+        return null;
+    }
 }

@@ -19,11 +19,4 @@ public interface UserService {
     void deleteUser() throws AstraException;
 
     UserEntity getUser() throws AstraException;
-
-    /**
-     * Create a new user with the following provider
-     *
-     * @throws AstraException
-     */
-    void createUserWithProvider() throws AstraException;
 }
