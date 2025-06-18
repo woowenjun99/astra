@@ -1,5 +1,5 @@
 "use client";
-import AddFitnessGoalModal from "@/services/fitness/presentation/add-fitness-goal-modal";
+import AddFitnessGoalModal from "@/services/fitness/presentation/AddFitnessGoalModal";
 import { Grid, Text, Title } from "@mantine/core";
 
 export default function FitnessGoalPage() {

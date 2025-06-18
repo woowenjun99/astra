@@ -45,11 +45,11 @@ export default function FitnessGoalDashboardCard() {
   }
 
   return (
-    <Card withBorder>
+    <Card withBorder h={500}>
       <Title order={2}>Goals Progress</Title>
       <Text>Track your fitness goals</Text>
       {displayProgressBars()}
-      <Link passHref href="/goals" style={{ textDecoration: "none" }}>
+      <Link passHref href="/fitness/goals" style={{ textDecoration: "none" }}>
         <Button variant="outline" fullWidth color="black" mt="md">
           Manage Goals
         </Button>

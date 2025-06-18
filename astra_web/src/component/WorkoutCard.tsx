@@ -1,4 +1,4 @@
-import { Card, Stack, Text } from "@mantine/core";
+import { Card, Group, Stack, Text } from "@mantine/core";
 import { IconClock, IconFlame, IconGauge } from "@tabler/icons-react";
 
 interface WorkoutCardProps {
@@ -19,27 +19,27 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({
   return (
     <Card withBorder>
       <Stack>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Group justify="space-between">
           <Text fw="bold">{title}</Text>
           <Text fw="lighter">{date}</Text>
-        </div>
+        </Group>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <Group flex="wrap" gap={4}>
+          <Group align="center" gap={1.5}>
             <IconClock />
             <span>{duration}</span>
-          </div>
+          </Group>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Group flex="wrap" gap={4}>
             <IconFlame color="orange" />
             <span>{calories} kcal</span>
-          </div>
+          </Group>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Group flex="wrap" gap={4}>
             <IconGauge />
             <span>{intensity}</span>
-          </div>
-        </div>
+          </Group>
+        </Group>
       </Stack>
     </Card>
   );

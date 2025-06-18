@@ -1,6 +1,6 @@
 "use client";
 import WorkoutCard from "@/component/WorkoutCard";
-import FitnessGoalDashboardCard from "@/services/fitness/presentation/fitness-goal-dashboard-card";
+import FitnessGoalDashboardCard from "@/services/fitness/presentation/FitnessGoalDashboardCard";
 import { Card, Grid, Title, Text, Button } from "@mantine/core";
 
 export default function Page() {
@@ -8,7 +8,7 @@ export default function Page() {
     <div>
       <Grid>
         <Grid.Col span={{ sm: 12, md: 8 }}>
-          <Card withBorder>
+          <Card withBorder h={500}>
             <Title order={2}>Recent Workouts</Title>
             <Text>Your latest training sessions</Text>
             <WorkoutCard
@@ -18,7 +18,7 @@ export default function Page() {
               calories={320}
               intensity="High"
             />
-            <Button fullWidth mt={20}>
+            <Button fullWidth mt={20} color="black">
               View Workout History
             </Button>
           </Card>
