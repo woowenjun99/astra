@@ -3,7 +3,7 @@
 <mapper namespace="com.wenjun.astra_persistence.mappers.manual.ManualAccountEntityMapper">
 <select id="countByEmailAndPasswordProvider" resultType="java.lang.Long">
     select
-        count(1)
+        count(*)
     from accounts
     join users
     on accounts.uid = users.uid
