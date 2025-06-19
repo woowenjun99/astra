@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper">
+    <select id="getRecentWorkouts" resultType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+        select
+            *
+        from workout_logs
+        where uid = #{userId}
+        order by date desc
+        limit 3 offset 0
+    </select>
+</mapper>

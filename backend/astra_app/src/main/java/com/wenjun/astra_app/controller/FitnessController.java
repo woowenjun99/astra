@@ -4,6 +4,7 @@ import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
 import com.wenjun.astra_app.service.FitnessService;
+import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 
 import lombok.AllArgsConstructor;
 
@@ -38,5 +39,10 @@ public class FitnessController {
     @DeleteMapping("/goals/{category}")
     private void deleteFitnessGoal(@PathVariable("category") String category) throws AstraException {
         fitnessService.deleteFitnessGoal(category);
+    }
+
+    @GetMapping("/workouts/recent")
+    public List<WorkoutLogEntity> getRecentWorkouts() throws AstraException {
+        return fitnessService.getRecentWorkouts();
     }
 }

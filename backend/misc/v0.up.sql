@@ -37,4 +37,16 @@ CREATE TABLE daily_logs (
     id BIGSERIAL PRIMARY KEY,
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE,
     weight NUMERIC(10, 2)
-)
+);
+
+CREATE TABLE workout_logs (
+    calories_burnt INTEGER NOT NULL,
+    date DATE NOT NULL,
+    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    duration INTEGER NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
+    intensity VARCHAR(10) NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
+);

@@ -4,7 +4,7 @@ spring:
     datasource:
         hikari:
             connectionTimeout: 20000
-            maximumPoolSize: 5
+            maximumPoolSize: 1
         url: ${DATABASE_URL}
 logging:
     level:

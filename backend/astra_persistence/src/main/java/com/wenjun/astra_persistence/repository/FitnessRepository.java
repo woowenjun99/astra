@@ -2,10 +2,12 @@ package com.wenjun.astra_persistence.repository;
 
 import com.wenjun.astra_persistence.mappers.FitnessGoalEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualDailyLogEntityMapper;
+import com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper;
 import com.wenjun.astra_persistence.models.DailyLogEntity;
 import com.wenjun.astra_persistence.models.FitnessGoalEntity;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
+import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,9 @@ public class FitnessRepository {
 
     @Resource
     private ManualDailyLogEntityMapper manualDailyLogEntityMapper;
+
+    @Resource
+    private ManualWorkoutLogEntityMapper manualWorkoutLogEntityMapper;
 
     public void insertFitnessGoalSelective(FitnessGoalEntity fitnessGoalEntity) {
         fitnessGoalEntityMapper.insertSelective(fitnessGoalEntity);
@@ -47,5 +52,9 @@ public class FitnessRepository {
         primaryKey.setUid(userId);
         primaryKey.setCategory(category);
         fitnessGoalEntityMapper.deleteByPrimaryKey(primaryKey);
+    }
+
+    public List<WorkoutLogEntity> getRecentWorkouts(String userId) {
+        return manualWorkoutLogEntityMapper.getRecentWorkouts(userId);
     }
 }

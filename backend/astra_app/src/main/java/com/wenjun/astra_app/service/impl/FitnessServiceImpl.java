@@ -10,6 +10,7 @@ import com.wenjun.astra_app.plugins.fitness_goals.FitnessGoalPlugins;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.FitnessGoalEntity;
+import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.repository.FitnessRepository;
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
@@ -94,5 +95,12 @@ public class FitnessServiceImpl implements FitnessService {
         String userId = authenticatedUser.getUid();
         FitnessGoalCategory fitnessGoalCategory = FitnessGoalCategory.getByAlias(category);
         fitnessRepository.deleteFitnessGoal(userId, fitnessGoalCategory.getAlias());
+    }
+
+    @Override
+    public List<WorkoutLogEntity> getRecentWorkouts() throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+        return fitnessRepository.getRecentWorkouts(userId);
     }
 }

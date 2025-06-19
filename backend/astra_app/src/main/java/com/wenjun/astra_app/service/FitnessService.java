@@ -3,6 +3,7 @@ package com.wenjun.astra_app.service;
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
+import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 
 import java.util.List;
 
@@ -25,4 +26,12 @@ public interface FitnessService {
     List<FitnessGoal> getFitnessGoals() throws AstraException;
 
     void deleteFitnessGoal(String category) throws AstraException;
+
+    /**
+     * Get the top 3 most recent workouts by the user
+     *
+     * @return An array of workouts
+     * @throws AstraException
+     */
+    List<WorkoutLogEntity> getRecentWorkouts() throws AstraException;
 }
