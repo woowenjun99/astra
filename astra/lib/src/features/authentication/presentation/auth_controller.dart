@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:astra/src/features/authentication/data/auth_repository.dart';
+import 'package:astra/src/util/dio_instance.dart';
 
 part 'auth_controller.g.dart';
 
@@ -14,15 +15,16 @@ class AuthController extends _$AuthController {
     required String password,
     required bool isLogin,
   }) async {
-    final AuthRepository authRepository = ref.watch(authRepositoryProvider);
-    if (isLogin) {
-      await authRepository.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return;
+    if (!isLogin) {
+      final DioInstance<void> dioInstance = ref.watch(dioInstanceProvider);
+      await dioInstance.post("/users/register", {
+        "email": email,
+        "password": password,
+        "provider": "password",
+      });
     }
-    await authRepository.createUserWithEmailAndPassword(
+    final AuthRepository authRepository = ref.watch(authRepositoryProvider);
+    await authRepository.signInWithEmailAndPassword(
       email: email,
       password: password,
     );

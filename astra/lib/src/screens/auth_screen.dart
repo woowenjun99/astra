@@ -40,6 +40,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     ref.listen(authControllerProvider, (_, state) {
       state.showAlertDialogOnError(context);
     });
+    final AsyncValue<void> state = ref.watch(authControllerProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -102,14 +103,18 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 SizedBox(height: 20),
                 GFButton(
                   onPressed: _submit,
-                  text: isLogin ? "Login" : "Register",
                   color: Colors.black,
                   fullWidthButton: true,
                   size: GFSize.LARGE,
-                  textStyle: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
+                  child: state.isLoading
+                      ? CircularProgressIndicator(color: Colors.white)
+                      : Text(
+                          isLogin ? "Login" : "Register",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
                 ),
                 SizedBox(height: 20),
                 TextButton(

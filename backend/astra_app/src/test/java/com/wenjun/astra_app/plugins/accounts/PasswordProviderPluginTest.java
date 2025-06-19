@@ -34,7 +34,7 @@ public class PasswordProviderPluginTest {
 
     @Test
     public void createUser_emailAlreadyInUseInAnotherPasswordProvider_shouldThrow() {
-        Mockito.when(accountRepository.isEmailAlreadyInUseByPasswordProvider("abc@gmail.com")).thenReturn(true);
+        Mockito.when(userRepository.isEmailInUse("abc@gmail.com")).thenReturn(true);
         PasswordProviderPlugin plugin = new PasswordProviderPlugin(firebaseClient, accountRepository, userRepository);
         CreateUserDTO request = new CreateUserDTO("abc@gmail.com", "", "password", null);
 
@@ -46,7 +46,7 @@ public class PasswordProviderPluginTest {
     @Test
     public void createUser_emailNotInUseInAnotherPasswordProvider_shouldNotThrow() {
         AuthenticatedUser authenticatedUser = new AuthenticatedUser("userId");
-        Mockito.when(accountRepository.isEmailAlreadyInUseByPasswordProvider("abc@gmail.com")).thenReturn(false);
+        Mockito.when(userRepository.isEmailInUse("abc@gmail.com")).thenReturn(false);
         Mockito.when(firebaseClient.createUser("abc@gmail.com", "")).thenReturn(authenticatedUser);
         PasswordProviderPlugin plugin = new PasswordProviderPlugin(firebaseClient, accountRepository, userRepository);
         CreateUserDTO request = new CreateUserDTO("abc@gmail.com", "", "password", null);

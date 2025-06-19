@@ -9,16 +9,6 @@ class AuthRepository {
 
   const AuthRepository(this._auth);
 
-  Future<void> createUserWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-  }
-
   Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -29,6 +19,14 @@ class AuthRepository {
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
   User? get currentUser => _auth.currentUser;
+
+  Future<String> getJwtToken() async {
+    String? idToken = await _auth.currentUser!.getIdToken();
+    if (idToken == null) {
+      throw Exception("User is not signed in");
+    }
+    return idToken;
+  }
 }
 
 @Riverpod(keepAlive: false)

@@ -25,7 +25,7 @@ public class PasswordProviderPlugin implements ProviderPlugin {
     private final UserRepository userRepository;
 
     private Boolean isEmailAlreadyInUsedByPasswordProvider(CreateUserDTO request) {
-        return accountRepository.isEmailAlreadyInUseByPasswordProvider(request.getEmail());
+        return userRepository.isEmailInUse(request.getEmail());
     }
 
     @Override

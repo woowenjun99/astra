@@ -21,6 +21,8 @@ GoRouter appRouter(Ref ref) {
       bool isLoggedIn = authRepository.currentUser != null;
       if (isLoggedIn && state.fullPath == "/auth") {
         return "/";
+      } else if (!isLoggedIn && state.fullPath != "/auth") {
+        return "/auth";
       }
     },
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges),
