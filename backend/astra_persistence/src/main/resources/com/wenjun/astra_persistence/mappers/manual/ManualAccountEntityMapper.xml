@@ -5,7 +5,7 @@
     select
         count(1)
     from accounts
-    join accounts
+    join users
     on accounts.uid = users.uid
     where
         accounts.provider_id = 'password'
