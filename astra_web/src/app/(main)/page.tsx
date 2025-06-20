@@ -10,10 +10,12 @@ import {
   Stack,
   LoadingOverlay,
   Box,
+  Group,
 } from "@mantine/core";
 import useSWR from "swr";
 import { getRecentWorkouts } from "@/services/fitness/data/fitness-api";
 import Link from "next/link";
+import { IconWeight } from "@tabler/icons-react";
 
 export default function Page() {
   const { data, isLoading, error } = useSWR(
@@ -35,7 +37,16 @@ export default function Page() {
     }
 
     if (data !== undefined && data.length === 0) {
-      return <Text my="md">You currently do not have any workouts</Text>;
+      return (
+        <Stack align="center" justify="center">
+          <IconWeight />
+          <Text>No workouts yet</Text>
+          <Group>
+            <Button>Record Workout</Button>
+            <Button variant="outline">Browse Templates</Button>
+          </Group>
+        </Stack>
+      );
     }
     return (
       <Stack my="lg">
@@ -51,6 +62,12 @@ export default function Page() {
             />
           );
         })}
+
+        <Link passHref href="/fitness/workouts">
+          <Button fullWidth color="black">
+            View Workout History
+          </Button>
+        </Link>
       </Stack>
     );
   }
@@ -59,15 +76,10 @@ export default function Page() {
     <div>
       <Grid>
         <Grid.Col span={{ sm: 12, md: 8 }}>
-          <Card withBorder mah={550}>
+          <Card withBorder h={550}>
             <Title order={2}>Recent Workouts</Title>
             <Text>Your latest training sessions</Text>
             {displayWorkoutCards()}
-            <Link passHref href="/fitness/workouts">
-              <Button fullWidth color="black">
-                View Workout History
-              </Button>
-            </Link>
           </Card>
         </Grid.Col>
 
