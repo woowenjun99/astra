@@ -1,3 +1,4 @@
+import 'package:astra/src/features/fitness/domain/workout_log.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'base_response.g.dart';
@@ -9,6 +10,9 @@ class _Converter<T> implements JsonConverter<T?, Object?> {
   T? fromJson(Object? json) {
     if (json == null || T == Null) return null;
     switch (T) {
+      case List<WorkoutLog> _:
+      case WorkoutLog _:
+        return WorkoutLog.fromJson(json as Map<String, dynamic>) as T;
       default:
         throw UnsupportedError('Unsupported type: $T');
     }

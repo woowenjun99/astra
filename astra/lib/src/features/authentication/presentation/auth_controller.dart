@@ -16,7 +16,7 @@ class AuthController extends _$AuthController {
     required bool isLogin,
   }) async {
     if (!isLogin) {
-      final DioInstance<void> dioInstance = ref.watch(dioInstanceProvider);
+      final DioInstance<void> dioInstance = DioInstance<void>();
       await dioInstance.post("/users/register", {
         "email": email,
         "password": password,

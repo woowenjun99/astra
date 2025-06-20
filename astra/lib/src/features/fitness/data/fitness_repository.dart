@@ -1,12 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:astra/src/features/authentication/data/auth_repository.dart';
 import 'package:astra/src/features/fitness/domain/fitness_goal.dart';
 import 'package:astra/src/features/fitness/domain/workout_log.dart';
+import 'package:astra/src/util/dio_instance.dart';
 
 part 'fitness_repository.g.dart';
 
 class FitnessRepository {
+  final AuthRepository authRepository;
+
+  const FitnessRepository({required this.authRepository});
+
   /// Gets the workout log on the dashboard screen
   Future<List<WorkoutLog>> getWorkoutLogs() async {
     // TODO Replace with actual invocation of API
@@ -37,14 +43,18 @@ class FitnessRepository {
   }
 
   Future<List<FitnessGoal>> getFitnessGoals() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    return [];
+    DioInstance<List<FitnessGoal>> dioInstance =
+        DioInstance<List<FitnessGoal>>();
+    String jwt = await authRepository.getJwtToken();
+    final response = await dioInstance.get("/fitness/goals", jwt);
+    return response!;
   }
 }
 
 @riverpod
 FitnessRepository fitnessRepository(Ref ref) {
-  return FitnessRepository();
+  final AuthRepository authRepository = ref.watch(authRepositoryProvider);
+  return FitnessRepository(authRepository: authRepository);
 }
 
 @Riverpod(keepAlive: false)
