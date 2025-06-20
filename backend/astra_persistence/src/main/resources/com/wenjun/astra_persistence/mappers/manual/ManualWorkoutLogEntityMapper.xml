@@ -5,7 +5,20 @@
         select
             *
         from workout_logs
-        where uid = #{userId}
+        where
+            uid = #{userId}
+            and date &lt; current_date
+        order by date desc
+        limit 3 offset 0
+    </select>
+
+    <select id="getUpcomingWorkouts" resultType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+        select
+            *
+        from workout_logs
+        where
+            uid = #{userId}
+            and date &gt; current_date
         order by date desc
         limit 3 offset 0
     </select>

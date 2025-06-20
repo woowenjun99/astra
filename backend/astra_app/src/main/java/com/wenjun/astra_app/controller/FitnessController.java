@@ -8,9 +8,7 @@ import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 
 import lombok.AllArgsConstructor;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,22 +25,22 @@ public class FitnessController {
     private final FitnessService fitnessService;
 
     @PostMapping("/goals")
-    private void createFitnessGoal(@RequestBody @Valid CreateFitnessGoalDTO request) throws AstraException {
+    public void createFitnessGoal(@RequestBody @Valid CreateFitnessGoalDTO request) throws AstraException {
         fitnessService.createFitnessGoal(request);
     }
 
     @GetMapping("/goals")
-    private List<FitnessGoal> getFitnessGoals() throws AstraException {
+    public List<FitnessGoal> getFitnessGoals() throws AstraException {
         return fitnessService.getFitnessGoals();
-    }
-
-    @DeleteMapping("/goals/{category}")
-    private void deleteFitnessGoal(@PathVariable("category") String category) throws AstraException {
-        fitnessService.deleteFitnessGoal(category);
     }
 
     @GetMapping("/workouts/recent")
     public List<WorkoutLogEntity> getRecentWorkouts() throws AstraException {
         return fitnessService.getRecentWorkouts();
+    }
+
+    @GetMapping("/workouts/upcoming")
+    public List<WorkoutLogEntity> getUpcomingWorkouts() throws AstraException {
+        return fitnessService.getUpcomingWorkouts();
     }
 }

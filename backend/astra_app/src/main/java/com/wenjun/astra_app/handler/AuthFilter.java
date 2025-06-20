@@ -38,9 +38,7 @@ public class AuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = request.getHeader("Authorization");
-            log.info("Request: {}", jwt);
             AuthenticatedUser user = firebaseClient.getUser(jwt);
-            log.info("user: {}", user);
             ThreadLocalUser.set(user);
             filterChain.doFilter(request, response);
         } catch (Exception e) {

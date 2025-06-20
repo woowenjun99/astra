@@ -26,7 +26,7 @@ public class UserController {
     private final UserService userService;
 
     @PutMapping
-    private void updateUser(@Valid @RequestBody UpdateUserDTO request) throws AstraException {
+    public void updateUser(@Valid @RequestBody UpdateUserDTO request) throws AstraException {
         userService.updateUser(request);
     }
 
@@ -37,12 +37,12 @@ public class UserController {
     }
 
     @DeleteMapping
-    private void deleteUser() throws AstraException {
+    public void deleteUser() throws AstraException {
         userService.deleteUser();
     }
 
     @GetMapping
-    private UserEntity getUser() throws AstraException {
+    public UserEntity getUser() throws AstraException {
         return userService.getUser();
     }
 }

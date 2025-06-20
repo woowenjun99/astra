@@ -35,7 +35,7 @@ export default function Page() {
     }
 
     if (data !== undefined && data.length === 0) {
-      return <Text>You currently do not have any fitness goals</Text>;
+      return <Text my="md">You currently do not have any workouts</Text>;
     }
     return (
       <Stack my="lg">
