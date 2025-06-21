@@ -24,7 +24,7 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
   if (workouts.length === 0) {
     return (
       <Stack w="100%" h="100%" align="center" py="md" gap="sm">
-        <IconBarbell size={160} color="gray" />
+        <IconBarbell size={120} color="gray" />
         <Title order={3}>No workouts yet</Title>
         <Text fw="lighter">
           Start your fitness journey by recording your first workout
