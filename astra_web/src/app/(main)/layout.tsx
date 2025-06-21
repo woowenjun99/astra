@@ -1,29 +1,17 @@
 import Header from "@/component/Header";
 import { NavbarSimple } from "@/component/Navbar";
+import { Box, Group } from "@mantine/core";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          backgroundColor: "#F9FAFB",
-          height: "100dvh",
-        }}
-      >
+      <Group bg="#F9FAFB" h="100dvh" align="start" w="100dvw" wrap="nowrap">
         <NavbarSimple />
-        <div
-          style={{
-            width: "75%",
-            marginLeft: "auto",
-            marginRight: "auto",
-            paddingTop: 20,
-          }}
-        >
+        <Box style={{ flex: 1, height: "100%" }} p="md">
           {children}
-        </div>
-      </div>
+        </Box>
+      </Group>
     </div>
   );
 }

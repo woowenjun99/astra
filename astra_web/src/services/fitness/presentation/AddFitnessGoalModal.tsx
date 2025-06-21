@@ -31,7 +31,7 @@ type Schema = z.infer<typeof schema>;
 
 export default function AddFitnessGoalModal() {
   const [opened, { open, close }] = useDisclosure(false);
-  const isMdScreen = useMediaQuery("(min-width: 62em)");
+  const isSmScreen = useMediaQuery("(min-width: 48em)");
   const {
     register,
     formState: { errors, isSubmitting },
@@ -162,7 +162,7 @@ export default function AddFitnessGoalModal() {
         onClick={open}
         color="black"
         leftSection={<IconPlus />}
-        fullWidth={!isMdScreen}
+        fullWidth={!isSmScreen}
       >
         Add New Goals
       </Button>
