@@ -1,69 +1,133 @@
 "use client";
-import { getFitnessGoals } from "@/services/fitness/data/fitness-api";
-import AddFitnessGoalModal from "@/services/fitness/presentation/AddFitnessGoalModal";
+import { Button } from "@/components/ui/button";
 import {
-  Box,
-  Card,
-  Grid,
-  Group,
-  LoadingOverlay,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
-import { IconTrash } from "@tabler/icons-react";
-import dayjs from "dayjs";
-import useSWR from "swr";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@mantine/core";
+import { IconPlus } from "@tabler/icons-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const schema = z.object({
+  category: z.string(),
+  description: z.string().nullable(),
+  targetDate: z.string(),
+  targetValue: z.number(),
+  title: z.string(),
+});
+
+type Schema = z.infer<typeof schema>;
 
 export default function FitnessGoalPage() {
-  const { data, isLoading } = useSWR("/fitness/goals", getFitnessGoals);
+  const form = useForm<Schema>({
+    resolver: zodResolver(schema),
+  });
 
-  function displayFitnessGoal() {
-    if (isLoading) {
-      return (
-        <Grid.Col>
-          <Box h={400} pos="relative">
-            <LoadingOverlay />
-          </Box>
-        </Grid.Col>
-      );
-    }
-
-    if (data !== undefined) {
-      return data.map((d) => {
-        return (
-          <Grid.Col key={d.category} span={{ sm: 12, md: 6 }}>
-            <Card withBorder>
-              <Group justify="space-between">
-                <Stack gap="sm">
-                  <Text>{d.title}</Text>
-                  <Text>
-                    Target date: {dayjs(d.targetDate).format("MMMM D, YYYY")}
-                  </Text>
-                </Stack>
-                <IconTrash color="red" />
-              </Group>
-
-              <Text>{d.description}</Text>
-            </Card>
-          </Grid.Col>
-        );
-      });
-    }
-  }
+  const onSubmit = form.handleSubmit(async () => {});
 
   return (
-    <>
-      <Grid>
-        <Grid.Col span={{ sm: 12, md: 8 }}>
-          <Title>Fitness Goals</Title>
-          <Text>Track and manage your fitness objectives</Text>
-        </Grid.Col>
-        <Grid.Col span={{ sm: 12, md: 4 }}>
-          <AddFitnessGoalModal />
-        </Grid.Col>
-        {displayFitnessGoal()}
-      </Grid>
-    </>
+    <main>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Fitness Goals</h1>
+          <p className="text-gray-500 dark:text-gray-400">
+            Track and manage your fitness objectives
+          </p>
+        </div>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="bg-green-600 hover:bg-green-700">
+              <IconPlus />
+              Add New Goal
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogTitle>Create New Goal</DialogTitle>
+            <DialogDescription>
+              Set a new fitness goal to track your progress
+            </DialogDescription>
+
+            <Form {...form}>
+              <form onSubmit={onSubmit} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Goal Title</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="e.g. Weight Loss, Run 5 KM"
+                            required
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
+                />
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Category</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Distance">Distance</SelectItem>
+                              <SelectItem value="Weight">Weight</SelectItem>
+                              <SelectItem value="Frequency">
+                                Frequency
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormItem>
+                      );
+                    }}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="targetDate"
+                    render={({ field }) => {}}
+                  />
+                </div>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </main>
   );
 }
