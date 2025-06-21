@@ -1,13 +1,36 @@
 import { auth } from "@/firebase";
 import type { BaseResponse } from "@/model/base-response";
 import { axiosInstance } from "@/util/axios-instance";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 
 interface CreateUserDTO {
   email: string;
   password: string | null;
   provider: "password" | "google.com";
   uid: string | null;
+}
+
+/**
+ * Sign in with Google and invoke the create user API. If the user has
+ * been created before, we do not need to do anything. Otherwise, we
+ * will store the user in our database.
+ *
+ * @throws {FirebaseError} If there is any issue with creating the user
+ */
+export async function signInWithGoogle() {
+  const user = await signInWithPopup(auth, new GoogleAuthProvider());
+
+  await createUser({
+    email: user.user.email as string,
+    password: null,
+    provider: "google.com",
+    uid: user.user.uid,
+  });
 }
 
 export async function createUser(payload: CreateUserDTO) {

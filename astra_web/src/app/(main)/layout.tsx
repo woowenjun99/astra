@@ -1,28 +1,14 @@
 import Header from "@/component/Header";
 import { NavbarSimple } from "@/component/Navbar";
+import "../globals.css";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          backgroundColor: "#F9FAFB",
-          height: "100dvh",
-        }}
-      >
+      <div className="flex bg-[#F9FAFB] h-dvh">
         <NavbarSimple />
-        <div
-          style={{
-            width: "75%",
-            marginLeft: "auto",
-            marginRight: "auto",
-            paddingTop: 20,
-          }}
-        >
-          {children}
-        </div>
+        <div className="w-3/4 mx-auto pt-5">{children}</div>
       </div>
     </div>
   );

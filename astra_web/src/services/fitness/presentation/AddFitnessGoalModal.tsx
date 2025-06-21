@@ -3,6 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import {
   Button,
   Grid,
+  Group,
   Modal,
   NumberInput,
   Select,
@@ -129,19 +130,12 @@ export default function AddFitnessGoalModal() {
               />
             </Grid.Col>
           </Grid>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "end",
-            }}
-          >
+          <Group justify="end">
             <Button
               variant="outline"
               mt="lg"
               type="button"
               onClick={close}
-              mr="md"
               color="black"
             >
               Cancel
@@ -155,7 +149,7 @@ export default function AddFitnessGoalModal() {
             >
               Create Goal
             </Button>
-          </div>
+          </Group>
         </form>
       </Modal>
       <Button

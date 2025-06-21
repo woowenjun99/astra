@@ -16,12 +16,11 @@ import { useForm } from "react-hook-form";
 import {
   createUser,
   signin,
+  signInWithGoogle,
 } from "@/services/authentication/data/authentication-api";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { notifications } from "@mantine/notifications";
 import { IconBrandGoogle } from "@tabler/icons-react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "@/firebase";
 
 const schema = z.object({
   email: z.string().email(),
@@ -59,31 +58,12 @@ export default function AuthenticationImage() {
     }
   });
 
-  const signInWithGoogle = useCallback(async () => {
-    const provider = new GoogleAuthProvider();
-    const user = await signInWithPopup(auth, provider);
-    await createUser({
-      email: user.user.email ?? "",
-      password: null,
-      provider: "google.com",
-      uid: user.user.uid ?? null,
-    });
-  }, []);
-
   return (
     <form onSubmit={submit}>
       <div className={classes.wrapper}>
         <Paper className={classes.form}>
           <Title order={1}>Welcome back</Title>
-          <Title
-            order={2}
-            style={{
-              fontSize: 18,
-              marginBottom: 16,
-              opacity: 0.5,
-              fontWeight: 400,
-            }}
-          >
+          <Title order={2} className="text-lg font-normal opacity-50 mb-4">
             Sign in to your account to continue
           </Title>
 
