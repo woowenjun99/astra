@@ -2,11 +2,15 @@
 import { Grid } from "@mantine/core";
 import RecentWorkoutDashboardCard from "@/services/fitness/presentation/RecentWorkoutDashboardCard";
 import GoalsProgressDashboardCard from "@/services/fitness/presentation/GoalsProgressDashboardCard";
+import WeeklyActivityDashboardCard from "@/services/fitness/presentation/WeeklyActivityDashboardCard";
 
 export default function Page() {
   return (
     <main>
       <Grid mx="md">
+        <Grid.Col span={{ sm: 12, md: 8 }}>
+          <WeeklyActivityDashboardCard />
+        </Grid.Col>
         <Grid.Col span={{ sm: 12, md: 8 }}>
           <RecentWorkoutDashboardCard />
         </Grid.Col>
