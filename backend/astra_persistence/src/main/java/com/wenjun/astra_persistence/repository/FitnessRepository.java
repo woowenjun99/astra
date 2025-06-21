@@ -8,9 +8,13 @@ import com.wenjun.astra_persistence.models.FitnessGoalEntity;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
 import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
+import com.wenjun.astra_persistence.models.manual.DailyActivity;
 
 import org.springframework.stereotype.Repository;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import jakarta.annotation.Resource;
@@ -56,5 +60,12 @@ public class FitnessRepository {
 
     public List<WorkoutLogEntity> getRecentWorkouts(String userId) {
         return manualWorkoutLogEntityMapper.getRecentWorkouts(userId);
+    }
+
+    public List<DailyActivity> getWeeklyActivity(String userId) {
+        LocalDate today = LocalDate.now();
+        LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate sunday = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        return manualWorkoutLogEntityMapper.getWeeklyActivity(userId, monday, sunday);
     }
 }

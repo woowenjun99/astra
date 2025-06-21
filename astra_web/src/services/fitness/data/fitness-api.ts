@@ -3,6 +3,7 @@ import { axiosInstance } from "@/util/axios-instance";
 import type { FitnessGoal } from "../domain/fitness-goal";
 import type { Workout } from "../domain/workout";
 import type { BaseResponse } from "@/model/base-response";
+import { DailyActivity } from "../domain/daily-activity";
 
 export interface CreateFitnessGoalDTO {
   category: string;
@@ -44,5 +45,14 @@ export async function getRecentWorkouts(endpoint: string) {
     headers: { Authorization: jwt },
   });
   const data = response.data as BaseResponse<Workout[]>;
+  return data.data;
+}
+
+export async function getWeeklyActvity(endpoint: string) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.get(endpoint, {
+    headers: { Authorization: jwt },
+  });
+  const data = response.data as BaseResponse<DailyActivity[]>;
   return data.data;
 }

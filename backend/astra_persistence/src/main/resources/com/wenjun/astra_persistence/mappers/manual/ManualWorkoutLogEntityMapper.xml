@@ -11,4 +11,17 @@
         order by date desc
         limit 3 offset 0
     </select>
+
+    <select id="getWeeklyActivity" resultType="com.wenjun.astra_persistence.models.manual.DailyActivity">
+        select
+            date,
+            sum(calories_burnt) as caloriesBurnt
+        from workout_logs
+        where
+            uid = #{userId}
+            and date &gt;= #{startDate}
+            and date &lt;= #{endDate}
+        group by date
+        order by date asc;
+    </select>
 </mapper>

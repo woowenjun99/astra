@@ -5,6 +5,7 @@ import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
+import com.wenjun.astra_persistence.models.manual.DailyActivity;
 
 import lombok.AllArgsConstructor;
 
@@ -37,5 +38,10 @@ public class FitnessController {
     @GetMapping("/workouts/recent")
     public List<WorkoutLogEntity> getRecentWorkouts() throws AstraException {
         return fitnessService.getRecentWorkouts();
+    }
+
+    @GetMapping("/weekly-activity")
+    public List<DailyActivity> getWeeklyActivity() throws AstraException {
+        return fitnessService.getWeeklyActivity();
     }
 }
