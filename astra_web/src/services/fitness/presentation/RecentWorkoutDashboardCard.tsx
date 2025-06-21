@@ -29,11 +29,20 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
         <Text fw="lighter">
           Start your fitness journey by recording your first workout
         </Text>
-        <Group align="start">
+        <Group align="start" visibleFrom="sm">
           <Button color="black" leftSection={<IconPlus />}>
             Record Workout
           </Button>
           <Button variant="outline" color="black">
+            Browse Templates
+          </Button>
+        </Group>
+
+        <Group align="start" hiddenFrom="sm">
+          <Button color="black" leftSection={<IconPlus />} fullWidth>
+            Record Workout
+          </Button>
+          <Button variant="outline" color="black" fullWidth>
             Browse Templates
           </Button>
         </Group>
