@@ -38,9 +38,4 @@ public class FitnessController {
     public List<WorkoutLogEntity> getRecentWorkouts() throws AstraException {
         return fitnessService.getRecentWorkouts();
     }
-
-    @GetMapping("/workouts/upcoming")
-    public List<WorkoutLogEntity> getUpcomingWorkouts() throws AstraException {
-        return fitnessService.getUpcomingWorkouts();
-    }
 }

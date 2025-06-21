@@ -57,8 +57,4 @@ public class FitnessRepository {
     public List<WorkoutLogEntity> getRecentWorkouts(String userId) {
         return manualWorkoutLogEntityMapper.getRecentWorkouts(userId);
     }
-
-    public List<WorkoutLogEntity> getUpcomingWorkouts(String userId) {
-        return manualWorkoutLogEntityMapper.getUpcomingWorkouts(userId);
-    }
 }

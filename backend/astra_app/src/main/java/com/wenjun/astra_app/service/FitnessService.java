@@ -34,6 +34,4 @@ public interface FitnessService {
      * @throws AstraException
      */
     List<WorkoutLogEntity> getRecentWorkouts() throws AstraException;
-
-    List<WorkoutLogEntity> getUpcomingWorkouts() throws AstraException;
 }

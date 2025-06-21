@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface ManualWorkoutLogEntityMapper {
     List<WorkoutLogEntity> getRecentWorkouts(@Param("userId") String userId);
-
-    List<WorkoutLogEntity> getUpcomingWorkouts(@Param("userId") String userId);
 }

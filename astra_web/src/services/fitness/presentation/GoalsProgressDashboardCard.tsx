@@ -13,6 +13,7 @@ import { FC } from "react";
 import useSWR from "swr";
 import { getFitnessGoals } from "../data/fitness-api";
 import { IconPlus, IconTarget } from "@tabler/icons-react";
+import Link from "next/link";
 
 type FitnessGoalsListProps = {
   fitnessGoals: FitnessGoal[];
@@ -25,9 +26,15 @@ const FitnessGoals: FC<FitnessGoalsListProps> = ({ fitnessGoals }) => {
         <IconTarget size={120} color="gray" />
         <Title order={3}>No goals set</Title>
         <Text fw="lighter">Set your first fitness goal to track progress</Text>
-        <Button color="black" leftSection={<IconPlus />} fullWidth>
-          Create Goal
-        </Button>
+        <Link
+          passHref
+          href="/fitness/goals"
+          style={{ width: "100%", textDecoration: "none" }}
+        >
+          <Button color="black" leftSection={<IconPlus />} fullWidth>
+            Create Goal
+          </Button>
+        </Link>
       </Stack>
     );
   }
