@@ -3,7 +3,14 @@
 <mapper namespace="com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper">
     <select id="getRecentWorkouts" resultType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
         select
-            *
+            calories_burnt as caloriesBurnt,
+            date,
+            date_created as dateCreated,
+            date_updated as dateUpdated,
+            duration,
+            intensity,
+            title,
+            uid
         from workout_logs
         where
             uid = #{userId}

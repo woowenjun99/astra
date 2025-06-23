@@ -1,5 +1,6 @@
 import { Card, Group, Stack, Text } from "@mantine/core";
 import { IconClock, IconFlame, IconGauge } from "@tabler/icons-react";
+import dayjs from "dayjs";
 
 interface WorkoutCardProps {
   title: string;
@@ -7,6 +8,15 @@ interface WorkoutCardProps {
   duration: string;
   calories: number;
   intensity: "Low" | "Medium" | "High";
+}
+
+function computeDate(date: string): string {
+  const today = dayjs();
+  const givenDate = dayjs(date);
+  if (today.diff(givenDate, "days") === 0) {
+    return "Today";
+  }
+  return `${today.diff(givenDate, "days")} days ago`;
 }
 
 const WorkoutCard: React.FC<WorkoutCardProps> = ({
@@ -21,7 +31,7 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({
       <Stack>
         <Group justify="space-between">
           <Text fw="bold">{title}</Text>
-          <Text fw="lighter">{date}</Text>
+          <Text fw="lighter">{computeDate(date)}</Text>
         </Group>
 
         <Group flex="wrap" gap={4}>

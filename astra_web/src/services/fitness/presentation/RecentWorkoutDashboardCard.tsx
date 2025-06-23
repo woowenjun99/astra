@@ -15,6 +15,7 @@ import { getRecentWorkouts } from "../data/fitness-api";
 import type { FC } from "react";
 import { Workout } from "../domain/workout";
 import Link from "next/link";
+import WorkoutCard from "./WorkoutCard";
 
 type WorkoutCardsListProps = {
   workouts: Workout[];
@@ -59,9 +60,25 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
   }
 
   return (
-    <Stack>
-      <Link passHref href="/fitness/workouts">
-        <Button variant="outline" color="black">
+    <Stack mt="lg">
+      {workouts.map((workout) => {
+        return (
+          <WorkoutCard
+            calories={workout.caloriesBurnt}
+            date={workout.date}
+            duration={workout.duration}
+            intensity={workout.intensity}
+            key={workout.id}
+            title={workout.title}
+          />
+        );
+      })}
+      <Link
+        passHref
+        href="/fitness/workouts"
+        style={{ textDecoration: "none" }}
+      >
+        <Button variant="outline" color="black" fullWidth mt="lg">
           View Workout History
         </Button>
       </Link>
