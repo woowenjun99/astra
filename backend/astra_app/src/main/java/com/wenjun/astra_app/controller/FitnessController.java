@@ -2,6 +2,7 @@ package com.wenjun.astra_app.controller;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
+import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
@@ -9,6 +10,7 @@ import com.wenjun.astra_persistence.models.manual.DailyActivity;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +41,10 @@ public class FitnessController {
     public List<WorkoutLogEntity> getRecentWorkouts() throws AstraException {
         return fitnessService.getRecentWorkouts();
     }
+
+    @Transactional
+    @PostMapping("/workouts")
+    public void createWorkout(@RequestBody @Valid CreateWorkoutDTO request) throws AstraException {}
 
     @GetMapping("/weekly-activity")
     public List<DailyActivity> getWeeklyActivity() throws AstraException {
