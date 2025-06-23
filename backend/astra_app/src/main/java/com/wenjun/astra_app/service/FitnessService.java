@@ -26,8 +26,6 @@ public interface FitnessService {
      */
     List<FitnessGoal> getFitnessGoals() throws AstraException;
 
-    void deleteFitnessGoal(String category) throws AstraException;
-
     /**
      * Get the top 3 most recent workouts by the user
      *
