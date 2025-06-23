@@ -25,7 +25,7 @@
         order by date asc;
     </select>
 
-    <insert id="createWorkoutLog" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <select id="createWorkoutLog" resultType="java.lang.Long" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
         insert into workout_logs (
             calories_burnt,
             date,
@@ -34,14 +34,14 @@
             title,
             uid
         ) values (
-            #{workoutLog.caloriesBurnt},
-            #{workoutLog.date},
-            #{workoutLog.duration},
-            #{workoutLog.intensity},
-            #{workoutLog.title},
-            #{workoutLog.uid}
+            #{caloriesBurnt},
+            #{date},
+            #{duration},
+            #{intensity},
+            #{title},
+            #{uid}
         ) returning id
-    </insert>
+    </select>
 
     <insert id = "batchInsertRuns">
         insert into runs (
@@ -51,7 +51,7 @@
             workout_log_id
         ) values
         <foreach collection="runs" item = "run" separator = ",">
-            (#{run.distance}, #{run.duration}, #{run.index}, #{run.workout_log_id})
+            (#{run.distance}, #{run.duration}, #{run.index}, #{run.workoutLogId})
         </foreach>
     </insert>
 

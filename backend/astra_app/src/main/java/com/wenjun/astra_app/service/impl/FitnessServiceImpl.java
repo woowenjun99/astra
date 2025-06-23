@@ -19,6 +19,7 @@ import com.wenjun.astra_persistence.repository.FitnessRepository;
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class FitnessServiceImpl implements FitnessService {
     private final FitnessRepository fitnessRepository;
     private final FitnessGoalPlugins fitnessGoalPlugins;
@@ -121,6 +123,7 @@ public class FitnessServiceImpl implements FitnessService {
         workoutLog.setDuration(request.getDuration());
         workoutLog.setIntensity(request.getIntensity());
         Long workoutLogId = fitnessRepository.createWorkout(workoutLog);
+        log.info("Workout Entity created: {}", workoutLogId);
 
         // Create the runs
         List<RunEntity> runs = new ArrayList<>(request.getRuns().size());

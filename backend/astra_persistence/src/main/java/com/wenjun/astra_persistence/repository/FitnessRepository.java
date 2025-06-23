@@ -4,7 +4,13 @@ import com.wenjun.astra_persistence.mappers.FitnessGoalEntityMapper;
 import com.wenjun.astra_persistence.mappers.RunEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualDailyLogEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper;
-import com.wenjun.astra_persistence.models.*;
+import com.wenjun.astra_persistence.models.DailyLogEntity;
+import com.wenjun.astra_persistence.models.ExerciseEntity;
+import com.wenjun.astra_persistence.models.FitnessGoalEntity;
+import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
+import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
+import com.wenjun.astra_persistence.models.RunEntity;
+import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
 
 import org.springframework.stereotype.Repository;
