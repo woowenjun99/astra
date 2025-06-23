@@ -4,6 +4,7 @@ import com.wenjun.astra_persistence.models.ExerciseEntity;
 import com.wenjun.astra_persistence.models.RunEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
+import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +25,6 @@ public interface ManualWorkoutLogEntityMapper {
     void batchInsertRuns(@Param("runs") List<RunEntity> runs);
 
     void batchInsertExercises(@Param("exercises")List<ExerciseEntity> exercises);
+
+    WorkoutMetadata getWorkoutMetadata(@Param("userId") String userId);
 }

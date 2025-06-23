@@ -17,14 +17,13 @@ Astra is just a personal project for me to practice Java and Spring Boot. It cur
 2. Mantine
 3. Firebase Client
 
-### Tech Stack (FE Mobile)
-
-Currently mobile development is in progress but my priority will be placed on the web app as I would need to use it soon.
-
 ## Features
 
-### v0.1.0
+### v0.1.0: Workout Tracking
 
-1. Login by email and password / Google
-2. Update user details
-3. Create a new fitness goal
+1. Login by email and password
+2. Login by Google
+3. Update user details
+4. Create a new fitness goal
+5. Create a new workout record
+6. View top 3 most recent workouts in the home page

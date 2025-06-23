@@ -76,4 +76,14 @@
             (#{exercise.index}, #{exercise.name}, #{exercise.reps}, #{exercise.sets}, #{exercise.weight}, #{exercise.workoutLogId})
         </foreach>
     </insert>
+
+    <select id = "getWorkoutMetadata" resultType="com.wenjun.astra_persistence.models.manual.WorkoutMetadata">
+        select
+            count(*) as totalWorkouts,
+            floor(sum(duration) / 60) as totalHours,
+            floor(avg(duration)) as averageDuration
+        from workout_logs
+        where uid = #{userId}
+        group by uid;
+    </select>
 </mapper>

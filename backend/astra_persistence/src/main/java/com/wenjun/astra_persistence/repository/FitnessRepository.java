@@ -12,6 +12,7 @@ import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
 import com.wenjun.astra_persistence.models.RunEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
+import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
 import org.springframework.stereotype.Repository;
 
@@ -78,5 +79,9 @@ public class FitnessRepository {
 
     public void batchInsertExercises(List<ExerciseEntity> exercises) {
         manualWorkoutLogEntityMapper.batchInsertExercises(exercises);
+    }
+
+    public WorkoutMetadata getWorkoutMetadata(String userId) {
+        return manualWorkoutLogEntityMapper.getWorkoutMetadata(userId);
     }
 }

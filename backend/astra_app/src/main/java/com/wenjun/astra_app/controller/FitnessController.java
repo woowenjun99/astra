@@ -7,6 +7,7 @@ import com.wenjun.astra_app.model.vo.FitnessGoal;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
+import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
 import lombok.AllArgsConstructor;
 
@@ -51,5 +52,10 @@ public class FitnessController {
     @GetMapping("/weekly-activity")
     public List<DailyActivity> getWeeklyActivity() throws AstraException {
         return fitnessService.getWeeklyActivity();
+    }
+
+    @GetMapping("/workouts/metadata")
+    public WorkoutMetadata getWorkoutMetadata() throws AstraException {
+        return fitnessService.getWorkoutMetadata();
     }
 }

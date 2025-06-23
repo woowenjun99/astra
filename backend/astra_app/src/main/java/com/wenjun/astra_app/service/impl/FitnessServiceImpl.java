@@ -15,6 +15,7 @@ import com.wenjun.astra_persistence.models.FitnessGoalEntity;
 import com.wenjun.astra_persistence.models.RunEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
+import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 import com.wenjun.astra_persistence.repository.FitnessRepository;
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
@@ -156,5 +157,12 @@ public class FitnessServiceImpl implements FitnessService {
         if (!exercises.isEmpty()) {
             fitnessRepository.batchInsertExercises(exercises);
         }
+    }
+
+    @Override
+    public WorkoutMetadata getWorkoutMetadata() throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+        return fitnessRepository.getWorkoutMetadata(userId);
     }
 }
