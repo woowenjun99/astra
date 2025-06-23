@@ -15,6 +15,8 @@ function computeDate(date: string): string {
   const givenDate = dayjs(date);
   if (today.diff(givenDate, "days") === 0) {
     return "Today";
+  } else if (today.diff(givenDate, "days") === 1) {
+    return "1 day ago";
   }
   return `${today.diff(givenDate, "days")} days ago`;
 }

@@ -8,13 +8,14 @@
             date_created as dateCreated,
             date_updated as dateUpdated,
             duration,
+            id,
             intensity,
             title,
             uid
         from workout_logs
         where
             uid = #{userId}
-            and date &lt; current_date
+            and date &lt;= current_date
         order by date desc
         limit 3 offset 0
     </select>
@@ -32,7 +33,7 @@
         order by date asc;
     </select>
 
-    <select id="createWorkoutLog" resultType="java.lang.Long" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
+    <select id="createWorkoutLog" resultType="java.lang.Long">
         insert into workout_logs (
             calories_burnt,
             date,
@@ -41,12 +42,12 @@
             title,
             uid
         ) values (
-            #{caloriesBurnt},
-            #{date},
-            #{duration},
-            #{intensity},
-            #{title},
-            #{uid}
+            #{workoutLog.caloriesBurnt},
+            #{workoutLog.date},
+            #{workoutLog.duration},
+            #{workoutLog.intensity},
+            #{workoutLog.title},
+            #{workoutLog.uid}
         ) returning id
     </select>
 
