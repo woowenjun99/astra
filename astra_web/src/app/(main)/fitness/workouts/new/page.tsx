@@ -1,5 +1,6 @@
 "use client";
 import { createWorkout } from "@/services/fitness/data/fitness-api";
+import { Exercise, Run } from "@/services/fitness/domain/workout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -8,7 +9,9 @@ import {
   Group,
   NumberInput,
   Select,
+  Stack,
   Table,
+  Text,
   Textarea,
   TextInput,
   Title,
@@ -33,13 +36,6 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-type Exercise = {
-  name: string;
-  reps: number;
-  sets: number;
-  weight: number;
-};
-
 export default function WorkoutPage() {
   const {
     register,
@@ -48,6 +44,9 @@ export default function WorkoutPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<Schema>({
+    defaultValues: {
+      workoutType: "Running",
+    },
     resolver: zodResolver(schema),
   });
   const [exercise, setExercise] = useState<Exercise>({
@@ -56,7 +55,12 @@ export default function WorkoutPage() {
     reps: 10,
     weight: 0,
   });
+  const [run, setRun] = useState<Run>({
+    distance: 0,
+    duration: 0,
+  });
   const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [runs, setRuns] = useState<Run[]>([]);
 
   const onSubmit = handleSubmit(
     async ({
@@ -76,7 +80,7 @@ export default function WorkoutPage() {
           exercises,
           intensity,
           remarks,
-          runs: [],
+          runs,
           title,
           workoutType,
         });
@@ -92,215 +96,289 @@ export default function WorkoutPage() {
 
   return (
     <main>
-      <Card withBorder shadow="md">
-        <form onSubmit={onSubmit}>
-          <Grid>
-            <Grid.Col span={12}>
-              <TextInput
-                error={errors.title?.message}
-                label="Workout Title"
-                required
-                {...register("title")}
-              />
-            </Grid.Col>
-
-            <Grid.Col span={{ sm: 12, md: 6 }}>
-              <Select
-                allowDeselect={false}
-                data={[
-                  "Strength Training",
-                  "Cardio",
-                  "HIIT",
-                  "Yoga",
-                  "Pilates",
-                  "Cycling",
-                  "Running",
-                  "Swimming",
-                  "Others",
-                ]}
-                error={errors.workoutType?.message}
-                label="Workout Type"
-                onChange={(value) => setValue("workoutType", value ?? "")}
-                placeholder="Select workout type"
-                required
-                value={watch("workoutType")}
-              />
-            </Grid.Col>
-
-            <Grid.Col span={{ sm: 12, md: 6 }}>
-              <DateInput
-                label="Date"
-                onChange={(date) => setValue("date", date)}
-                rightSection={<IconCalendar />}
-                required
-                value={watch("date")}
-              />
-            </Grid.Col>
-
-            <Grid.Col span={{ sm: 12, md: 4 }}>
-              <NumberInput
-                allowNegative={false}
-                allowDecimal={false}
-                label="Duration (Minutes)"
-                onChange={(value) =>
-                  setValue("duration", typeof value === "string" ? 0 : value)
-                }
-                required
-                value={watch("duration")}
-              />
-            </Grid.Col>
-
-            <Grid.Col span={{ sm: 12, md: 4 }}>
-              <Select
-                allowDeselect={false}
-                data={["Low", "Medium", "High"]}
-                label="Intensity"
-                onChange={(value) => setValue("intensity", value ?? "")}
-                placeholder="Select intensity"
-                required
-                value={watch("intensity")}
-              />
-            </Grid.Col>
-
-            <Grid.Col span={{ sm: 12, md: 4 }}>
-              <NumberInput
-                allowNegative={false}
-                allowDecimal={false}
-                label="Calories Burnt"
-                onChange={(value) =>
-                  setValue(
-                    "caloriesBurnt",
-                    typeof value === "string" ? 0 : value
-                  )
-                }
-                placeholder="Optional"
-                value={watch("caloriesBurnt")}
-              />
-            </Grid.Col>
-          </Grid>
-
-          <Title order={3} my="md">
-            Exercises
+      <Group justify="space-between">
+        <Stack gap="sm">
+          <Title order={1} fw="bold">
+            Record Workout
           </Title>
-          <Card withBorder bg="#f9fafb">
+          <Text fw="lighter">Log your workout details and exercises</Text>
+        </Stack>
+        <Card withBorder shadow="md">
+          <form onSubmit={onSubmit}>
             <Grid>
-              <Grid.Col span={{ sm: 12, md: 3 }}>
+              <Grid.Col span={12}>
                 <TextInput
-                  label="Exercise Name"
-                  onChange={(event) => {
-                    setExercise({ ...exercise, name: event.target.value });
+                  error={errors.title?.message}
+                  label="Workout Title"
+                  required
+                  {...register("title")}
+                />
+              </Grid.Col>
+
+              <Grid.Col span={{ sm: 12, md: 6 }}>
+                <Select
+                  allowDeselect={false}
+                  data={["Running", "Strength Training"]}
+                  error={errors.workoutType?.message}
+                  label="Workout Type"
+                  onChange={(value) => {
+                    setValue("workoutType", value ?? "");
+                    setRuns([]);
+                    setExercises([]);
                   }}
-                  placeholder="e.g. Bench Press"
-                  value={exercise.name}
+                  placeholder="Select workout type"
+                  required
+                  value={watch("workoutType")}
                 />
               </Grid.Col>
 
-              <Grid.Col span={{ sm: 12, md: 3 }}>
+              <Grid.Col span={{ sm: 12, md: 6 }}>
+                <DateInput
+                  label="Date"
+                  onChange={(date) => setValue("date", date)}
+                  rightSection={<IconCalendar />}
+                  required
+                  value={watch("date")}
+                />
+              </Grid.Col>
+
+              <Grid.Col span={{ sm: 12, md: 4 }}>
                 <NumberInput
-                  allowDecimal={false}
                   allowNegative={false}
-                  label="Sets"
+                  allowDecimal={false}
+                  label="Duration (Minutes)"
                   onChange={(value) =>
-                    setExercise({
-                      ...exercise,
-                      sets: typeof value === "string" ? 0 : value,
-                    })
+                    setValue("duration", typeof value === "string" ? 0 : value)
                   }
-                  value={exercise.sets}
+                  required
+                  value={watch("duration")}
                 />
               </Grid.Col>
 
-              <Grid.Col span={{ sm: 12, md: 3 }}>
+              <Grid.Col span={{ sm: 12, md: 4 }}>
+                <Select
+                  allowDeselect={false}
+                  data={["Low", "Medium", "High"]}
+                  label="Intensity"
+                  onChange={(value) => setValue("intensity", value ?? "")}
+                  placeholder="Select intensity"
+                  required
+                  value={watch("intensity")}
+                />
+              </Grid.Col>
+
+              <Grid.Col span={{ sm: 12, md: 4 }}>
                 <NumberInput
-                  label="Reps"
+                  allowNegative={false}
+                  allowDecimal={false}
+                  label="Calories Burnt"
                   onChange={(value) =>
-                    setExercise({
-                      ...exercise,
-                      reps: typeof value === "string" ? 0 : value,
-                    })
+                    setValue(
+                      "caloriesBurnt",
+                      typeof value === "string" ? 0 : value
+                    )
                   }
-                  value={exercise.reps}
+                  placeholder="Optional"
+                  value={watch("caloriesBurnt")}
                 />
-              </Grid.Col>
-
-              <Grid.Col span={{ sm: 12, md: 3 }}>
-                <Group>
-                  <NumberInput
-                    label="Weight (In KG)"
-                    onChange={(value) =>
-                      setExercise({
-                        ...exercise,
-                        weight: typeof value === "string" ? 0 : value,
-                      })
-                    }
-                    value={exercise.weight}
-                  />
-                  <Button
-                    color="black"
-                    mt="lg"
-                    onClick={() => {
-                      exercises.push(exercise);
-                      setExercises(exercises);
-                      setExercise({
-                        name: "",
-                        sets: 3,
-                        reps: 10,
-                        weight: 0,
-                      });
-                    }}
-                  >
-                    <IconPlus />
-                  </Button>
-                </Group>
               </Grid.Col>
             </Grid>
-          </Card>
 
-          <Table my="lg" withTableBorder striped>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Exercise</Table.Th>
-                <Table.Th>Sets</Table.Th>
-                <Table.Th>Reps</Table.Th>
-                <Table.Th>Weights</Table.Th>
-                <Table.Th></Table.Th>
-              </Table.Tr>
-            </Table.Thead>
+            <Title order={3} my="md">
+              Exercises
+            </Title>
+            <Card withBorder bg="#f9fafb">
+              {watch("workoutType") === "Strength Training" ? (
+                <Grid>
+                  <Grid.Col span={{ sm: 12, md: 4 }}>
+                    <TextInput
+                      label="Exercise Name"
+                      onChange={(event) => {
+                        setExercise({ ...exercise, name: event.target.value });
+                      }}
+                      placeholder="e.g. Bench Press"
+                      value={exercise.name}
+                    />
+                  </Grid.Col>
 
-            <Table.Tbody>
-              {exercises.map((ex) => {
-                return (
-                  <Table.Tr key={ex.name}>
-                    <Table.Td>{ex.name}</Table.Td>
-                    <Table.Td>{ex.sets}</Table.Td>
-                    <Table.Td>{ex.reps}</Table.Td>
-                    <Table.Td>{ex.weight}</Table.Td>
-                    <Table.Td></Table.Td>
+                  <Grid.Col span={{ sm: 12, md: 2 }}>
+                    <NumberInput
+                      allowDecimal={false}
+                      allowNegative={false}
+                      label="Sets"
+                      onChange={(value) =>
+                        setExercise({
+                          ...exercise,
+                          sets: typeof value === "string" ? 0 : value,
+                        })
+                      }
+                      value={exercise.sets}
+                    />
+                  </Grid.Col>
+
+                  <Grid.Col span={{ sm: 12, md: 2 }}>
+                    <NumberInput
+                      label="Reps"
+                      onChange={(value) =>
+                        setExercise({
+                          ...exercise,
+                          reps: typeof value === "string" ? 0 : value,
+                        })
+                      }
+                      value={exercise.reps}
+                    />
+                  </Grid.Col>
+
+                  <Grid.Col span={{ sm: 12, md: 2 }}>
+                    <NumberInput
+                      label="Weight (KG)"
+                      onChange={(value) =>
+                        setExercise({
+                          ...exercise,
+                          weight: typeof value === "string" ? 0 : value,
+                        })
+                      }
+                      value={exercise.weight}
+                    />
+                  </Grid.Col>
+
+                  <Grid.Col span={{ sm: 12, md: 2 }}>
+                    <Button
+                      fullWidth
+                      color="black"
+                      mt="lg"
+                      onClick={() => {
+                        exercises.push(exercise);
+                        setExercises(exercises);
+                        setExercise({
+                          name: "",
+                          sets: 3,
+                          reps: 10,
+                          weight: 0,
+                        });
+                      }}
+                    >
+                      <IconPlus />
+                    </Button>
+                  </Grid.Col>
+                </Grid>
+              ) : (
+                <Grid>
+                  <Grid.Col span={{ sm: 12, md: 4 }}>
+                    <NumberInput
+                      allowDecimal
+                      allowLeadingZeros={false}
+                      allowNegative={false}
+                      label="Distance (m)"
+                      onChange={(val) =>
+                        setRun({
+                          ...run,
+                          distance: typeof val === "string" ? 0 : val,
+                        })
+                      }
+                      value={run.distance}
+                    />
+                  </Grid.Col>
+
+                  <Grid.Col span={{ sm: 12, md: 4 }}>
+                    <NumberInput
+                      allowDecimal={false}
+                      allowLeadingZeros={false}
+                      allowNegative={false}
+                      label="Duration (seconds)"
+                      onChange={(val) =>
+                        setRun({
+                          ...run,
+                          duration: typeof val === "string" ? 0 : val,
+                        })
+                      }
+                      value={run.duration}
+                    />
+                  </Grid.Col>
+
+                  <Grid.Col span={{ sm: 12, md: 4 }}>
+                    <Button
+                      fullWidth
+                      color="black"
+                      mt="lg"
+                      onClick={() => {
+                        runs.push(run);
+                        setRuns(runs);
+                        setRun({ distance: 0, duration: 0 });
+                      }}
+                    >
+                      <IconPlus />
+                    </Button>
+                  </Grid.Col>
+                </Grid>
+              )}
+            </Card>
+
+            <Table my="lg" withTableBorder striped>
+              <Table.Thead>
+                {watch("workoutType") === "Strength Training" ? (
+                  <Table.Tr>
+                    <Table.Th>Exercise</Table.Th>
+                    <Table.Th>Sets</Table.Th>
+                    <Table.Th>Reps</Table.Th>
+                    <Table.Th>Weights</Table.Th>
+                    <Table.Th></Table.Th>
                   </Table.Tr>
-                );
-              })}
-            </Table.Tbody>
-          </Table>
+                ) : (
+                  <Table.Tr>
+                    <Table.Th>Rep</Table.Th>
+                    <Table.Th>Distance (m)</Table.Th>
+                    <Table.Th>Duration (seconds)</Table.Th>
+                    <Table.Th></Table.Th>
+                  </Table.Tr>
+                )}
+              </Table.Thead>
 
-          <Textarea
-            label="Notes"
-            my="md"
-            placeholder="Any additional notes about your workout..."
-            {...register("remarks")}
-          />
+              <Table.Tbody>
+                {watch("workoutType") === "Strength Training"
+                  ? exercises.map((ex) => {
+                      return (
+                        <Table.Tr key={ex.name}>
+                          <Table.Td>{ex.name}</Table.Td>
+                          <Table.Td>{ex.sets}</Table.Td>
+                          <Table.Td>{ex.reps}</Table.Td>
+                          <Table.Td>{ex.weight}</Table.Td>
+                          <Table.Td></Table.Td>
+                        </Table.Tr>
+                      );
+                    })
+                  : runs.map((run, index) => {
+                      return (
+                        <Table.Tr key={index}>
+                          <Table.Td>{index + 1}</Table.Td>
+                          <Table.Td>{run.distance}</Table.Td>
+                          <Table.Td>{run.duration}</Table.Td>
+                        </Table.Tr>
+                      );
+                    })}
+              </Table.Tbody>
+            </Table>
 
-          <Group justify="end">
-            <Button
-              type="submit"
-              color="black"
-              disabled={isSubmitting}
-              loading={isSubmitting}
-            >
-              Save Workout
-            </Button>
-          </Group>
-        </form>
-      </Card>
+            <Textarea
+              label="Notes"
+              my="md"
+              placeholder="Any additional notes about your workout..."
+              {...register("remarks")}
+            />
+
+            <Group justify="end">
+              <Button
+                type="submit"
+                color="black"
+                disabled={isSubmitting}
+                loading={isSubmitting}
+              >
+                Save Workout
+              </Button>
+            </Group>
+          </form>
+        </Card>
+      </Group>
     </main>
   );
 }
