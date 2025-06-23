@@ -45,7 +45,7 @@ export default function GoalsProgressDashboardCard() {
   const { data, isLoading } = useSWR("/fitness/goals", getFitnessGoals);
 
   return (
-    <Card withBorder shadow="md" h={450} radius="md">
+    <Card withBorder shadow="md" h={550} radius="md">
       <Title order={2}>Goals Progress</Title>
       <Text fw="lighter">Track your fitness goals</Text>
       {isLoading ? (

@@ -93,7 +93,7 @@ export default function RecentWorkoutDashboardCard() {
   );
 
   return (
-    <Card withBorder shadow="md" h={450} radius="md">
+    <Card withBorder shadow="md" h={550} radius="md">
       <Title order={2}>Recent Workouts</Title>
       <Text fw="lighter">Your latest training sessions</Text>
       {isLoading ? (
