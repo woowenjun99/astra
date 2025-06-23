@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenjun.astra_persistence.mappers.ExerciseEntityMapper">
+  <resultMap id="BaseResultMap" type="com.wenjun.astra_persistence.models.ExerciseEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
+    <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="reps" jdbcType="INTEGER" property="reps" />
+    <result column="sets" jdbcType="INTEGER" property="sets" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="workout_log_id" jdbcType="BIGINT" property="workoutLogId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, date_created, date_updated, index, name, reps, sets, weight, workout_log_id
+  </sql>
+  <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.ExerciseEntityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exercises
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exercises
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from exercises
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wenjun.astra_persistence.models.ExerciseEntityExample">
+    delete from exercises
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wenjun.astra_persistence.models.ExerciseEntity">
+    insert into exercises (id, date_created, date_updated, 
+      index, name, reps, 
+      sets, weight, workout_log_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}, 
+      #{index,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{reps,jdbcType=INTEGER}, 
+      #{sets,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{workoutLogId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.ExerciseEntity">
+    insert into exercises
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dateCreated != null">
+        date_created,
+      </if>
+      <if test="dateUpdated != null">
+        date_updated,
+      </if>
+      <if test="index != null">
+        index,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="reps != null">
+        reps,
+      </if>
+      <if test="sets != null">
+        sets,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="workoutLogId != null">
+        workout_log_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dateCreated != null">
+        #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateUpdated != null">
+        #{dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="index != null">
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reps != null">
+        #{reps,jdbcType=INTEGER},
+      </if>
+      <if test="sets != null">
+        #{sets,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="workoutLogId != null">
+        #{workoutLogId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wenjun.astra_persistence.models.ExerciseEntityExample" resultType="java.lang.Long">
+    select count(*) from exercises
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update exercises
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.dateCreated != null">
+        date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.dateUpdated != null">
+        date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.index != null">
+        index = #{row.index,jdbcType=INTEGER},
+      </if>
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.reps != null">
+        reps = #{row.reps,jdbcType=INTEGER},
+      </if>
+      <if test="row.sets != null">
+        sets = #{row.sets,jdbcType=INTEGER},
+      </if>
+      <if test="row.weight != null">
+        weight = #{row.weight,jdbcType=INTEGER},
+      </if>
+      <if test="row.workoutLogId != null">
+        workout_log_id = #{row.workoutLogId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update exercises
+    set id = #{row.id,jdbcType=BIGINT},
+      date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
+      date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
+      index = #{row.index,jdbcType=INTEGER},
+      name = #{row.name,jdbcType=VARCHAR},
+      reps = #{row.reps,jdbcType=INTEGER},
+      sets = #{row.sets,jdbcType=INTEGER},
+      weight = #{row.weight,jdbcType=INTEGER},
+      workout_log_id = #{row.workoutLogId,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wenjun.astra_persistence.models.ExerciseEntity">
+    update exercises
+    <set>
+      <if test="dateCreated != null">
+        date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateUpdated != null">
+        date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="index != null">
+        index = #{index,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reps != null">
+        reps = #{reps,jdbcType=INTEGER},
+      </if>
+      <if test="sets != null">
+        sets = #{sets,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="workoutLogId != null">
+        workout_log_id = #{workoutLogId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wenjun.astra_persistence.models.ExerciseEntity">
+    update exercises
+    set date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
+      index = #{index,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      reps = #{reps,jdbcType=INTEGER},
+      sets = #{sets,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      workout_log_id = #{workoutLogId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

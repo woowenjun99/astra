@@ -30,6 +30,9 @@ public class CreateWorkoutDTO {
 
     private final String remarks;
 
+    @NotNull
+    private final List<@NotNull RunningDTO> runs;
+
     @NotEmpty
     @NotNull
     private final String title;
@@ -41,7 +44,7 @@ public class CreateWorkoutDTO {
     @Data
     public static class ExerciseDTO {
         @NotNull
-        @NotNull
+        @NotEmpty
         private final String name;
 
         @NotNull
@@ -54,6 +57,17 @@ public class CreateWorkoutDTO {
 
         @NotNull
         @PositiveOrZero
-        private final Integer weights;
+        private final Integer weight;
+    }
+
+    @Data
+    public static class RunningDTO {
+        @NotNull
+        @PositiveOrZero
+        private final Integer distance;
+
+        @NotNull
+        @PositiveOrZero
+        private final Integer duration;
     }
 }

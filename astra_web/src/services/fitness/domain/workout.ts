@@ -6,3 +6,15 @@ export interface Workout {
   intensity: "Low" | "Medium" | "High";
   title: string;
 }
+
+export interface Exercise {
+  name: string;
+  reps: number;
+  sets: number;
+  weight: number;
+}
+
+export interface Run {
+  distance: number;
+  duration: number;
+}

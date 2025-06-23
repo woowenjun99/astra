@@ -50,3 +50,25 @@ CREATE TABLE workout_logs (
     title VARCHAR(50) NOT NULL,
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
 );
+
+CREATE TABLE exercises (
+    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    id BIGSERIAL PRIMARY KEY,
+    index INTEGER NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    reps INTEGER NOT NULL,
+    sets INTEGER NOT NULL,
+    weight INTEGER,
+    workout_log_id BIGSERIAL NOT NULL REFERENCES workout_logs ON DELETE CASCADE
+);
+
+CREATE TABLE runs (
+    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    distance INTEGER NOT NULL,
+    duration INTEGER NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
+    index INTEGER NOT NULL,
+    workout_log_id BIGSERIAL NOT NULL REFERENCES workout_logs ON DELETE CASCADE
+);

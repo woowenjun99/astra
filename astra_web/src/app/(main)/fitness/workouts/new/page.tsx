@@ -1,4 +1,5 @@
 "use client";
+import { createWorkout } from "@/services/fitness/data/fitness-api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -13,7 +14,9 @@ import {
   Title,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
+import { notifications } from "@mantine/notifications";
 import { IconCalendar, IconPlus } from "@tabler/icons-react";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,7 +45,8 @@ export default function WorkoutPage() {
     register,
     watch,
     setValue,
-    formState: { errors },
+    handleSubmit,
+    formState: { errors, isSubmitting },
   } = useForm<Schema>({
     resolver: zodResolver(schema),
   });
@@ -54,10 +58,42 @@ export default function WorkoutPage() {
   });
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
+  const onSubmit = handleSubmit(
+    async ({
+      title,
+      caloriesBurnt,
+      date,
+      duration,
+      intensity,
+      remarks,
+      workoutType,
+    }) => {
+      try {
+        await createWorkout({
+          caloriesBurnt,
+          date: dayjs(date, "YYYY-MM-DD").toDate(),
+          duration,
+          exercises,
+          intensity,
+          remarks,
+          runs: [],
+          title,
+          workoutType,
+        });
+      } catch (e) {
+        notifications.show({
+          color: "red",
+          message: (e as Error).message,
+          title: "Error",
+        });
+      }
+    }
+  );
+
   return (
     <main>
       <Card withBorder shadow="md">
-        <form>
+        <form onSubmit={onSubmit}>
           <Grid>
             <Grid.Col span={12}>
               <TextInput
@@ -254,7 +290,12 @@ export default function WorkoutPage() {
           />
 
           <Group justify="end">
-            <Button type="submit" color="black">
+            <Button
+              type="submit"
+              color="black"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
               Save Workout
             </Button>
           </Group>

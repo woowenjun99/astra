@@ -41,7 +41,11 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
         </Group>
 
         <Group align="start" hiddenFrom="sm">
-          <Link passHref href="/fitness/workouts/new">
+          <Link
+            passHref
+            href="/fitness/workouts/new"
+            style={{ width: "100%", textDecoration: "none" }}
+          >
             <Button color="black" leftSection={<IconPlus />} fullWidth>
               Record Workout
             </Button>

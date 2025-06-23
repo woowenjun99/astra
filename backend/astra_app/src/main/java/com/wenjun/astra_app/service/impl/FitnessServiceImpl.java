@@ -2,6 +2,7 @@ package com.wenjun.astra_app.service.impl;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
+import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.model.enums.fitness_goals.FitnessGoalCategory;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
@@ -9,7 +10,9 @@ import com.wenjun.astra_app.plugins.fitness_goals.FitnessGoalPlugin;
 import com.wenjun.astra_app.plugins.fitness_goals.FitnessGoalPlugins;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
+import com.wenjun.astra_persistence.models.ExerciseEntity;
 import com.wenjun.astra_persistence.models.FitnessGoalEntity;
+import com.wenjun.astra_persistence.models.RunEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
 import com.wenjun.astra_persistence.repository.FitnessRepository;
@@ -102,5 +105,53 @@ public class FitnessServiceImpl implements FitnessService {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
         return fitnessRepository.getWeeklyActivity(userId);
+    }
+
+    @Override
+    public void createWorkout(CreateWorkoutDTO request) throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+
+        // Create the workout log first
+        WorkoutLogEntity workoutLog = new WorkoutLogEntity();
+        workoutLog.setDate(request.getDate());
+        workoutLog.setTitle(request.getTitle());
+        workoutLog.setUid(userId);
+        workoutLog.setCaloriesBurnt(request.getCaloriesBurnt());
+        workoutLog.setDuration(request.getDuration());
+        workoutLog.setIntensity(request.getIntensity());
+        Long workoutLogId = fitnessRepository.createWorkout(workoutLog);
+
+        // Create the runs
+        List<RunEntity> runs = new ArrayList<>(request.getRuns().size());
+        for (int i = 0; i < request.getRuns().size(); ++i) {
+            CreateWorkoutDTO.RunningDTO entity = request.getRuns().get(i);
+            RunEntity run = new RunEntity();
+            run.setWorkoutLogId(workoutLogId);
+            run.setDistance(entity.getDistance());
+            run.setIndex(i);
+            run.setDuration(entity.getDuration());
+            runs.add(run);
+        }
+        if (!runs.isEmpty()) {
+            fitnessRepository.batchInsertRuns(runs);
+        }
+
+        // Create the normal exercise
+        List<ExerciseEntity> exercises = new ArrayList<>(request.getExercises().size());
+        for (int i = 0; i < request.getExercises().size(); ++i) {
+            CreateWorkoutDTO.ExerciseDTO entity = request.getExercises().get(i);
+            ExerciseEntity exercise = new ExerciseEntity();
+            exercise.setName(entity.getName());
+            exercise.setReps(entity.getReps());
+            exercise.setSets(entity.getSets());
+            exercise.setWorkoutLogId(workoutLogId);
+            exercise.setWeight(entity.getWeight());
+            exercise.setIndex(i);
+            exercises.add(exercise);
+        }
+        if (!exercises.isEmpty()) {
+            fitnessRepository.batchInsertExercises(exercises);
+        }
     }
 }

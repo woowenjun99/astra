@@ -44,7 +44,9 @@ public class FitnessController {
 
     @Transactional
     @PostMapping("/workouts")
-    public void createWorkout(@RequestBody @Valid CreateWorkoutDTO request) throws AstraException {}
+    public void createWorkout(@RequestBody @Valid CreateWorkoutDTO request) throws AstraException {
+        fitnessService.createWorkout(request);
+    }
 
     @GetMapping("/weekly-activity")
     public List<DailyActivity> getWeeklyActivity() throws AstraException {

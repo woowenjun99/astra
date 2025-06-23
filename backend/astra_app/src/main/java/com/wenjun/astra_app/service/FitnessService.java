@@ -2,6 +2,7 @@ package com.wenjun.astra_app.service;
 
 import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
+import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
@@ -35,4 +36,6 @@ public interface FitnessService {
     List<WorkoutLogEntity> getRecentWorkouts() throws AstraException;
 
     List<DailyActivity> getWeeklyActivity() throws AstraException;
+
+    void createWorkout(CreateWorkoutDTO request) throws AstraException;
 }

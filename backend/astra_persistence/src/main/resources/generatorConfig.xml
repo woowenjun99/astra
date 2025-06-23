@@ -51,8 +51,16 @@
 <!--                <columnOverride column="weight" javaType="java.lang.Double" />-->
 <!--            </table>-->
 
-        <table tableName="workout_logs" domainObjectName="WorkoutLogEntity" >
-            <property name="useActualColumnNames" value="false"/>
-        </table>
+<!--        <table tableName="workout_logs" domainObjectName="WorkoutLogEntity" >-->
+<!--            <property name="useActualColumnNames" value="false"/>-->
+<!--        </table>-->
+
+                <table tableName="runs" domainObjectName="RunEntity" >
+                    <property name="useActualColumnNames" value="false"/>
+                </table>
+
+                <table tableName="exercises" domainObjectName="ExerciseEntity" >
+                    <property name="useActualColumnNames" value="false"/>
+                </table>
     </context>
 </generatorConfiguration>

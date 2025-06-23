@@ -1,7 +1,7 @@
 import { getJwtToken } from "@/services/authentication/data/authentication-api";
 import { axiosInstance } from "@/util/axios-instance";
 import type { FitnessGoal } from "../domain/fitness-goal";
-import type { Workout } from "../domain/workout";
+import type { Exercise, Run, Workout } from "../domain/workout";
 import type { BaseResponse } from "@/model/base-response";
 import { DailyActivity } from "../domain/daily-activity";
 
@@ -55,4 +55,27 @@ export async function getWeeklyActvity(endpoint: string) {
   });
   const data = response.data as BaseResponse<DailyActivity[]>;
   return data.data;
+}
+
+interface CreateWorkoutDTO {
+  caloriesBurnt: number;
+  date: Date;
+  duration: number;
+  exercises: Exercise[];
+  intensity: string;
+  remarks: string;
+  runs: Run[];
+  title: string;
+  workoutType: string;
+}
+
+export async function createWorkout(payload: CreateWorkoutDTO) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.post("/fitness/workouts", payload, {
+    headers: { Authorization: jwt },
+  });
+  const data = response.data as BaseResponse<void>;
+  if (!data.success) {
+    throw new Error(data.message);
+  }
 }

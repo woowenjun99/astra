@@ -24,4 +24,48 @@
         group by date
         order by date asc;
     </select>
+
+    <insert id="createWorkoutLog" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into workout_logs (
+            calories_burnt,
+            date,
+            duration,
+            intensity,
+            title,
+            uid
+        ) values (
+            #{workoutLog.caloriesBurnt},
+            #{workoutLog.date},
+            #{workoutLog.duration},
+            #{workoutLog.intensity},
+            #{workoutLog.title},
+            #{workoutLog.uid}
+        ) returning id
+    </insert>
+
+    <insert id = "batchInsertRuns">
+        insert into runs (
+            distance,
+            duration,
+            index,
+            workout_log_id
+        ) values
+        <foreach collection="runs" item = "run" separator = ",">
+            (#{run.distance}, #{run.duration}, #{run.index}, #{run.workout_log_id})
+        </foreach>
+    </insert>
+
+    <insert id = "batchInsertExercises">
+        insert into exercises (
+            index,
+            name,
+            reps,
+            sets,
+            weight,
+            workout_log_id
+        ) values
+        <foreach collection="exercises" item = "exercise" separator = ",">
+            (#{exercise.index}, #{exercise.name}, #{exercise.reps}, #{exercise.sets}, #{exercise.weight}, #{exercise.workoutLogId})
+        </foreach>
+    </insert>
 </mapper>

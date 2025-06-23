@@ -1,13 +1,10 @@
 package com.wenjun.astra_persistence.repository;
 
 import com.wenjun.astra_persistence.mappers.FitnessGoalEntityMapper;
+import com.wenjun.astra_persistence.mappers.RunEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualDailyLogEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper;
-import com.wenjun.astra_persistence.models.DailyLogEntity;
-import com.wenjun.astra_persistence.models.FitnessGoalEntity;
-import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
-import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
-import com.wenjun.astra_persistence.models.WorkoutLogEntity;
+import com.wenjun.astra_persistence.models.*;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
 
 import org.springframework.stereotype.Repository;
@@ -29,6 +26,9 @@ public class FitnessRepository {
 
     @Resource
     private ManualWorkoutLogEntityMapper manualWorkoutLogEntityMapper;
+
+    @Resource
+    private RunEntityMapper runEntityMapper;
 
     public void insertFitnessGoalSelective(FitnessGoalEntity fitnessGoalEntity) {
         fitnessGoalEntityMapper.insertSelective(fitnessGoalEntity);
@@ -60,5 +60,17 @@ public class FitnessRepository {
         LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate sunday = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
         return manualWorkoutLogEntityMapper.getWeeklyActivity(userId, monday, sunday);
+    }
+
+    public Long createWorkout(WorkoutLogEntity workoutLog) {
+        return manualWorkoutLogEntityMapper.createWorkoutLog(workoutLog);
+    }
+
+    public void batchInsertRuns(List<RunEntity> runs) {
+        manualWorkoutLogEntityMapper.batchInsertRuns(runs);
+    }
+
+    public void batchInsertExercises(List<ExerciseEntity> exercises) {
+        manualWorkoutLogEntityMapper.batchInsertExercises(exercises);
     }
 }
