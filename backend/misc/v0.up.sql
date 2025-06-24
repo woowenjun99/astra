@@ -73,4 +73,10 @@ CREATE TABLE runs (
     workout_log_id BIGSERIAL NOT NULL REFERENCES workout_logs ON DELETE CASCADE
 );
 
-ALTER TABLE users ADD COLUMN devices text;
+CREATE TABLE devices (
+    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    device_token VARCHAR(50) NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
+    uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
+);

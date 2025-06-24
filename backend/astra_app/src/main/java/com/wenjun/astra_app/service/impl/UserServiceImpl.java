@@ -1,7 +1,6 @@
 package com.wenjun.astra_app.service.impl;
 
 import com.wenjun.astra_app.model.AstraException;
-import com.wenjun.astra_app.model.dto.AddPushNotificationDTO;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
@@ -81,14 +80,5 @@ public class UserServiceImpl implements UserService {
             throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");
         }
         return user;
-    }
-
-    @Override
-    public void addPushNotificationToken(AddPushNotificationDTO request) throws AstraException {
-        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
-        String userId = authenticatedUser.getUid();
-        UserEntity user = userRepository.getUserByUid(userId);
-        user.setDevices(request.getPushNotificationToken());
-        userRepository.updateByPrimaryKey(user);
     }
 }

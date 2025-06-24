@@ -44,7 +44,7 @@ interface AddPushNotificationDTO {
 
 export async function addPushNotification(body: AddPushNotificationDTO) {
   const jwt = await getJwtToken();
-  const response = await axiosInstance.post("/users/push-notification", body, {
+  const response = await axiosInstance.post("/devices", body, {
     headers: { Authorization: jwt },
   });
   const data = response.data as BaseResponse<void>;

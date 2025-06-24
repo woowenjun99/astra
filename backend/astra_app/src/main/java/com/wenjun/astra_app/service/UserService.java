@@ -20,6 +20,4 @@ public interface UserService {
     void deleteUser() throws AstraException;
 
     UserEntity getUser() throws AstraException;
-
-    void addPushNotificationToken(AddPushNotificationDTO request) throws AstraException;
 }

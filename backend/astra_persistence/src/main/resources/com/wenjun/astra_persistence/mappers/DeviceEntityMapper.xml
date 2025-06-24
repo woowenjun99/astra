@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wenjun.astra_persistence.mappers.UserEntityMapper">
-  <resultMap id="BaseResultMap" type="com.wenjun.astra_persistence.models.UserEntity">
-    <id column="uid" jdbcType="VARCHAR" property="uid" />
-    <result column="bio" jdbcType="VARCHAR" property="bio" />
+<mapper namespace="com.wenjun.astra_persistence.mappers.DeviceEntityMapper">
+  <resultMap id="BaseResultMap" type="com.wenjun.astra_persistence.models.DeviceEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
-    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
     <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="device_token" jdbcType="VARCHAR" property="deviceToken" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    uid, bio, date_created, date_of_birth, date_updated, email, full_name, gender
+    id, date_created, date_updated, device_token, uid
   </sql>
-  <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.UserEntityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.DeviceEntityExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from users
+    from devices
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,117 +83,88 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from users
-    where uid = #{uid,jdbcType=VARCHAR}
+    from devices
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from users
-    where uid = #{uid,jdbcType=VARCHAR}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from devices
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wenjun.astra_persistence.models.UserEntityExample">
-    delete from users
+  <delete id="deleteByExample" parameterType="com.wenjun.astra_persistence.models.DeviceEntityExample">
+    delete from devices
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wenjun.astra_persistence.models.UserEntity">
-    insert into users (uid, bio, date_created, 
-      date_of_birth, date_updated, email, 
-      full_name, gender)
-    values (#{uid,jdbcType=VARCHAR}, #{bio,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, 
-      #{dateOfBirth,jdbcType=DATE}, #{dateUpdated,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
-      #{fullName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.wenjun.astra_persistence.models.DeviceEntity">
+    insert into devices (id, date_created, date_updated, 
+      device_token, uid)
+    values (#{id,jdbcType=BIGINT}, #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}, 
+      #{deviceToken,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.UserEntity">
-    insert into users
+  <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.DeviceEntity">
+    insert into devices
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="bio != null">
-        bio,
+      <if test="id != null">
+        id,
       </if>
       <if test="dateCreated != null">
         date_created,
       </if>
-      <if test="dateOfBirth != null">
-        date_of_birth,
-      </if>
       <if test="dateUpdated != null">
         date_updated,
       </if>
-      <if test="email != null">
-        email,
+      <if test="deviceToken != null">
+        device_token,
       </if>
-      <if test="fullName != null">
-        full_name,
-      </if>
-      <if test="gender != null">
-        gender,
+      <if test="uid != null">
+        uid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="bio != null">
-        #{bio,jdbcType=VARCHAR},
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="dateCreated != null">
         #{dateCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="dateOfBirth != null">
-        #{dateOfBirth,jdbcType=DATE},
-      </if>
       <if test="dateUpdated != null">
         #{dateUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="deviceToken != null">
+        #{deviceToken,jdbcType=VARCHAR},
       </if>
-      <if test="fullName != null">
-        #{fullName,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null">
-        #{gender,jdbcType=VARCHAR},
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wenjun.astra_persistence.models.UserEntityExample" resultType="java.lang.Long">
-    select count(*) from users
+  <select id="countByExample" parameterType="com.wenjun.astra_persistence.models.DeviceEntityExample" resultType="java.lang.Long">
+    select count(*) from devices
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update users
+    update devices
     <set>
-      <if test="row.uid != null">
-        uid = #{row.uid,jdbcType=VARCHAR},
-      </if>
-      <if test="row.bio != null">
-        bio = #{row.bio,jdbcType=VARCHAR},
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
       </if>
       <if test="row.dateCreated != null">
         date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="row.dateOfBirth != null">
-        date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
-      </if>
       <if test="row.dateUpdated != null">
         date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="row.email != null">
-        email = #{row.email,jdbcType=VARCHAR},
+      <if test="row.deviceToken != null">
+        device_token = #{row.deviceToken,jdbcType=VARCHAR},
       </if>
-      <if test="row.fullName != null">
-        full_name = #{row.fullName,jdbcType=VARCHAR},
-      </if>
-      <if test="row.gender != null">
-        gender = #{row.gender,jdbcType=VARCHAR},
+      <if test="row.uid != null">
+        uid = #{row.uid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="example != null">
@@ -204,55 +172,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update users
-    set uid = #{row.uid,jdbcType=VARCHAR},
-      bio = #{row.bio,jdbcType=VARCHAR},
+    update devices
+    set id = #{row.id,jdbcType=BIGINT},
       date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
-      date_of_birth = #{row.dateOfBirth,jdbcType=DATE},
       date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
-      email = #{row.email,jdbcType=VARCHAR},
-      full_name = #{row.fullName,jdbcType=VARCHAR},
-      gender = #{row.gender,jdbcType=VARCHAR}
+      device_token = #{row.deviceToken,jdbcType=VARCHAR},
+      uid = #{row.uid,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wenjun.astra_persistence.models.UserEntity">
-    update users
+  <update id="updateByPrimaryKeySelective" parameterType="com.wenjun.astra_persistence.models.DeviceEntity">
+    update devices
     <set>
-      <if test="bio != null">
-        bio = #{bio,jdbcType=VARCHAR},
-      </if>
       <if test="dateCreated != null">
         date_created = #{dateCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="dateOfBirth != null">
-        date_of_birth = #{dateOfBirth,jdbcType=DATE},
       </if>
       <if test="dateUpdated != null">
         date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="deviceToken != null">
+        device_token = #{deviceToken,jdbcType=VARCHAR},
       </if>
-      <if test="fullName != null">
-        full_name = #{fullName,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=VARCHAR},
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
       </if>
     </set>
-    where uid = #{uid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wenjun.astra_persistence.models.UserEntity">
-    update users
-    set bio = #{bio,jdbcType=VARCHAR},
-      date_created = #{dateCreated,jdbcType=TIMESTAMP},
-      date_of_birth = #{dateOfBirth,jdbcType=DATE},
+  <update id="updateByPrimaryKey" parameterType="com.wenjun.astra_persistence.models.DeviceEntity">
+    update devices
+    set date_created = #{dateCreated,jdbcType=TIMESTAMP},
       date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
-      email = #{email,jdbcType=VARCHAR},
-      full_name = #{fullName,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR}
-    where uid = #{uid,jdbcType=VARCHAR}
+      device_token = #{deviceToken,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

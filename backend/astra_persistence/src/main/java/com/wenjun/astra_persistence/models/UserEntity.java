@@ -19,8 +19,6 @@ public class UserEntity {
 
     private String gender;
 
-    private String devices;
-
     public String getUid() {
         return uid;
     }
@@ -83,13 +81,5 @@ public class UserEntity {
 
     public void setGender(String gender) {
         this.gender = gender == null ? null : gender.trim();
-    }
-
-    public String getDevices() {
-        return devices;
-    }
-
-    public void setDevices(String devices) {
-        this.devices = devices == null ? null : devices.trim();
     }
 }

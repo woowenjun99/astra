@@ -34,6 +34,10 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
+<!--        <table tableName="devices" domainObjectName="DeviceEntity" >-->
+<!--            <property name="useActualColumnNames" value="false"/>-->
+<!--        </table>-->
+
         <table tableName="users" domainObjectName="UserEntity" >
             <property name="useActualColumnNames" value="false"/>
         </table>
