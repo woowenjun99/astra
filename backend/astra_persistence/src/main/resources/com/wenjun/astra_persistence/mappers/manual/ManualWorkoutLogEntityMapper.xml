@@ -41,14 +41,16 @@
             duration,
             intensity,
             title,
-            uid
+            uid,
+            workout_type
         ) values (
             #{workoutLog.caloriesBurnt},
             #{workoutLog.date},
             #{workoutLog.duration},
             #{workoutLog.intensity},
             #{workoutLog.title},
-            #{workoutLog.uid}
+            #{workoutLog.uid},
+            #{workoutLog.workoutType}
         ) returning id
     </select>
 
