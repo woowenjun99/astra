@@ -76,7 +76,7 @@ CREATE TABLE runs (
 CREATE TABLE devices (
     date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    device_token VARCHAR(50) NOT NULL,
+    device_token TEXT NOT NULL,
     id BIGSERIAL PRIMARY KEY,
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
 );

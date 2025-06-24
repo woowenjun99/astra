@@ -26,4 +26,11 @@ public class DeviceServiceImpl implements DeviceService {
         device.setUid(userId);
         deviceRepository.insertSelective(device);
     }
+
+    @Override
+    public void deletePushNotificationToken(String notificationToken) throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+        deviceRepository.deleteByUserIdAndPushNotificationToken(userId, notificationToken);
+    }
 }
