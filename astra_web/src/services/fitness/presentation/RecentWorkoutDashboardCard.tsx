@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { IconBarbell, IconPlus } from "@tabler/icons-react";
 import useSWR from "swr";
-import { getRecentWorkouts } from "../data/fitness-api";
+import { getWorkouts } from "../data/fitness-api";
 import type { FC } from "react";
 import { Workout } from "../domain/workout";
 import Link from "next/link";
@@ -87,10 +87,7 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
 };
 
 export default function RecentWorkoutDashboardCard() {
-  const { data, isLoading } = useSWR(
-    ["/fitness/workouts", 3, 1],
-    getRecentWorkouts
-  );
+  const { data, isLoading } = useSWR(["/fitness/workouts", 3, 1], getWorkouts);
 
   return (
     <Card withBorder shadow="md" h={550} radius="md">

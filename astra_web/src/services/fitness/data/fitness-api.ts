@@ -39,8 +39,7 @@ export async function getFitnessGoals(
   return data.data;
 }
 
-// TODO: Implement /workouts
-export async function getRecentWorkouts([endpoint, ...params]: string[]) {
+export async function getWorkouts([endpoint, ...params]: string[]) {
   const jwt = await getJwtToken();
   const response = await axiosInstance.get(endpoint, {
     headers: { Authorization: jwt },

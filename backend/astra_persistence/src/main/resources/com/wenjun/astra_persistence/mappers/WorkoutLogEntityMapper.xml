@@ -11,6 +11,7 @@
     <result column="intensity" jdbcType="VARCHAR" property="intensity" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="workout_type" jdbcType="VARCHAR" property="workoutType" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, calories_burnt, date, date_created, date_updated, duration, intensity, title, 
-    uid
+    uid, workout_type
   </sql>
   <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntityExample" resultMap="BaseResultMap">
     select
@@ -107,12 +108,12 @@
   <insert id="insert" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
     insert into workout_logs (id, calories_burnt, date, 
       date_created, date_updated, duration, 
-      intensity, title, uid
-      )
+      intensity, title, uid, 
+      workout_type)
     values (#{id,jdbcType=BIGINT}, #{caloriesBurnt,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
       #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}, #{duration,jdbcType=INTEGER}, 
-      #{intensity,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}
-      )
+      #{intensity,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
+      #{workoutType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.WorkoutLogEntity">
     insert into workout_logs
@@ -144,6 +145,9 @@
       <if test="uid != null">
         uid,
       </if>
+      <if test="workoutType != null">
+        workout_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -172,6 +176,9 @@
       </if>
       <if test="uid != null">
         #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="workoutType != null">
+        #{workoutType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -211,6 +218,9 @@
       <if test="row.uid != null">
         uid = #{row.uid,jdbcType=VARCHAR},
       </if>
+      <if test="row.workoutType != null">
+        workout_type = #{row.workoutType,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -226,7 +236,8 @@
       duration = #{row.duration,jdbcType=INTEGER},
       intensity = #{row.intensity,jdbcType=VARCHAR},
       title = #{row.title,jdbcType=VARCHAR},
-      uid = #{row.uid,jdbcType=VARCHAR}
+      uid = #{row.uid,jdbcType=VARCHAR},
+      workout_type = #{row.workoutType,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -258,6 +269,9 @@
       <if test="uid != null">
         uid = #{uid,jdbcType=VARCHAR},
       </if>
+      <if test="workoutType != null">
+        workout_type = #{workoutType,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -270,7 +284,8 @@
       duration = #{duration,jdbcType=INTEGER},
       intensity = #{intensity,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      uid = #{uid,jdbcType=VARCHAR}
+      uid = #{uid,jdbcType=VARCHAR},
+      workout_type = #{workoutType,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

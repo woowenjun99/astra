@@ -21,6 +21,8 @@ public class WorkoutLogEntity {
 
     private String uid;
 
+    private String workoutType;
+
     public Long getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class WorkoutLogEntity {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getWorkoutType() {
+        return workoutType;
+    }
+
+    public void setWorkoutType(String workoutType) {
+        this.workoutType = workoutType == null ? null : workoutType.trim();
     }
 }

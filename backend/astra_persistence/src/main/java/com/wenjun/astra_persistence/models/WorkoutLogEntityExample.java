@@ -701,6 +701,76 @@ public class WorkoutLogEntityExample {
             addCriterion("uid not between", value1, value2, "uid");
             return (Criteria) this;
         }
+
+        public Criteria andWorkoutTypeIsNull() {
+            addCriterion("workout_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeIsNotNull() {
+            addCriterion("workout_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeEqualTo(String value) {
+            addCriterion("workout_type =", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeNotEqualTo(String value) {
+            addCriterion("workout_type <>", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeGreaterThan(String value) {
+            addCriterion("workout_type >", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("workout_type >=", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeLessThan(String value) {
+            addCriterion("workout_type <", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeLessThanOrEqualTo(String value) {
+            addCriterion("workout_type <=", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeLike(String value) {
+            addCriterion("workout_type like", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeNotLike(String value) {
+            addCriterion("workout_type not like", value, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeIn(List<String> values) {
+            addCriterion("workout_type in", values, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeNotIn(List<String> values) {
+            addCriterion("workout_type not in", values, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeBetween(String value1, String value2) {
+            addCriterion("workout_type between", value1, value2, "workoutType");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkoutTypeNotBetween(String value1, String value2) {
+            addCriterion("workout_type not between", value1, value2, "workoutType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

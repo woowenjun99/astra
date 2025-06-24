@@ -124,6 +124,7 @@ public class FitnessServiceImpl implements FitnessService {
         workoutLog.setCaloriesBurnt(request.getCaloriesBurnt());
         workoutLog.setDuration(request.getDuration());
         workoutLog.setIntensity(request.getIntensity());
+        workoutLog.setWorkoutType(workoutLog.getWorkoutType());
         Long workoutLogId = fitnessRepository.createWorkout(workoutLog);
         log.info("Workout Entity created: {}", workoutLogId);
 

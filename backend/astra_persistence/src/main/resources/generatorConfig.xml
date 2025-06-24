@@ -38,9 +38,9 @@
 <!--            <property name="useActualColumnNames" value="false"/>-->
 <!--        </table>-->
 
-        <table tableName="users" domainObjectName="UserEntity" >
+        <!-- <table tableName="users" domainObjectName="UserEntity" >
             <property name="useActualColumnNames" value="false"/>
-        </table>
+        </table> -->
 <!--                <table tableName="accounts" domainObjectName="AccountEntity" >-->
 <!--                    <property name="useActualColumnNames" value="false"/>-->
 <!--                </table>-->
@@ -55,9 +55,9 @@
 <!--                <columnOverride column="weight" javaType="java.lang.Double" />-->
 <!--            </table>-->
 
-<!--        <table tableName="workout_logs" domainObjectName="WorkoutLogEntity" >-->
-<!--            <property name="useActualColumnNames" value="false"/>-->
-<!--        </table>-->
+        <table tableName="workout_logs" domainObjectName="WorkoutLogEntity" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
 
 <!--                <table tableName="runs" domainObjectName="RunEntity" >-->
 <!--                    <property name="useActualColumnNames" value="false"/>-->

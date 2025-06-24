@@ -80,3 +80,6 @@ CREATE TABLE devices (
     id BIGSERIAL PRIMARY KEY,
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
 );
+
+ALTER TABLE "public"."workout_logs"
+ADD COLUMN "workout_type" varchar(50) NOT NULL;

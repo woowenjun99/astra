@@ -5,6 +5,7 @@ export interface Workout {
   id: number;
   intensity: "Low" | "Medium" | "High";
   title: string;
+  workoutType: string;
 }
 
 export interface Exercise {

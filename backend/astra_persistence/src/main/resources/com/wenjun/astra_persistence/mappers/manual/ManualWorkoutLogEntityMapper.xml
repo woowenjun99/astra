@@ -11,7 +11,8 @@
             id,
             intensity,
             title,
-            uid
+            uid,
+            workout_type as workoutType
         from workout_logs
         where
             uid = #{userId}
