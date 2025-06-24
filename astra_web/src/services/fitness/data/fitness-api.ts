@@ -4,6 +4,7 @@ import type { FitnessGoal } from "../domain/fitness-goal";
 import type { Exercise, Run, Workout } from "../domain/workout";
 import type { BaseResponse } from "@/model/base-response";
 import { DailyActivity } from "../domain/daily-activity";
+import { WorkoutMetadata } from "../domain/workout-metadata";
 
 export interface CreateFitnessGoalDTO {
   category: string;
@@ -78,4 +79,15 @@ export async function createWorkout(payload: CreateWorkoutDTO) {
   if (!data.success) {
     throw new Error(data.message);
   }
+}
+
+export async function getWorkoutMetadata(
+  endpoint: string
+): Promise<WorkoutMetadata> {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.get(endpoint, {
+    headers: { Authorization: jwt },
+  });
+  const data = response.data as BaseResponse<WorkoutMetadata>;
+  return data.data;
 }

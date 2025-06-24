@@ -1,4 +1,5 @@
 "use client";
+import WorkoutMetadataCards from "@/services/fitness/presentation/WorkoutMetadataCard";
 import { Button, Group, Stack, Text, Title } from "@mantine/core";
 import { IconCalendar, IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
@@ -37,6 +38,8 @@ export default function WorkoutMainPage() {
           </Link>
         </Group>
       </Group>
+
+      <WorkoutMetadataCards />
     </main>
   );
 }

@@ -4,6 +4,7 @@ import com.wenjun.astra_persistence.mappers.UserEntityMapper;
 import com.wenjun.astra_persistence.models.UserEntity;
 import com.wenjun.astra_persistence.models.UserEntityExample;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserRepository {
         UserEntityExample example = new UserEntityExample();
         example.createCriteria().andEmailEqualTo(email);
         List<UserEntity> users = userEntityMapper.selectByExample(example);
-        return !users.isEmpty();
+        return CollectionUtils.isNotEmpty(users);
     }
 
     public void insertSelective(UserEntity user) {

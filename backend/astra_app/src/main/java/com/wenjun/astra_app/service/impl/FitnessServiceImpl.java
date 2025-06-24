@@ -22,6 +22,7 @@ import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -137,7 +138,7 @@ public class FitnessServiceImpl implements FitnessService {
             run.setDuration(entity.getDuration());
             runs.add(run);
         }
-        if (!runs.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(runs)) {
             fitnessRepository.batchInsertRuns(runs);
         }
 
@@ -154,7 +155,7 @@ public class FitnessServiceImpl implements FitnessService {
             exercise.setIndex(i);
             exercises.add(exercise);
         }
-        if (!exercises.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(exercises)) {
             fitnessRepository.batchInsertExercises(exercises);
         }
     }
@@ -163,6 +164,7 @@ public class FitnessServiceImpl implements FitnessService {
     public WorkoutMetadata getWorkoutMetadata() throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
+        log.info("Metadata: {}", fitnessRepository.getWorkoutMetadata(userId));
         return fitnessRepository.getWorkoutMetadata(userId);
     }
 }

@@ -21,7 +21,7 @@ function computeDate(date: string): string {
   return `${today.diff(givenDate, "days")} days ago`;
 }
 
-const WorkoutCard: React.FC<WorkoutCardProps> = ({
+const WorkoutDashboardCard: React.FC<WorkoutCardProps> = ({
   date,
   intensity,
   title,
@@ -57,4 +57,4 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({
   );
 };
 
-export default WorkoutCard;
+export default WorkoutDashboardCard;
