@@ -9,4 +9,10 @@ public class WorkoutMetadata {
     private final Integer totalHours;
 
     private final Integer averageDuration;
+
+    WorkoutMetadata(Integer totalWorkouts, Integer totalHours, Integer averageDuration) {
+        this.totalWorkouts = totalWorkouts;
+        this.totalHours = totalHours;
+        this.averageDuration = averageDuration;
+    }
 }

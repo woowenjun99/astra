@@ -1,6 +1,7 @@
 package com.wenjun.astra_app.service.impl;
 
 import com.wenjun.astra_app.model.AstraException;
+import com.wenjun.astra_app.model.dto.AddPushNotificationDTO;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
@@ -16,6 +17,7 @@ import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 import com.wenjun.astra_third_party_services.firebase.service.FirebaseClient;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import java.util.Date;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final FirebaseClient firebaseClient;
@@ -78,5 +81,14 @@ public class UserServiceImpl implements UserService {
             throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "User");
         }
         return user;
+    }
+
+    @Override
+    public void addPushNotificationToken(AddPushNotificationDTO request) throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+        UserEntity user = userRepository.getUserByUid(userId);
+        user.setDevices(request.getPushNotificationToken());
+        userRepository.updateByPrimaryKey(user);
     }
 }

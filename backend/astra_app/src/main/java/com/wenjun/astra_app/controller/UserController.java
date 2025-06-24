@@ -1,6 +1,7 @@
 package com.wenjun.astra_app.controller;
 
 import com.wenjun.astra_app.model.AstraException;
+import com.wenjun.astra_app.model.dto.AddPushNotificationDTO;
 import com.wenjun.astra_app.model.dto.CreateUserDTO;
 import com.wenjun.astra_app.model.dto.UpdateUserDTO;
 import com.wenjun.astra_app.service.UserService;
@@ -44,5 +45,10 @@ public class UserController {
     @GetMapping
     public UserEntity getUser() throws AstraException {
         return userService.getUser();
+    }
+
+    @PostMapping("/push-notification")
+    public void addPushNotificationToken(@Valid @RequestBody AddPushNotificationDTO request) throws AstraException {
+        userService.addPushNotificationToken(request);
     }
 }

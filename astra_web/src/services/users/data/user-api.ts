@@ -37,3 +37,18 @@ export async function updateUser(payload: UpdateUserDTO) {
     throw new Error(data.message);
   }
 }
+
+interface AddPushNotificationDTO {
+  pushNotificationToken: string;
+}
+
+export async function addPushNotification(body: AddPushNotificationDTO) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.post("/users/push-notification", body, {
+    headers: { Authorization: jwt },
+  });
+  const data = response.data as BaseResponse<void>;
+  if (!data.success) {
+    throw new Error(data.message);
+  }
+}

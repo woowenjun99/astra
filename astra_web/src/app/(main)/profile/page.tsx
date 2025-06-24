@@ -19,6 +19,7 @@ import { DateInput, DateStringValue } from "@mantine/dates";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { getUser, updateUser } from "@/services/users/data/user-api";
+import PushNotificationManager from "@/services/users/presentation/PushNotificationManager";
 
 const schema = z.object({
   bio: z.string().max(500).nullable(),
@@ -148,6 +149,8 @@ export default function ProfileForm() {
           )}
         </Card>
       </form>
+
+      <PushNotificationManager />
     </div>
   );
 }

@@ -661,6 +661,76 @@ public class UserEntityExample {
             addCriterion("gender not between", value1, value2, "gender");
             return (Criteria) this;
         }
+
+        public Criteria andDevicesIsNull() {
+            addCriterion("devices is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesIsNotNull() {
+            addCriterion("devices is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesEqualTo(String value) {
+            addCriterion("devices =", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesNotEqualTo(String value) {
+            addCriterion("devices <>", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesGreaterThan(String value) {
+            addCriterion("devices >", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesGreaterThanOrEqualTo(String value) {
+            addCriterion("devices >=", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesLessThan(String value) {
+            addCriterion("devices <", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesLessThanOrEqualTo(String value) {
+            addCriterion("devices <=", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesLike(String value) {
+            addCriterion("devices like", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesNotLike(String value) {
+            addCriterion("devices not like", value, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesIn(List<String> values) {
+            addCriterion("devices in", values, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesNotIn(List<String> values) {
+            addCriterion("devices not in", values, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesBetween(String value1, String value2) {
+            addCriterion("devices between", value1, value2, "devices");
+            return (Criteria) this;
+        }
+
+        public Criteria andDevicesNotBetween(String value1, String value2) {
+            addCriterion("devices not between", value1, value2, "devices");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

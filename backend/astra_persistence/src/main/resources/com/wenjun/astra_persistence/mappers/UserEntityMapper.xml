@@ -10,6 +10,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="devices" jdbcType="VARCHAR" property="devices" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    uid, bio, date_created, date_of_birth, date_updated, email, full_name, gender
+    uid, bio, date_created, date_of_birth, date_updated, email, full_name, gender, devices
   </sql>
   <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.UserEntityExample" resultMap="BaseResultMap">
     select
@@ -105,10 +106,12 @@
   <insert id="insert" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     insert into users (uid, bio, date_created, 
       date_of_birth, date_updated, email, 
-      full_name, gender)
+      full_name, gender, devices
+      )
     values (#{uid,jdbcType=VARCHAR}, #{bio,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, 
       #{dateOfBirth,jdbcType=DATE}, #{dateUpdated,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
-      #{fullName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR})
+      #{fullName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{devices,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.UserEntity">
     insert into users
@@ -137,6 +140,9 @@
       <if test="gender != null">
         gender,
       </if>
+      <if test="devices != null">
+        devices,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uid != null">
@@ -162,6 +168,9 @@
       </if>
       <if test="gender != null">
         #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="devices != null">
+        #{devices,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +207,9 @@
       <if test="row.gender != null">
         gender = #{row.gender,jdbcType=VARCHAR},
       </if>
+      <if test="row.devices != null">
+        devices = #{row.devices,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +224,8 @@
       date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
       email = #{row.email,jdbcType=VARCHAR},
       full_name = #{row.fullName,jdbcType=VARCHAR},
-      gender = #{row.gender,jdbcType=VARCHAR}
+      gender = #{row.gender,jdbcType=VARCHAR},
+      devices = #{row.devices,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +254,9 @@
       <if test="gender != null">
         gender = #{gender,jdbcType=VARCHAR},
       </if>
+      <if test="devices != null">
+        devices = #{devices,jdbcType=VARCHAR},
+      </if>
     </set>
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
@@ -252,7 +268,8 @@
       date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
       email = #{email,jdbcType=VARCHAR},
       full_name = #{fullName,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR}
+      gender = #{gender,jdbcType=VARCHAR},
+      devices = #{devices,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>

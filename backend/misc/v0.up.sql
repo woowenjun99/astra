@@ -72,3 +72,5 @@ CREATE TABLE runs (
     index INTEGER NOT NULL,
     workout_log_id BIGSERIAL NOT NULL REFERENCES workout_logs ON DELETE CASCADE
 );
+
+ALTER TABLE users ADD COLUMN devices text;

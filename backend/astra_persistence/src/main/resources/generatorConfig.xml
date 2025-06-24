@@ -34,9 +34,9 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-<!--        <table tableName="users" domainObjectName="UserEntity" >-->
-<!--            <property name="useActualColumnNames" value="false"/>-->
-<!--        </table>-->
+        <table tableName="users" domainObjectName="UserEntity" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
 <!--                <table tableName="accounts" domainObjectName="AccountEntity" >-->
 <!--                    <property name="useActualColumnNames" value="false"/>-->
 <!--                </table>-->
@@ -55,12 +55,12 @@
 <!--            <property name="useActualColumnNames" value="false"/>-->
 <!--        </table>-->
 
-                <table tableName="runs" domainObjectName="RunEntity" >
-                    <property name="useActualColumnNames" value="false"/>
-                </table>
+<!--                <table tableName="runs" domainObjectName="RunEntity" >-->
+<!--                    <property name="useActualColumnNames" value="false"/>-->
+<!--                </table>-->
 
-                <table tableName="exercises" domainObjectName="ExerciseEntity" >
-                    <property name="useActualColumnNames" value="false"/>
-                </table>
+<!--                <table tableName="exercises" domainObjectName="ExerciseEntity" >-->
+<!--                    <property name="useActualColumnNames" value="false"/>-->
+<!--                </table>-->
     </context>
 </generatorConfiguration>
