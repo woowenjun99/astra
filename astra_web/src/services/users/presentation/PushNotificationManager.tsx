@@ -4,29 +4,22 @@ import { env } from "@/env";
 import { app } from "@/firebase";
 import { Button } from "@mantine/core";
 import { getMessaging, getToken } from "firebase/messaging";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { addPushNotification } from "../data/user-api";
+import { IconBell } from "@tabler/icons-react";
 
 export default function PushNotificationManager() {
-  const [isSupported, setIsSupported] = useState(false);
-  const [subscription, setSubscription] = useState<PushSubscription | null>(
-    null
-  );
-
   useEffect(() => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      setIsSupported(true);
       registerServiceWorker();
     }
   }, []);
 
   async function registerServiceWorker() {
-    const registration = await navigator.serviceWorker.register("/sw.js", {
+    await navigator.serviceWorker.register("/sw.js", {
       scope: "/",
       updateViaCache: "none",
     });
-    const sub = await registration.pushManager.getSubscription();
-    setSubscription(sub);
   }
 
   async function subscribeUser() {
@@ -36,10 +29,6 @@ export default function PushNotificationManager() {
       throw new Error("Please give permission to send push notification");
     }
     const registration = await navigator.serviceWorker.ready;
-    // await registration.pushManager.subscribe({
-    //   applicationServerKey: env.NEXT_PUBLIC_FIREBASE_CLOUD_MESSAGING_VAPID_KEY,
-    //   userVisibleOnly: true,
-    // });
     const token = await getToken(messaging, {
       serviceWorkerRegistration: registration,
       vapidKey: env.NEXT_PUBLIC_FIREBASE_CLOUD_MESSAGING_VAPID_KEY,
@@ -48,8 +37,8 @@ export default function PushNotificationManager() {
   }
 
   return (
-    <div>
-      <Button onClick={subscribeUser}>Subscribe User</Button>
-    </div>
+    <Button onClick={subscribeUser} color="black" leftSection={<IconBell />}>
+      Subscribe
+    </Button>
   );
 }

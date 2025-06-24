@@ -6,11 +6,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
 
 public class FirebaseClientImpl implements FirebaseClient {
     private final FirebaseAuth firebaseAuth;
 
-    public FirebaseClientImpl(FirebaseAuth firebaseAuth) {
+    private final FirebaseMessaging firebaseMessaging;
+
+    public FirebaseClientImpl(FirebaseMessaging firebaseMessaging, FirebaseAuth firebaseAuth) {
+        this.firebaseMessaging = firebaseMessaging;
         this.firebaseAuth = firebaseAuth;
     }
 
@@ -53,6 +59,19 @@ public class FirebaseClientImpl implements FirebaseClient {
             FirebaseToken token = firebaseAuth.verifyIdToken(jwt, true);
             return new AuthenticatedUser(token.getUid());
         } catch(FirebaseAuthException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void sendPushNotification(String token) {
+        try {
+            Message message = Message
+                    .builder()
+                    .setToken(token)
+                    .build();
+            String response = firebaseMessaging.send(message);
+        } catch(FirebaseMessagingException e) {
             throw new RuntimeException(e.getMessage());
         }
     }

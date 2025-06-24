@@ -37,4 +37,9 @@ public interface FirebaseClient {
      * @throws RuntimeException If the JWT is invalid
      */
     AuthenticatedUser getUser(String jwt);
+
+    /**
+     * Send push notification to all the listed devices
+     */
+    void sendPushNotification(String token);
 }

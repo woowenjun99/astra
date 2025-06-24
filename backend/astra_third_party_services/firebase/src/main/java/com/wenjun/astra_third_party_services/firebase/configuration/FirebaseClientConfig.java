@@ -1,5 +1,6 @@
 package com.wenjun.astra_third_party_services.firebase.configuration;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.wenjun.astra_third_party_services.firebase.service.FirebaseClient;
 import com.wenjun.astra_third_party_services.firebase.service.FirebaseClientImpl;
 
@@ -28,6 +29,7 @@ public class FirebaseClientConfig {
         FirebaseOptions firebaseOptions = FirebaseOptions.builder().setCredentials(googleCredentials).build();
         FirebaseApp firebaseApp = FirebaseApp.initializeApp(firebaseOptions);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance(firebaseApp);
-        return new FirebaseClientImpl(firebaseAuth);
+        FirebaseMessaging firebaseMessaging = FirebaseMessaging.getInstance(firebaseApp);
+        return new FirebaseClientImpl(firebaseMessaging, firebaseAuth);
     }
 }
