@@ -4,6 +4,7 @@ import "@mantine/dates/styles.css";
 import "@mantine/charts/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
+import { ModalsProvider } from "@mantine/modals";
 
 import ClientLayout from "@/component/ClientLayout";
 import type { Metadata } from "next";
@@ -23,7 +24,7 @@ export default function RootLayout({
       <body>
         <MantineProvider>
           <ClientLayout>
-            {children}
+            <ModalsProvider>{children}</ModalsProvider>
             <Notifications />
           </ClientLayout>
         </MantineProvider>

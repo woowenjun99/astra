@@ -91,3 +91,14 @@ export async function getWorkoutMetadata(
   const data = response.data as BaseResponse<WorkoutMetadata>;
   return data.data;
 }
+
+export async function deleteWorkout(id: number) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.delete(`/fitness/workouts/${id}`, {
+    headers: { Authorization: jwt },
+  });
+  const data = response.data as BaseResponse<null>;
+  if (!data.success) {
+    throw new Error(data.message);
+  }
+}

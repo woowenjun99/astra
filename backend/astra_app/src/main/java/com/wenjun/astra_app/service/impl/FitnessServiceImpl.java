@@ -165,7 +165,13 @@ public class FitnessServiceImpl implements FitnessService {
     public WorkoutMetadata getWorkoutMetadata() throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-        log.info("Metadata: {}", fitnessRepository.getWorkoutMetadata(userId));
         return fitnessRepository.getWorkoutMetadata(userId);
+    }
+
+    @Override
+    public void deleteWorkout(Long workoutId) throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+        fitnessRepository.deleteWorkout(userId, workoutId);
     }
 }

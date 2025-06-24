@@ -41,4 +41,6 @@ public interface FitnessService {
     void createWorkout(CreateWorkoutDTO request) throws AstraException;
 
     WorkoutMetadata getWorkoutMetadata() throws AstraException;
+
+    void deleteWorkout(Long workoutId) throws AstraException;
 }

@@ -2,15 +2,10 @@ package com.wenjun.astra_persistence.repository;
 
 import com.wenjun.astra_persistence.mappers.FitnessGoalEntityMapper;
 import com.wenjun.astra_persistence.mappers.RunEntityMapper;
+import com.wenjun.astra_persistence.mappers.WorkoutLogEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualDailyLogEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper;
-import com.wenjun.astra_persistence.models.DailyLogEntity;
-import com.wenjun.astra_persistence.models.ExerciseEntity;
-import com.wenjun.astra_persistence.models.FitnessGoalEntity;
-import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
-import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
-import com.wenjun.astra_persistence.models.RunEntity;
-import com.wenjun.astra_persistence.models.WorkoutLogEntity;
+import com.wenjun.astra_persistence.models.*;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
@@ -36,6 +31,9 @@ public class FitnessRepository {
 
     @Resource
     private RunEntityMapper runEntityMapper;
+
+    @Resource
+    private WorkoutLogEntityMapper workoutLogEntityMapper;
 
     public void insertFitnessGoalSelective(FitnessGoalEntity fitnessGoalEntity) {
         fitnessGoalEntityMapper.insertSelective(fitnessGoalEntity);
@@ -83,5 +81,11 @@ public class FitnessRepository {
 
     public WorkoutMetadata getWorkoutMetadata(String userId) {
         return manualWorkoutLogEntityMapper.getWorkoutMetadata(userId);
+    }
+
+    public void deleteWorkout(String userId, Long workoutId) {
+        WorkoutLogEntityExample example = new WorkoutLogEntityExample();
+        example.createCriteria().andUidEqualTo(userId).andIdEqualTo(workoutId);
+        workoutLogEntityMapper.deleteByExample(example);
     }
 }
