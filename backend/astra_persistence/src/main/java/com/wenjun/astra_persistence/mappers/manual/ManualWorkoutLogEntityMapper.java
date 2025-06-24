@@ -12,7 +12,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ManualWorkoutLogEntityMapper {
-    List<WorkoutLogEntity> getRecentWorkouts(@Param("userId") String userId);
+    List<WorkoutLogEntity> getWorkouts(
+            @Param("userId") String userId,
+            @Param("pageSize") Long pageSize,
+            @Param("pageNo") Long pageNo
+    );
 
     List<DailyActivity> getWeeklyActivity(
             @Param("userId") String userId,

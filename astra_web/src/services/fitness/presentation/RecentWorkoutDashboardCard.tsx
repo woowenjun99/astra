@@ -88,7 +88,7 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
 
 export default function RecentWorkoutDashboardCard() {
   const { data, isLoading } = useSWR(
-    "/fitness/workouts/recent",
+    ["/fitness/workouts", 3, 1],
     getRecentWorkouts
   );
 

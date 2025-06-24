@@ -58,8 +58,8 @@ public class FitnessRepository {
         return manualDailyLogEntityMapper.getMostRecentDailyLog(uid, isDescending);
     }
 
-    public List<WorkoutLogEntity> getRecentWorkouts(String userId) {
-        return manualWorkoutLogEntityMapper.getRecentWorkouts(userId);
+    public List<WorkoutLogEntity> getWorkouts(String userId) {
+        return manualWorkoutLogEntityMapper.getWorkouts(userId, 3L, 0L);
     }
 
     public List<DailyActivity> getWeeklyActivity(String userId) {

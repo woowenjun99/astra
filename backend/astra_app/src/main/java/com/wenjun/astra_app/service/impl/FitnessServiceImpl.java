@@ -98,10 +98,10 @@ public class FitnessServiceImpl implements FitnessService {
     }
 
     @Override
-    public List<WorkoutLogEntity> getRecentWorkouts() throws AstraException {
+    public List<WorkoutLogEntity> getWorkouts() throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-        return fitnessRepository.getRecentWorkouts(userId);
+        return fitnessRepository.getWorkouts(userId);
     }
 
     @Override

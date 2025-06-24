@@ -1,16 +1,29 @@
 package com.wenjun.astra_persistence.models.manual;
 
-import lombok.Data;
-
 import java.util.Date;
 
-@Data
 public class DailyActivity {
-    final private Date date;
-    final private Integer caloriesBurnt;
+    private Date date;
+    private Integer caloriesBurnt;
 
     DailyActivity(Date date, Integer caloriesBurnt) {
         this.date = date;
+        this.caloriesBurnt = caloriesBurnt;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Integer getCaloriesBurnt() {
+        return caloriesBurnt;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setCaloriesBurnt(Integer caloriesBurnt) {
         this.caloriesBurnt = caloriesBurnt;
     }
 }
