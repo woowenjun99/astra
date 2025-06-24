@@ -4,14 +4,11 @@ import {
   Button,
   Card,
   Grid,
-  Group,
   LoadingOverlay,
   Select,
-  Stack,
   Text,
   Textarea,
   TextInput,
-  Title,
 } from "@mantine/core";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -22,7 +19,6 @@ import { DateInput, DateStringValue } from "@mantine/dates";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { getUser, updateUser } from "@/services/users/data/user-api";
-import PushNotificationManager from "@/services/users/presentation/PushNotificationManager";
 
 const schema = z.object({
   bio: z.string().max(500).nullable(),
@@ -152,16 +148,6 @@ export default function ProfileForm() {
           )}
         </Card>
       </form>
-
-      <Card mt="lg" withBorder shadow="md">
-        <Title order={2}>Progressive Web App Settings</Title>
-        <Stack>
-          <Group align="center" justify="space-between">
-            <Text>Push Notification (Click to subscribe)</Text>
-            <PushNotificationManager />
-          </Group>
-        </Stack>
-      </Card>
     </div>
   );
 }
