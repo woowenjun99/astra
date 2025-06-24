@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function mainfest(): MetadataRoute.Manifest {
   return {
+    background_color: "#FFFFFF",
     description:
       "A super Progressive Web App that is able to keep track of fitness",
     display: "standalone",
@@ -19,5 +20,6 @@ export default function mainfest(): MetadataRoute.Manifest {
     ],
     name: "Astra",
     start_url: "/",
+    theme_color: "#000000",
   };
 }

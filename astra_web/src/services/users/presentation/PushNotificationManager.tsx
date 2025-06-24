@@ -38,7 +38,7 @@ export default function PushNotificationManager() {
 
   return (
     <Button onClick={subscribeUser} color="black" leftSection={<IconBell />}>
-      Subscribe
+      Subscribe To Push Notification
     </Button>
   );
 }

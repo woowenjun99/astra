@@ -23,7 +23,6 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { getUser, updateUser } from "@/services/users/data/user-api";
 import PushNotificationManager from "@/services/users/presentation/PushNotificationManager";
-import InstallPrompt from "@/services/users/presentation/InstallPrompt";
 
 const schema = z.object({
   bio: z.string().max(500).nullable(),
@@ -160,11 +159,6 @@ export default function ProfileForm() {
           <Group align="center" justify="space-between">
             <Text>Push Notification (Click to subscribe)</Text>
             <PushNotificationManager />
-          </Group>
-
-          <Group align="center" justify="space-between">
-            <Text>Install in iOS</Text>
-            <InstallPrompt />
           </Group>
         </Stack>
       </Card>
