@@ -6,6 +6,7 @@ import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.model.enums.fitness_goals.FitnessGoalCategory;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
+import com.wenjun.astra_app.model.vo.GetWorkoutVO;
 import com.wenjun.astra_app.plugins.fitness_goals.FitnessGoalPlugin;
 import com.wenjun.astra_app.plugins.fitness_goals.FitnessGoalPlugins;
 import com.wenjun.astra_app.service.FitnessService;
@@ -98,10 +99,15 @@ public class FitnessServiceImpl implements FitnessService {
     }
 
     @Override
-    public List<WorkoutLogEntity> getWorkouts() throws AstraException {
+    public GetWorkoutVO getWorkouts(Long pageSize, Long pageNo, String workoutType, String intensity) throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-        return fitnessRepository.getWorkouts(userId);
+        List<WorkoutLogEntity> workouts = fitnessRepository.getWorkouts(userId, pageSize, pageNo, workoutType, intensity);
+        Long total = fitnessRepository.getWorkoutCount(userId, workoutType, intensity);
+        GetWorkoutVO response = new GetWorkoutVO();
+        response.setWorkouts(workouts);
+        response.setTotal(total);
+        return response;
     }
 
     @Override

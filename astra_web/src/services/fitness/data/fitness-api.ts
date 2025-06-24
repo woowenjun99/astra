@@ -39,13 +39,25 @@ export async function getFitnessGoals(
   return data.data;
 }
 
+interface GetWorkoutVO {
+  workouts: Workout[];
+  total: number;
+}
+
 export async function getWorkouts([endpoint, ...params]: string[]) {
   const jwt = await getJwtToken();
   const response = await axiosInstance.get(endpoint, {
     headers: { Authorization: jwt },
-    params: { pageSize: params[0], pageNo: params[1] },
+    params: {
+      intensity:
+        params.length >= 3 && params[3] === "All Intensity" ? null : params[3],
+      pageSize: params[0],
+      pageNo: params[1],
+      workoutType:
+        params.length >= 3 && params[2] === "All Types" ? null : params[2],
+    },
   });
-  const data = response.data as BaseResponse<Workout[]>;
+  const data = response.data as BaseResponse<GetWorkoutVO>;
   return data.data;
 }
 

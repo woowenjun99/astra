@@ -4,8 +4,8 @@ import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
 import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
+import com.wenjun.astra_app.model.vo.GetWorkoutVO;
 import com.wenjun.astra_app.service.FitnessService;
-import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
@@ -42,11 +42,13 @@ public class FitnessController {
     }
 
     @GetMapping("/workouts")
-    public List<WorkoutLogEntity> getWorkouts(
-            @RequestParam("pageSize") Integer pageSize,
-            @RequestParam("pageNo") Integer pageNo
+    public GetWorkoutVO getWorkouts(
+            @RequestParam("pageSize") Long pageSize,
+            @RequestParam("pageNo") Long pageNo,
+            @RequestParam(value = "workoutType", required = false) String workoutType,
+            @RequestParam(value = "intensity", required = false) String intensity
     ) throws AstraException {
-        return fitnessService.getWorkouts();
+        return fitnessService.getWorkouts(pageSize, pageNo, workoutType, intensity);
     }
 
     @DeleteMapping("/workouts/{id}")

@@ -4,7 +4,7 @@ import com.wenjun.astra_app.model.AstraException;
 import com.wenjun.astra_app.model.dto.CreateFitnessGoalDTO;
 import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.vo.FitnessGoal;
-import com.wenjun.astra_persistence.models.WorkoutLogEntity;
+import com.wenjun.astra_app.model.vo.GetWorkoutVO;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
@@ -34,7 +34,7 @@ public interface FitnessService {
      * @return An array of workouts
      * @throws AstraException
      */
-    List<WorkoutLogEntity> getWorkouts() throws AstraException;
+    GetWorkoutVO getWorkouts(Long pageSize, Long pageNo, String workoutType, String intensity) throws AstraException;
 
     List<DailyActivity> getWeeklyActivity() throws AstraException;
 

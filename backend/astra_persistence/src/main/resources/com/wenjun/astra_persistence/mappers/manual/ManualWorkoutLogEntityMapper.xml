@@ -17,8 +17,14 @@
         where
             uid = #{userId}
             and date &lt;= current_date
+        <if test="workoutType != null">
+            and workout_type = #{workoutType}
+        </if>
+        <if test="intensity != null">
+            and intensity = #{intensity}
+        </if>
         order by date desc
-        limit #{pageSize} offset #{pageNo}
+        limit #{pageSize} offset #{offset}
     </select>
 
     <select id="getWeeklyActivity" resultType="com.wenjun.astra_persistence.models.manual.DailyActivity">

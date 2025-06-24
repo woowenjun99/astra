@@ -87,7 +87,7 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
 };
 
 export default function RecentWorkoutDashboardCard() {
-  const { data, isLoading } = useSWR(["/fitness/workouts", 3, 1], getWorkouts);
+  const { data, isLoading } = useSWR(["/fitness/workouts", 3, 0], getWorkouts);
 
   return (
     <Card withBorder shadow="md" h={550} radius="md">
@@ -98,7 +98,7 @@ export default function RecentWorkoutDashboardCard() {
           <LoadingOverlay visible />
         </Box>
       ) : (
-        <WorkoutCards workouts={data ?? []} />
+        <WorkoutCards workouts={data?.workouts ?? []} />
       )}
     </Card>
   );

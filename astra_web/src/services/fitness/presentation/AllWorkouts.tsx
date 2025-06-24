@@ -1,5 +1,5 @@
 "use client";
-import { FC } from "react";
+import { FC, useState } from "react";
 import useSWR from "swr";
 import { deleteWorkout, getWorkouts } from "../data/fitness-api";
 import { Workout } from "../domain/workout";
@@ -7,9 +7,12 @@ import {
   Box,
   Button,
   Card,
+  Grid,
   Group,
   LoadingOverlay,
   Menu,
+  Pagination,
+  Select,
   Stack,
   Text,
   Title,
@@ -59,7 +62,7 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
   };
 
   return (
-    <Card withBorder shadow="md" my="lg">
+    <Card withBorder shadow="md">
       <Group justify="space-between" align="start">
         <Stack gap="sm">
           <Title order={3} size="lg">
@@ -105,21 +108,66 @@ const WorkoutCards: FC<{ workouts: Workout[] }> = ({ workouts }) => {
 };
 
 export default function AllWorkouts() {
-  const pagination = { pageSize: 20, pageNo: 0 };
+  const [workoutType, setWorkoutType] = useState("All Types");
+  const [intensity, setIntensity] = useState("All Intensity");
+  const [pagination, setPagination] = useState({ pageSize: 20, pageNo: 0 });
   const { data, isLoading } = useSWR(
-    ["/fitness/workouts", pagination.pageSize, pagination.pageNo],
+    [
+      "/fitness/workouts",
+      pagination.pageSize,
+      pagination.pageNo,
+      workoutType,
+      intensity,
+    ],
     getWorkouts
   );
 
   return (
-    <div>
+    <Stack mt="lg">
+      <Grid>
+        <Grid.Col span={{ sm: 6, md: 4 }}>
+          <Select
+            allowDeselect={false}
+            data={["All Types", "Running", "Gym"]}
+            onChange={(value) => {
+              if (value === null) return;
+              setWorkoutType(value);
+            }}
+            value={workoutType}
+          />
+        </Grid.Col>
+
+        <Grid.Col span={{ sm: 6, md: 4 }}>
+          <Select
+            allowDeselect={false}
+            data={["All Intensity", "Low", "Medium", "High"]}
+            onChange={(value) => {
+              if (value === null) return;
+              setIntensity(value);
+            }}
+            value={intensity}
+          />
+        </Grid.Col>
+      </Grid>
       {isLoading ? (
-        <Box h="100%" pos="relative">
-          <LoadingOverlay />
+        <Box pos="relative">
+          <LoadingOverlay visible />
         </Box>
       ) : (
-        <WorkoutCards workouts={data ?? []} />
+        <Stack>
+          <WorkoutCards workouts={data?.workouts ?? []} />
+          <Pagination
+            color="black"
+            onChange={(page) =>
+              setPagination({ ...pagination, pageNo: page - 1 })
+            }
+            radius="md"
+            total={Math.ceil((data?.total ?? 0) / pagination.pageSize)}
+            value={pagination.pageNo + 1}
+            withEdges
+          />
+        </Stack>
       )}
-    </div>
+    </Stack>
   );
 }

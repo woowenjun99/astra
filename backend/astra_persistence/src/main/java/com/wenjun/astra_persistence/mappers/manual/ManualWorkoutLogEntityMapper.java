@@ -15,7 +15,9 @@ public interface ManualWorkoutLogEntityMapper {
     List<WorkoutLogEntity> getWorkouts(
             @Param("userId") String userId,
             @Param("pageSize") Long pageSize,
-            @Param("pageNo") Long pageNo
+            @Param("offset") Long offset,
+            @Param("workoutType") String workoutType,
+            @Param("intensity") String intensity
     );
 
     List<DailyActivity> getWeeklyActivity(

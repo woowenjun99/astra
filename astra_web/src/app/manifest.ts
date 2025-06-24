@@ -5,7 +5,7 @@ export default function mainfest(): MetadataRoute.Manifest {
     background_color: "#FFFFFF",
     description:
       "A super Progressive Web App that is able to keep track of fitness",
-    display: "standalone",
+    display: "fullscreen",
     icons: [
       {
         src: "/web-app-manifest-192x192.png",

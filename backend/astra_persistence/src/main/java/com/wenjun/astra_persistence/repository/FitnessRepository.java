@@ -5,7 +5,14 @@ import com.wenjun.astra_persistence.mappers.RunEntityMapper;
 import com.wenjun.astra_persistence.mappers.WorkoutLogEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualDailyLogEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper;
-import com.wenjun.astra_persistence.models.*;
+import com.wenjun.astra_persistence.models.DailyLogEntity;
+import com.wenjun.astra_persistence.models.ExerciseEntity;
+import com.wenjun.astra_persistence.models.FitnessGoalEntity;
+import com.wenjun.astra_persistence.models.FitnessGoalEntityExample;
+import com.wenjun.astra_persistence.models.FitnessGoalEntityKey;
+import com.wenjun.astra_persistence.models.RunEntity;
+import com.wenjun.astra_persistence.models.WorkoutLogEntity;
+import com.wenjun.astra_persistence.models.WorkoutLogEntityExample;
 import com.wenjun.astra_persistence.models.manual.DailyActivity;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
@@ -56,8 +63,8 @@ public class FitnessRepository {
         return manualDailyLogEntityMapper.getMostRecentDailyLog(uid, isDescending);
     }
 
-    public List<WorkoutLogEntity> getWorkouts(String userId) {
-        return manualWorkoutLogEntityMapper.getWorkouts(userId, 3L, 0L);
+    public List<WorkoutLogEntity> getWorkouts(String userId, Long pageSize, Long pageNo, String workoutType, String intensity) {
+        return manualWorkoutLogEntityMapper.getWorkouts(userId, pageSize, pageSize * pageNo, workoutType, intensity);
     }
 
     public List<DailyActivity> getWeeklyActivity(String userId) {
@@ -87,5 +94,18 @@ public class FitnessRepository {
         WorkoutLogEntityExample example = new WorkoutLogEntityExample();
         example.createCriteria().andUidEqualTo(userId).andIdEqualTo(workoutId);
         workoutLogEntityMapper.deleteByExample(example);
+    }
+
+    public Long getWorkoutCount(String userId, String workoutType, String intensity) {
+        WorkoutLogEntityExample example = new WorkoutLogEntityExample();
+        WorkoutLogEntityExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(userId);
+        if (workoutType != null) {
+            criteria.andWorkoutTypeEqualTo(workoutType);
+        }
+        if (intensity != null) {
+            criteria.andIntensityEqualTo(intensity);
+        }
+        return workoutLogEntityMapper.countByExample(example);
     }
 }

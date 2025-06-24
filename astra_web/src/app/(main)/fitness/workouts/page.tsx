@@ -1,7 +1,7 @@
 "use client";
 import AllWorkouts from "@/services/fitness/presentation/AllWorkouts";
 import WorkoutMetadataCards from "@/services/fitness/presentation/WorkoutMetadataCard";
-import { Button, Group, Stack, Text, Title } from "@mantine/core";
+import { Button, Group, Stack, Tabs, Text, Title } from "@mantine/core";
 import { IconCalendar, IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 
@@ -41,7 +41,17 @@ export default function WorkoutMainPage() {
       </Group>
 
       <WorkoutMetadataCards />
-      <AllWorkouts />
+      <Tabs defaultValue="list" variant="pills">
+        <Tabs.List>
+          <Tabs.Tab value="list" color="black">
+            List View
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="list">
+          <AllWorkouts />
+        </Tabs.Panel>
+      </Tabs>
     </main>
   );
 }
