@@ -48,11 +48,16 @@ export default function ClientLayout({
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user === null && pathname !== "/auth") {
-        router.push("/auth");
-      } else if (user !== null && pathname === "/auth") {
-        router.push("/");
-        subscribeUser();
+      // If the user is in the home page, do not need to do anything
+      switch (pathname) {
+        case "/auth":
+          if (user === null) router.push("/auth");
+          break;
+        case "/":
+          break;
+        default:
+          router.push("/main");
+          subscribeUser();
       }
       setAuthReady(true);
     });
