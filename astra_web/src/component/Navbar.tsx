@@ -7,8 +7,8 @@ import { signout } from "@/services/authentication/data/authentication-api";
 import Link from "next/link";
 
 const data = [
-  { link: "/", label: "Fitness", icon: IconHome },
-  { link: "/profile", label: "Settings", icon: IconSettings },
+  { link: "/main", label: "Fitness", icon: IconHome },
+  { link: "/main/profile", label: "Settings", icon: IconSettings },
 ];
 
 export function NavbarSimple() {

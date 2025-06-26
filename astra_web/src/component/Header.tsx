@@ -3,11 +3,12 @@ import { Burger, Button, Container, Drawer, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./Header.module.css";
 import Link from "next/link";
+import { signout } from "@/services/authentication/data/authentication-api";
 
 const links = [
-  { link: "/", label: "Fitness" },
+  { link: "/main/", label: "Fitness" },
   {
-    link: "/profile",
+    link: "/main/profile",
     label: "Settings",
   },
 ];
@@ -21,7 +22,7 @@ export default function Header() {
         <div className={classes.inner}>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
         </div>
-        <Drawer opened={opened} onClose={close}>
+        <Drawer opened={opened} onClose={close} size="md">
           <Stack>
             {links.map((link) => {
               return (
@@ -38,6 +39,9 @@ export default function Header() {
                 </Link>
               );
             })}
+            <Button fullWidth variant="transparent" onClick={signout}>
+              Sign Out
+            </Button>
           </Stack>
         </Drawer>
       </Container>

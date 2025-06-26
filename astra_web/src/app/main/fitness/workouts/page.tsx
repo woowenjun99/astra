@@ -16,7 +16,7 @@ export default function WorkoutMainPage() {
         <Group gap="md">
           <Link
             passHref
-            href="/fitness/workouts/new"
+            href="/main/fitness/workouts/new"
             style={{ textDecoration: "none" }}
           >
             <Button leftSection={<IconPlus />} color="black">
@@ -26,7 +26,7 @@ export default function WorkoutMainPage() {
 
           <Link
             passHref
-            href="/fitness/workouts/schedule"
+            href="/main/fitness/workouts/schedule"
             style={{ textDecoration: "none" }}
           >
             <Button

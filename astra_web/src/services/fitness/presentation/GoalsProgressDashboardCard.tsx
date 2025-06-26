@@ -28,7 +28,7 @@ const FitnessGoals: FC<FitnessGoalsListProps> = ({ fitnessGoals }) => {
         <Text fw="lighter">Set your first fitness goal to track progress</Text>
         <Link
           passHref
-          href="/fitness/goals"
+          href="/main/fitness/goals"
           style={{ width: "100%", textDecoration: "none" }}
         >
           <Button color="black" leftSection={<IconPlus />} fullWidth>

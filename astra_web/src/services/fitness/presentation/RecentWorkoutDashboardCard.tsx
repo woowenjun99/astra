@@ -31,7 +31,7 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
           Start your fitness journey by recording your first workout
         </Text>
         <Group align="start" visibleFrom="sm">
-          <Link passHref href="/fitness/workouts/new">
+          <Link passHref href="/main/fitness/workouts/new">
             <Button color="black" leftSection={<IconPlus />}>
               Record Workout
             </Button>
@@ -44,7 +44,7 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
         <Group align="start" hiddenFrom="sm">
           <Link
             passHref
-            href="/fitness/workouts/new"
+            href="/main/fitness/workouts/new"
             style={{ width: "100%", textDecoration: "none" }}
           >
             <Button color="black" leftSection={<IconPlus />} fullWidth>
@@ -75,7 +75,7 @@ const WorkoutCards: FC<WorkoutCardsListProps> = ({ workouts }) => {
       })}
       <Link
         passHref
-        href="/fitness/workouts"
+        href="/main/fitness/workouts"
         style={{ textDecoration: "none" }}
       >
         <Button variant="outline" color="black" fullWidth mt="lg">
