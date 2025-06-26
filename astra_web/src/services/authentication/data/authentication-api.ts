@@ -1,6 +1,5 @@
-import { auth } from "@/firebase";
-import type { BaseResponse } from "@/model/base-response";
-import { axiosInstance } from "@/util/axios-instance";
+import { auth } from "@/util/firebase";
+import { axiosInstance, type BaseResponse } from "@/util/axios-instance";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 interface CreateUserDTO {
@@ -11,7 +10,7 @@ interface CreateUserDTO {
 }
 
 export async function createUser(payload: CreateUserDTO) {
-  const response = await axiosInstance.post<BaseResponse<void>>(
+  const response = await axiosInstance.post<null, BaseResponse<void>>(
     "/users/register",
     payload
   );

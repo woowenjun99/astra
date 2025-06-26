@@ -21,7 +21,7 @@ import { useCallback, useState } from "react";
 import { notifications } from "@mantine/notifications";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "@/firebase";
+import { auth } from "@/util/firebase";
 
 const schema = z.object({
   email: z.string().email(),

@@ -14,7 +14,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { notifications } from "@mantine/notifications";
-import { auth } from "@/firebase";
+import { auth } from "@/util/firebase";
 import { DateInput, DateStringValue } from "@mantine/dates";
 import { useState } from "react";
 import dayjs from "dayjs";

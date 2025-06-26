@@ -1,21 +1,14 @@
-import type { BaseResponse } from "@/model/base-response";
 import type { User } from "../domain/user";
-import { axiosInstance } from "@/util/axios-instance";
+import { axiosInstance, type BaseResponse } from "@/util/axios-instance";
 import { getJwtToken } from "@/services/authentication/data/authentication-api";
 import dayjs from "dayjs";
 
-/**
- * Get the current logged in user info from the backend.
- *
- * @returns The current logged in user info
- */
 export async function getUser(): Promise<User> {
   const jwt = await getJwtToken();
-  const response = await axiosInstance.get("/users", {
+  const response = await axiosInstance.get<null, BaseResponse<User>>("/users", {
     headers: { Authorization: jwt },
   });
-  const data = response.data as BaseResponse<User>;
-  return data.data;
+  return response.data.data;
 }
 
 export interface UpdateUserDTO {
@@ -29,12 +22,15 @@ export interface UpdateUserDTO {
 export async function updateUser(payload: UpdateUserDTO) {
   const body = { ...payload, dob: dayjs(payload.dob, "").toDate() };
   const jwt = await getJwtToken();
-  const response = await axiosInstance.put("/users", body, {
-    headers: { Authorization: jwt },
-  });
-  const data = response.data as BaseResponse<null>;
-  if (!data.success) {
-    throw new Error(data.message);
+  const response = await axiosInstance.put<UpdateUserDTO, BaseResponse<null>>(
+    "/users",
+    body,
+    {
+      headers: { Authorization: jwt },
+    }
+  );
+  if (!response.data.success) {
+    throw new Error(response.data.message);
   }
 }
 
@@ -44,11 +40,13 @@ interface AddPushNotificationDTO {
 
 export async function addPushNotification(body: AddPushNotificationDTO) {
   const jwt = await getJwtToken();
-  const response = await axiosInstance.post("/devices", body, {
+  const response = await axiosInstance.post<
+    AddPushNotificationDTO,
+    BaseResponse<null>
+  >("/devices", body, {
     headers: { Authorization: jwt },
   });
-  const data = response.data as BaseResponse<void>;
-  if (!data.success) {
-    throw new Error(data.message);
+  if (!response.data.success) {
+    throw new Error(response.data.message);
   }
 }

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
-import { app, auth } from "@/firebase";
+import { app, auth } from "@/util/firebase";
 import { LoadingOverlay } from "@mantine/core";
 import { getMessaging, getToken } from "firebase/messaging";
 import { addPushNotification } from "@/services/users/data/user-api";
@@ -47,17 +47,17 @@ export default function ClientLayout({
   }, []);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       // If the user is in the home page, do not need to do anything
       switch (pathname) {
         case "/auth":
-          if (user === null) router.push("/auth");
+          if (user !== null) router.push("/main");
           break;
         case "/":
           break;
         default:
-          router.push("/main");
-          subscribeUser();
+          if (user === null) router.push("/auth");
+          await subscribeUser();
       }
       setAuthReady(true);
     });
