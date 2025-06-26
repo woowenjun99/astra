@@ -47,9 +47,7 @@ export default function AuthPage() {
   return (
     <main>
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <div className="absolute right-4 top-4 z-10">
-          <ThemeToggle />
-        </div>
+        <ThemeToggle />
 
         <div className="min-h-screen flex">
           <div className="flex flex-col md:w-[450px] p-8 pt-10 border w-full dark:bg-transparent bg-white">
