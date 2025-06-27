@@ -54,7 +54,7 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
     if (today.isSame(givenDate, "day")) return "Today";
     if (today.diff(givenDate, "day") === -1) return "Tomorrow";
     if (today.diff(givenDate, "day") === 1) return "Yesterday";
-    return givenDate.format("MMM d, YYYY");
+    return givenDate.format("MMMM D, YYYY");
   };
 
   const getIntensityColor = (intensity: string) => {

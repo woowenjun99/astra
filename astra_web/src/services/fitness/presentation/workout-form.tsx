@@ -36,11 +36,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import {
   createWorkout,
+  editWorkout,
   getWorkout,
 } from "@/services/fitness/data/fitness-repository";
 import { Exercise, Run } from "@/services/fitness/domain/workout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
+import dayjs from "dayjs";
 import { CalendarIcon } from "lucide-react";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -143,7 +145,7 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
       setRuns(data.runs);
       return {
         caloriesBurnt: data.workout.caloriesBurnt,
-        date: data.workout.date,
+        date: dayjs(data.workout.date).toDate(),
         duration: data.workout.duration,
         intensity: data.workout.intensity,
         remarks: "",
@@ -177,17 +179,33 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
       workoutType,
     }) => {
       try {
-        await createWorkout({
-          caloriesBurnt,
-          date,
-          duration,
-          exercises,
-          intensity,
-          remarks,
-          runs,
-          title,
-          workoutType,
-        });
+        if (id === undefined) {
+          await createWorkout({
+            caloriesBurnt,
+            date,
+            duration,
+            exercises,
+            intensity,
+            remarks,
+            runs,
+            title,
+            workoutType,
+          });
+        } else {
+          await editWorkout({
+            caloriesBurnt,
+            date,
+            duration,
+            exercises,
+            id,
+            intensity,
+            remarks,
+            runs,
+            title,
+            workoutType,
+          });
+        }
+        window.history.back();
       } catch (e) {
         toast.error((e as Error).message);
       }
@@ -318,7 +336,17 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                       <FormItem>
                         <FormLabel>Duration (Minutes)</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input
+                            {...field}
+                            value={field.value ?? ""}
+                            onChange={(e) =>
+                              field.onChange(
+                                e.target.value === ""
+                                  ? undefined
+                                  : Number(e.target.value)
+                              )
+                            }
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -362,7 +390,17 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                       <FormItem>
                         <FormLabel>Calories Burnt</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input
+                            {...field}
+                            value={field.value ?? ""}
+                            onChange={(e) =>
+                              field.onChange(
+                                e.target.value === ""
+                                  ? undefined
+                                  : Number(e.target.value)
+                              )
+                            }
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

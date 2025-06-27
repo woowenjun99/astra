@@ -39,6 +39,19 @@ export async function createWorkout(payload: CreateWorkoutDTO) {
   }
 }
 
+export async function editWorkout(payload: CreateWorkoutDTO) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.put<
+    CreateWorkoutDTO,
+    BaseResponse<null>
+  >("/fitness/workouts", payload, {
+    headers: { Authorization: jwt },
+  });
+  if (!response.data.success) {
+    throw new Error(response.data.message);
+  }
+}
+
 export async function getWorkoutMetadata(
   endpoint: string
 ): Promise<WorkoutMetadata> {
