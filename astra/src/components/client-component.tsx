@@ -19,8 +19,11 @@ const ClientComponent: FC<ClientComponentProps> = ({ children }) => {
           if (user !== null) redirect("/main");
           break;
         case "/":
+          // Allow anyone to access the home page
           break;
         default:
+          // Allow anyone to access the documentation page
+          if (pathName?.startsWith("/docs")) break;
           if (user === null) redirect("/auth");
       }
       setIsAuthStateReady(true);
