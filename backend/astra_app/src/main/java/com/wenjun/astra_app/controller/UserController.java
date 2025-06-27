@@ -33,7 +33,7 @@ public class UserController {
     @Transactional
     @PostMapping("/register")
     public void createUser(@Valid @RequestBody CreateUserDTO request) throws AstraException {
-        userService.createUserWithEmailAndPassword(request);
+        userService.createUser(request);
     }
 
     @DeleteMapping
