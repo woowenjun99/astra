@@ -22,7 +22,7 @@ export function AppSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link href="/main/fitness">Fitness</Link>
+                  <Link href="/main/workout">Fitness</Link>
                 </SidebarMenuButton>
                 <SidebarMenuButton asChild>
                   <Link href="/docs">Documentation</Link>
