@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -23,12 +24,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { createWorkout } from "@/services/fitness/data/fitness-repository";
 import { Exercise, Run } from "@/services/fitness/domain/workout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import dayjs from "dayjs";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -46,6 +55,67 @@ const schema = z.object({
 });
 
 type Schema = z.infer<typeof schema>;
+
+function ExerciseRunTable({
+  exercises,
+  workoutType,
+  runs,
+}: {
+  exercises: Exercise[];
+  runs: Run[];
+  workoutType: string;
+}) {
+  if (workoutType === "Running") {
+    return (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Lap</TableHead>
+            <TableHead>Duration</TableHead>
+            <TableHead>Distance</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {runs.map((run, index) => {
+            return (
+              <TableRow key={index}>
+                <TableCell>{index}</TableCell>
+                <TableCell>{run.duration}</TableCell>
+                <TableCell>{run.distance}</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    );
+  }
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Exercise</TableHead>
+          <TableHead>Sets</TableHead>
+          <TableHead>Reps</TableHead>
+          <TableHead>Weight</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {exercises.map((exercise, index) => {
+          return (
+            <TableRow key={index}>
+              <TableCell>{index}</TableCell>
+              <TableCell>{exercise.name}</TableCell>
+              <TableCell>{exercise.sets}</TableCell>
+              <TableCell>{exercise.reps}</TableCell>
+              <TableCell>{exercise.weight}</TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+}
 
 export default function NewWorkoutPage() {
   const form = useForm<Schema>({
@@ -80,7 +150,7 @@ export default function NewWorkoutPage() {
       try {
         await createWorkout({
           caloriesBurnt,
-          date: dayjs(date, "YYYY-MM-DD").toDate(),
+          date,
           duration,
           exercises,
           intensity,
@@ -97,11 +167,21 @@ export default function NewWorkoutPage() {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold">Record Workout</h1>
-        <p className="text-gray-500 dark:text-gray-400">
-          Log your workout details and exercises
-        </p>
+      <div className="mb-6 flex flex-row justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">Record Workout</h1>
+          <p className="text-gray-500 dark:text-gray-400">
+            Log your workout details and exercises
+          </p>
+        </div>
+
+        <Button
+          onClick={() => window.history.back()}
+          type="button"
+          variant="outline"
+        >
+          Cancel
+        </Button>
       </div>
 
       <Card>
@@ -145,7 +225,9 @@ export default function NewWorkoutPage() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="Gym">Gym</SelectItem>
+                            <SelectItem value="Strength Training">
+                              Strength Training
+                            </SelectItem>
                             <SelectItem value="Running">Running</SelectItem>
                           </SelectContent>
                         </Select>
@@ -196,6 +278,219 @@ export default function NewWorkoutPage() {
                     );
                   }}
                 />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-6">
+                <FormField
+                  control={form.control}
+                  name="duration"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Duration (Minutes)</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="intensity"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Intensity</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl className="w-full">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select intensity" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Low">Low</SelectItem>
+                            <SelectItem value="Medium">Medium</SelectItem>
+                            <SelectItem value="High">High</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="caloriesBurnt"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Calories Burnt</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+              </div>
+
+              <div>
+                <h3 className="mb-4 text-lg font-medium">Exercises</h3>
+                <div className="mb-4 rounded-md border bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 w-full">
+                  {form.watch("workoutType") === "Running" ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-6">
+                      <div className="flex flex-col space-y-2">
+                        <Label>Distance (m)</Label>
+                        <Input
+                          onChange={(e) =>
+                            setRun({
+                              ...run,
+                              distance: parseInt(e.target.value),
+                            })
+                          }
+                          value={run.distance}
+                        />
+                      </div>
+
+                      <div className="flex flex-col space-y-2">
+                        <Label>Duration (seconds)</Label>
+                        <Input
+                          onChange={(e) =>
+                            setRun({
+                              ...run,
+                              duration: parseInt(e.target.value),
+                            })
+                          }
+                          value={run.duration}
+                        />
+                      </div>
+
+                      <Button
+                        className="mt-5"
+                        onClick={() => {
+                          runs.push(run);
+                          setRuns(runs);
+                          setRun({
+                            distance: 0,
+                            duration: 0,
+                          });
+                        }}
+                        variant="outline"
+                        type="button"
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-y-4 md:gap-x-6">
+                      <div className="flex flex-col space-y-2">
+                        <Label>Exercise</Label>
+                        <Input
+                          onChange={(e) =>
+                            setExercise({
+                              ...exercise,
+                              name: e.target.value,
+                            })
+                          }
+                          value={exercise.name}
+                        />
+                      </div>
+
+                      <div className="flex flex-col space-y-2">
+                        <Label>Sets</Label>
+                        <Input
+                          onChange={(e) =>
+                            setExercise({
+                              ...exercise,
+                              sets: parseInt(e.target.value),
+                            })
+                          }
+                          value={exercise.sets}
+                        />
+                      </div>
+
+                      <div className="flex flex-col space-y-2">
+                        <Label>Reps</Label>
+                        <Input
+                          onChange={(e) =>
+                            setExercise({
+                              ...exercise,
+                              reps: parseInt(e.target.value),
+                            })
+                          }
+                          value={exercise.reps}
+                        />
+                      </div>
+
+                      <div className="flex flex-col space-y-2">
+                        <Label>Weight (kg)</Label>
+                        <Input
+                          onChange={(e) =>
+                            setExercise({
+                              ...exercise,
+                              weight: parseInt(e.target.value),
+                            })
+                          }
+                          value={exercise.weight}
+                        />
+                      </div>
+
+                      <Button
+                        className="mt-5"
+                        onClick={() => {
+                          exercises.push(exercise);
+                          setExercises(exercises);
+                          setExercise({
+                            name: "",
+                            sets: 3,
+                            reps: 10,
+                            weight: 0,
+                          });
+                        }}
+                        variant="outline"
+                        type="button"
+                      >
+                        Add
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <ExerciseRunTable
+                  exercises={exercises}
+                  runs={runs}
+                  workoutType={form.watch("workoutType")}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="remarks"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>Notes</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Any additional notes about your workout..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+
+              <div className="md:flex md:flex-row md:justify-end mt-5">
+                <Button className="w-full md:w-fit">Save Workout</Button>
               </div>
             </form>
           </Form>
