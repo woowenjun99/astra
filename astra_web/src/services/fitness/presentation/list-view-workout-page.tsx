@@ -16,17 +16,37 @@ import {
 } from "@tabler/icons-react";
 import { useState, useCallback, type FC } from "react";
 import useSWR from "swr";
-import { getWorkouts } from "../data/fitness-repository";
+import { deleteWorkout, getWorkouts } from "../data/fitness-repository";
 import type { Workout } from "../domain/workout";
 import { Card, CardContent } from "@/components/ui/card";
 import dayjs from "dayjs";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 interface WorkoutCardProps {
   workout: Workout;
 }
 
 const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const getDateLabel = () => {
     const today = dayjs();
     const givenDate = dayjs(workout.date);
@@ -51,42 +71,84 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
     }
   };
 
+  const onClick = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      await deleteWorkout(workout.id);
+      setIsOpen(false);
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [workout.id]);
+
   return (
-    <Card className="mb-4 overflow-hidden">
-      <CardContent className="px-6">
-        <div className="flex flex-col justify-start">
-          <div className="flex flex-row justify-between">
-            <div className="flex flex-col">
-              <h1 className="font-semibold text-lg">{workout.title}</h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {getDateLabel()} • {workout.workoutType}
-              </p>
+    <>
+      <Card className="mb-4 overflow-hidden">
+        <CardContent className="px-6">
+          <div className="flex flex-col justify-start">
+            <div className="flex flex-row justify-between">
+              <div className="flex flex-col">
+                <h1 className="font-semibold text-lg">{workout.title}</h1>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {getDateLabel()} • {workout.workoutType}
+                </p>
+              </div>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <IconDots />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => setIsOpen(true)}>
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
-            <IconDots />
+            <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 my-3">
+              <div className="flex items-center gap-1">
+                <IconClock />
+                {workout.duration} min
+              </div>
+
+              <div className="flex items-center gap-1">
+                <IconFlame />
+                {workout.caloriesBurnt} cal
+              </div>
+            </div>
+
+            <Badge
+              className={getIntensityColor(workout.intensity)}
+              variant="outline"
+            >
+              {workout.intensity}
+            </Badge>
           </div>
-
-          <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 my-3">
-            <div className="flex items-center gap-1">
-              <IconClock />
-              {workout.duration} min
-            </div>
-
-            <div className="flex items-center gap-1">
-              <IconFlame />
-              {workout.caloriesBurnt} cal
-            </div>
-          </div>
-
-          <Badge
-            className={getIntensityColor(workout.intensity)}
-            variant="outline"
-          >
-            {workout.intensity}
-          </Badge>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <AlertDialog open={isOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              workout and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction disabled={isLoading} onClick={onClick}>
+              {isLoading ? <IconLoader className="animate-spin" /> : "Continue"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
 

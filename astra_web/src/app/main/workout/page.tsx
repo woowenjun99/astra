@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WorkoutMetadataCards from "@/services/fitness/presentation/workout-metadata-cards";
 import ListViewWorkoutPage from "@/services/fitness/presentation/list-view-workout-page";
 import { IconPlus } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default function WorkoutPage() {
   return (
@@ -16,10 +17,12 @@ export default function WorkoutPage() {
           </p>
         </div>
 
-        <Button className="bg-green-600 hover:bg-green-700" type="button">
-          <IconPlus />
-          Record Workout
-        </Button>
+        <Link passHref href="/main/workout/new">
+          <Button className="bg-green-600 hover:bg-green-700" type="button">
+            <IconPlus />
+            Record Workout
+          </Button>
+        </Link>
       </div>
 
       <WorkoutMetadataCards />
