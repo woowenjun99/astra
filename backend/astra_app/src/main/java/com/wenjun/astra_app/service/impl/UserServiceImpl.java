@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUserWithEmailAndPassword(CreateUserDTO request) throws AstraException {
+    public void createUser(CreateUserDTO request) throws AstraException {
         Provider provider = Provider.getByProviderId(request.getProvider());
         ProviderPlugin plugin = providerPlugins.getPlugin(provider);
         plugin.createUser(request);
