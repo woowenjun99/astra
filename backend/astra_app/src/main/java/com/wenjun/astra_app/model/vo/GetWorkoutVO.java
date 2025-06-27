@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @Data
 public class GetWorkoutVO {
-    private WorkoutLogEntity workoutLog;
+    private WorkoutLogEntity workout;
     private List<RunEntity> runs;
     private List<ExerciseEntity> exercises;
 }

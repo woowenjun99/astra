@@ -27,7 +27,7 @@ type WorkoutCardProps = {
 };
 
 const WorkoutCards: FC<WorkoutCardProps> = ({ workouts }) => {
-  function convertDate(date: string) {
+  function convertDate(date: Date) {
     const today = dayjs();
     const givenDate = dayjs(date);
     if (today.diff(givenDate, "days") === 1) {

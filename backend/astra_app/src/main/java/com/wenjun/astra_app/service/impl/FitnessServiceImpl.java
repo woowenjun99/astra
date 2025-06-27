@@ -134,7 +134,7 @@ public class FitnessServiceImpl implements FitnessService {
                 .builder()
                 .exercises(exercises)
                 .runs(runs)
-                .workoutLog(workoutLog)
+                .workout(workoutLog)
                 .build();
         return response;
     }

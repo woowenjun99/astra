@@ -38,6 +38,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 interface WorkoutCardProps {
   workout: Workout;
@@ -101,6 +102,11 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
                   <IconDots />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => redirect(`/main/workout/${workout.id}`)}
+                  >
+                    Edit
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setIsOpen(true)}>
                     Delete
                   </DropdownMenuItem>

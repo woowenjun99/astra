@@ -1,7 +1,7 @@
 export interface Workout {
   caloriesBurnt: number;
-  date: string;
-  duration: string;
+  date: Date;
+  duration: number;
   id: number;
   intensity: "Low" | "Medium" | "High";
   title: string;
