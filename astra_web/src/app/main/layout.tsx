@@ -1,17 +1,18 @@
-import Header from "@/component/Header";
-import { NavbarSimple } from "@/component/Navbar";
-import { Box, Group } from "@mantine/core";
+"use client";
+import ThemeToggle from "@/components/theme-toggle";
+import type { ReactNode } from "react";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div>
-      <Header />
-      <Group bg="#F9FAFB" h="100dvh" align="start" w="100dvw" wrap="nowrap">
-        <NavbarSimple />
-        <Box style={{ flex: 1, height: "100%", overflow: "auto" }} p="md">
-          {children}
-        </Box>
-      </Group>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 p-6">
+        <SidebarTrigger />
+        <ThemeToggle />
+        {children}
+      </div>
+    </SidebarProvider>
   );
 }
