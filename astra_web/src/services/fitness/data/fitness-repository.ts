@@ -1,48 +1,13 @@
 import { getJwtToken } from "@/services/authentication/data/authentication-repository";
 import { axiosInstance, type BaseResponse } from "@/util/axios-instance";
-import type { FitnessGoal } from "../domain/fitness-goal";
-import type { Workout } from "../domain/workout";
-import type { DailyActivity } from "../domain/daily-activity";
 import type { WorkoutMetadata } from "../domain/workout-metadata";
-import type { CreateFitnessGoalDTO } from "../domain/create-fitness-goal-dto";
 import type { CreateWorkoutDTO } from "../domain/create-workout-dto";
-
-export async function createFitnessGoal(payload: CreateFitnessGoalDTO) {
-  const jwt = await getJwtToken();
-
-  const response = await axiosInstance.post<
-    CreateFitnessGoalDTO,
-    BaseResponse<null>
-  >("/fitness/goals", payload, {
-    headers: { Authorization: jwt },
-  });
-
-  if (!response.data.success) {
-    throw new Error(response.data.message);
-  }
-}
-
-export async function getFitnessGoals(
-  endpoint: string
-): Promise<FitnessGoal[]> {
-  const jwt = await getJwtToken();
-  const response = await axiosInstance.get<null, BaseResponse<FitnessGoal[]>>(
-    endpoint,
-    {
-      headers: { Authorization: jwt },
-    }
-  );
-  return response.data.data;
-}
-
-interface GetWorkoutVO {
-  workouts: Workout[];
-  total: number;
-}
+import type { GetWorkoutsVO } from "../domain/get-workouts-vo";
+import { GetWorkoutVO } from "../domain/get-workout-vo";
 
 export async function getWorkouts([endpoint, ...params]: string[]) {
   const jwt = await getJwtToken();
-  const response = await axiosInstance.get<null, BaseResponse<GetWorkoutVO>>(
+  const response = await axiosInstance.get<null, BaseResponse<GetWorkoutsVO>>(
     endpoint,
     {
       headers: { Authorization: jwt },
@@ -61,18 +26,22 @@ export async function getWorkouts([endpoint, ...params]: string[]) {
   return response.data.data;
 }
 
-export async function getWeeklyActvity(endpoint: string) {
-  const jwt = await getJwtToken();
-  const response = await axiosInstance.get(endpoint, {
-    headers: { Authorization: jwt },
-  });
-  const data = response.data as BaseResponse<DailyActivity[]>;
-  return data.data;
-}
-
 export async function createWorkout(payload: CreateWorkoutDTO) {
   const jwt = await getJwtToken();
   const response = await axiosInstance.post<
+    CreateWorkoutDTO,
+    BaseResponse<null>
+  >("/fitness/workouts", payload, {
+    headers: { Authorization: jwt },
+  });
+  if (!response.data.success) {
+    throw new Error(response.data.message);
+  }
+}
+
+export async function editWorkout(payload: CreateWorkoutDTO) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.put<
     CreateWorkoutDTO,
     BaseResponse<null>
   >("/fitness/workouts", payload, {
@@ -107,4 +76,13 @@ export async function deleteWorkout(id: number) {
   if (!response.data.success) {
     throw new Error(response.data.message);
   }
+}
+
+export async function getWorkout(id: number) {
+  const jwt = await getJwtToken();
+  const response = await axiosInstance.get<null, BaseResponse<GetWorkoutVO>>(
+    `/fitness/workouts/${id}`,
+    { headers: { Authorization: jwt } }
+  );
+  return response.data.data;
 }

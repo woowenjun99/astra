@@ -38,6 +38,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 interface WorkoutCardProps {
   workout: Workout;
@@ -53,7 +54,7 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
     if (today.isSame(givenDate, "day")) return "Today";
     if (today.diff(givenDate, "day") === -1) return "Tomorrow";
     if (today.diff(givenDate, "day") === 1) return "Yesterday";
-    return givenDate.format("MMM d, YYYY");
+    return givenDate.format("MMMM D, YYYY");
   };
 
   const getIntensityColor = (intensity: string) => {
@@ -101,6 +102,11 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
                   <IconDots />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => redirect(`/main/workout/${workout.id}`)}
+                  >
+                    Edit
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setIsOpen(true)}>
                     Delete
                   </DropdownMenuItem>
