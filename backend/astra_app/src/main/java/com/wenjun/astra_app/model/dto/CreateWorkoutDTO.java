@@ -1,6 +1,7 @@
 package com.wenjun.astra_app.model.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
@@ -9,37 +10,40 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
+@NoArgsConstructor
 @Data
 public class CreateWorkoutDTO {
     @PositiveOrZero
-    private final Integer caloriesBurnt;
+    private Integer caloriesBurnt;
 
     @NotNull
-    private final Date date;
+    private Date date;
 
     @NotNull
     @PositiveOrZero
-    private final Integer duration;
+    private Integer duration;
 
     @NotNull
-    private final List<@NotNull ExerciseDTO> exercises;
+    private List<@NotNull ExerciseDTO> exercises;
 
     @NotNull
     @NotEmpty
-    private final String intensity;
+    private String intensity;
 
-    private final String remarks;
+    private String remarks;
 
     @NotNull
-    private final List<@NotNull RunningDTO> runs;
+    private List<@NotNull RunningDTO> runs;
 
     @NotEmpty
     @NotNull
-    private final String title;
+    private String title;
 
     @NotEmpty
     @NotNull
-    private final String workoutType;
+    private String workoutType;
+
+    private Long id;
 
     @Data
     public static class ExerciseDTO {
