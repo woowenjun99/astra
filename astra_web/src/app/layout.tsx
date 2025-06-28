@@ -36,9 +36,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PushNotificationComponent>
-            <ClientComponent>{children}</ClientComponent>
-          </PushNotificationComponent>
+          <ClientComponent>
+            <PushNotificationComponent>{children}</PushNotificationComponent>
+          </ClientComponent>
         </ThemeProvider>
       </body>
     </html>
