@@ -18,13 +18,10 @@ const ClientComponent: FC<ClientComponentProps> = ({ children }) => {
   useEffect(() => {
     async function registerServiceWorker() {
       const messaging = getMessaging(app);
-
       const permission = await window.Notification.requestPermission();
-
       if (permission !== "granted") {
         return;
       }
-
       const registration = await navigator.serviceWorker.register("/sw.js", {
         scope: "/",
         updateViaCache: "none",
