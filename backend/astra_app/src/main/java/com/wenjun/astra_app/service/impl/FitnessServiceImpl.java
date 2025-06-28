@@ -74,6 +74,9 @@ public class FitnessServiceImpl implements FitnessService {
      * @param workoutLogId The workout log associated with the run
      */
     private void saveRuns(List<CreateWorkoutDTO.RunningDTO> runningDTOs, Long workoutLogId) {
+        if (CollectionUtils.isEmpty(runningDTOs)) {
+            return;
+        }
         List<RunEntity> runs = new ArrayList<>(runningDTOs.size());
         for (int i = 0; i < runningDTOs.size(); ++i) {
             CreateWorkoutDTO.RunningDTO entity = runningDTOs.get(i);
@@ -96,6 +99,9 @@ public class FitnessServiceImpl implements FitnessService {
      * @param workoutLogId The workout log associated with the exercise
      */
     private void saveExercises(List<CreateWorkoutDTO.ExerciseDTO> exerciseDTOs, Long workoutLogId) {
+        if (CollectionUtils.isEmpty(exerciseDTOs)) {
+            return;
+        }
         List<ExerciseEntity> exercises = new ArrayList<>(exerciseDTOs.size());
         for (int i = 0; i < exerciseDTOs.size(); ++i) {
             CreateWorkoutDTO.ExerciseDTO entity = exerciseDTOs.get(i);
