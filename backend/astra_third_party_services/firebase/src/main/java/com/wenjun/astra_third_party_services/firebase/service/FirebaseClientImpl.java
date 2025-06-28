@@ -9,12 +9,11 @@ import com.google.firebase.auth.UserRecord;
 import com.google.firebase.messaging.BatchResponse;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.MulticastMessage;
 import com.google.firebase.messaging.Notification;
 import com.google.firebase.messaging.SendResponse;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FirebaseClientImpl implements FirebaseClient {
     private final FirebaseAuth firebaseAuth;
@@ -72,24 +71,27 @@ public class FirebaseClientImpl implements FirebaseClient {
     @Override
     public void sendPushNotification(List<String> tokens, String title, String body) {
         try {
-            List<Message> messages = tokens
-                    .stream()
-                    .map(token -> {
-                        Notification notification = Notification
-                                .builder()
-                                .setBody(body)
-                                .setTitle(title)
-                                .build();
-                        return Message
-                                .builder()
-                                .setToken(token)
-                                .setNotification(notification)
-                                .build();
-                    })
-                    .collect(Collectors.toList());
-            BatchResponse batchResponse = firebaseMessaging.sendEach(messages);
+            Notification notification = Notification
+                    .builder()
+                    .setBody(body)
+                    .setTitle(title)
+                    .build();
+
+            MulticastMessage messages = MulticastMessage
+                    .builder()
+                    .addAllTokens(tokens)
+                    .setNotification(notification)
+                    .build();
+
+            BatchResponse batchResponse = firebaseMessaging.sendEachForMulticast(messages);
+
             List<SendResponse> responses = batchResponse.getResponses();
-            responses.forEach(System.out::println);
+
+            responses.forEach(response -> {
+                System.out.println(response.isSuccessful());
+                System.out.println(response.getMessageId());
+                System.out.println(response.getException());
+            });
         } catch(FirebaseMessagingException e) {
             throw new RuntimeException(e.getMessage());
         }
