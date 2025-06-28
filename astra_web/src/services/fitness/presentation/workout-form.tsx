@@ -24,14 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import {
@@ -44,10 +36,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import dayjs from "dayjs";
 import { CalendarIcon } from "lucide-react";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import ExerciseRunTable from "./exercise-table";
 
 const schema = z.object({
   caloriesBurnt: z.number().int().nonnegative(),
@@ -60,67 +53,6 @@ const schema = z.object({
 });
 
 type Schema = z.infer<typeof schema>;
-
-function ExerciseRunTable({
-  exercises,
-  workoutType,
-  runs,
-}: {
-  exercises: Exercise[];
-  runs: Run[];
-  workoutType: string;
-}) {
-  if (workoutType === "Running") {
-    return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Lap</TableHead>
-            <TableHead>Duration</TableHead>
-            <TableHead>Distance</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {runs.map((run, index) => {
-            return (
-              <TableRow key={index}>
-                <TableCell>{index}</TableCell>
-                <TableCell>{run.duration}</TableCell>
-                <TableCell>{run.distance}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    );
-  }
-
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Exercise</TableHead>
-          <TableHead>Sets</TableHead>
-          <TableHead>Reps</TableHead>
-          <TableHead>Weight</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {exercises.map((exercise, index) => {
-          return (
-            <TableRow key={index}>
-              <TableCell>{index}</TableCell>
-              <TableCell>{exercise.name}</TableCell>
-              <TableCell>{exercise.sets}</TableCell>
-              <TableCell>{exercise.reps}</TableCell>
-              <TableCell>{exercise.weight}</TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
-  );
-}
 
 interface WorkoutFormProps {
   id?: number;
@@ -533,6 +465,8 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                 <ExerciseRunTable
                   exercises={exercises}
                   runs={runs}
+                  setExercises={setExercises}
+                  setRuns={setRuns}
                   workoutType={form.watch("workoutType")}
                 />
               </div>

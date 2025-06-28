@@ -21,6 +21,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,6 +29,89 @@ import java.util.List;
 @Slf4j
 public class FitnessServiceImpl implements FitnessService {
     private final FitnessRepository fitnessRepository;
+
+    /**
+     * Get the workout log based on the user id and the workout log id.
+     *
+     * @param userId The user id
+     * @param workoutLogId The workout log id
+     * @return The workout log if found
+     * @throws AstraException If the workout id is invalid or user has no permission to view it
+     * @throws AstraException If the workoutLogId is invalid
+     */
+    private WorkoutLogEntity getWorkoutLogByUserIdAndId(String userId, Long workoutLogId) throws AstraException {
+        if (workoutLogId == null) {
+            throw new AstraException(AstraExceptionEnum.INVALID_PARAMETERS, "ID cannot be null");
+        }
+        WorkoutLogEntity entity = fitnessRepository.getWorkoutByUidAndId(workoutLogId, userId);
+        if (entity == null) {
+            throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "workout with id " + workoutLogId);
+        }
+        return entity;
+    }
+
+    /**
+     * Modifies the workout log by setting the common fields based on the request
+     *
+     * @param workoutLog The workout log object to modify
+     * @param request The payload from the frontend
+     * @return The modified workout log
+     */
+    private WorkoutLogEntity setWorkoutLogFields(WorkoutLogEntity workoutLog, CreateWorkoutDTO request) {
+        workoutLog.setDate(request.getDate());
+        workoutLog.setTitle(request.getTitle());
+        workoutLog.setCaloriesBurnt(request.getCaloriesBurnt());
+        workoutLog.setDuration(request.getDuration());
+        workoutLog.setIntensity(request.getIntensity());
+        workoutLog.setWorkoutType(request.getWorkoutType());
+        return workoutLog;
+    }
+
+    /**
+     * Save the runs provided by the frontend in the database
+     *
+     * @param runningDTOs The runs provided by the frontend
+     * @param workoutLogId The workout log associated with the run
+     */
+    private void saveRuns(List<CreateWorkoutDTO.RunningDTO> runningDTOs, Long workoutLogId) {
+        List<RunEntity> runs = new ArrayList<>(runningDTOs.size());
+        for (int i = 0; i < runningDTOs.size(); ++i) {
+            CreateWorkoutDTO.RunningDTO entity = runningDTOs.get(i);
+            RunEntity run = new RunEntity();
+            run.setWorkoutLogId(workoutLogId);
+            run.setDistance(entity.getDistance());
+            run.setIndex(i);
+            run.setDuration(entity.getDuration());
+            runs.add(run);
+        }
+        if (CollectionUtils.isNotEmpty(runs)) {
+            fitnessRepository.batchInsertRuns(runs);
+        }
+    }
+
+    /**
+     * Save the exercises provided by the frontend in the database
+     *
+     * @param exerciseDTOs The exercises provided by the frontend
+     * @param workoutLogId The workout log associated with the exercise
+     */
+    private void saveExercises(List<CreateWorkoutDTO.ExerciseDTO> exerciseDTOs, Long workoutLogId) {
+        List<ExerciseEntity> exercises = new ArrayList<>(exerciseDTOs.size());
+        for (int i = 0; i < exerciseDTOs.size(); ++i) {
+            CreateWorkoutDTO.ExerciseDTO entity = exerciseDTOs.get(i);
+            ExerciseEntity exercise = new ExerciseEntity();
+            exercise.setName(entity.getName());
+            exercise.setReps(entity.getReps());
+            exercise.setSets(entity.getSets());
+            exercise.setWorkoutLogId(workoutLogId);
+            exercise.setWeight(entity.getWeight());
+            exercise.setIndex(i);
+            exercises.add(exercise);
+        }
+        if (CollectionUtils.isNotEmpty(exercises)) {
+            fitnessRepository.batchInsertExercises(exercises);
+        }
+    }
 
     @Override
     public GetWorkoutsVO getWorkouts(Long pageSize, Long pageNo, String workoutType, String intensity) throws AstraException {
@@ -45,50 +129,11 @@ public class FitnessServiceImpl implements FitnessService {
     public void createWorkout(CreateWorkoutDTO request) throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-
-        // Create the workout log first
-        WorkoutLogEntity workoutLog = new WorkoutLogEntity();
-        workoutLog.setDate(request.getDate());
-        workoutLog.setTitle(request.getTitle());
+        WorkoutLogEntity workoutLog = setWorkoutLogFields(new WorkoutLogEntity(), request);
         workoutLog.setUid(userId);
-        workoutLog.setCaloriesBurnt(request.getCaloriesBurnt());
-        workoutLog.setDuration(request.getDuration());
-        workoutLog.setIntensity(request.getIntensity());
-        workoutLog.setWorkoutType(request.getWorkoutType());
         Long workoutLogId = fitnessRepository.createWorkout(workoutLog);
-        log.info("Workout Entity created: {}", workoutLogId);
-
-        // Create the runs
-        List<RunEntity> runs = new ArrayList<>(request.getRuns().size());
-        for (int i = 0; i < request.getRuns().size(); ++i) {
-            CreateWorkoutDTO.RunningDTO entity = request.getRuns().get(i);
-            RunEntity run = new RunEntity();
-            run.setWorkoutLogId(workoutLogId);
-            run.setDistance(entity.getDistance());
-            run.setIndex(i);
-            run.setDuration(entity.getDuration());
-            runs.add(run);
-        }
-        if (CollectionUtils.isNotEmpty(runs)) {
-            fitnessRepository.batchInsertRuns(runs);
-        }
-
-        // Create the normal exercise
-        List<ExerciseEntity> exercises = new ArrayList<>(request.getExercises().size());
-        for (int i = 0; i < request.getExercises().size(); ++i) {
-            CreateWorkoutDTO.ExerciseDTO entity = request.getExercises().get(i);
-            ExerciseEntity exercise = new ExerciseEntity();
-            exercise.setName(entity.getName());
-            exercise.setReps(entity.getReps());
-            exercise.setSets(entity.getSets());
-            exercise.setWorkoutLogId(workoutLogId);
-            exercise.setWeight(entity.getWeight());
-            exercise.setIndex(i);
-            exercises.add(exercise);
-        }
-        if (CollectionUtils.isNotEmpty(exercises)) {
-            fitnessRepository.batchInsertExercises(exercises);
-        }
+        saveRuns(request.getRuns(), workoutLogId);
+        saveExercises(request.getExercises(), workoutLogId);
     }
 
     @Override
@@ -107,27 +152,23 @@ public class FitnessServiceImpl implements FitnessService {
 
     @Override
     public void editWorkout(CreateWorkoutDTO request) throws AstraException {
-        if (request.getId() == null) {
-            throw new AstraException(AstraExceptionEnum.INVALID_PARAMETERS, "ID cannot be null");
-        }
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-        WorkoutLogEntity entity = fitnessRepository.getWorkoutByUidAndId(request.getId(), userId);
-        if (entity == null) {
-            throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "workout with id " + request.getId());
-        }
-        fitnessRepository.deleteWorkout(userId, request.getId());
-        createWorkout(request);
+        WorkoutLogEntity original = getWorkoutLogByUserIdAndId(userId, request.getId());
+        WorkoutLogEntity workoutLog = setWorkoutLogFields(original, request);
+        workoutLog.setDateUpdated(new Date());
+        fitnessRepository.updateWorkoutByPrimaryKey(workoutLog);
+        fitnessRepository.deleteRunsByWorkoutId(request.getId());
+        fitnessRepository.deleteExercisesByWorkoutId(request.getId());
+        saveRuns(request.getRuns(), request.getId());
+        saveExercises(request.getExercises(), request.getId());
     }
 
     @Override
     public GetWorkoutVO getWorkout(Long id) throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-        WorkoutLogEntity workoutLog = fitnessRepository.getWorkoutByUidAndId(id, userId);
-        if (workoutLog == null) {
-            throw new AstraException(AstraExceptionEnum.RESOURCE_NOT_FOUND_EXCEPTION, "workout with id " + id);
-        }
+        WorkoutLogEntity workoutLog = getWorkoutLogByUserIdAndId(userId, id);
         List<RunEntity> runs = fitnessRepository.getRunsByWorkoutId(workoutLog.getId());
         List<ExerciseEntity> exercises = fitnessRepository.getExerciseByWorkoutId(workoutLog.getId());
         GetWorkoutVO response = GetWorkoutVO
