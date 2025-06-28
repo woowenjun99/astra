@@ -99,4 +99,20 @@ public class FitnessRepository {
         example.setOrderByClause("index desc");
         return exerciseEntityMapper.selectByExample(example);
     }
+
+    public void updateWorkoutByPrimaryKey(WorkoutLogEntity workout) {
+        workoutLogEntityMapper.updateByPrimaryKey(workout);
+    }
+
+    public void deleteRunsByWorkoutId(Long workoutId) {
+        RunEntityExample example = new RunEntityExample();
+        example.createCriteria().andWorkoutLogIdEqualTo(workoutId);
+        runEntityMapper.deleteByExample(example);
+    }
+
+    public void deleteExercisesByWorkoutId(Long workoutId) {
+        ExerciseEntityExample example = new ExerciseEntityExample();
+        example.createCriteria().andWorkoutLogIdEqualTo(workoutId);
+        exerciseEntityMapper.deleteByExample(example);
+    }
 }
