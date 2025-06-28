@@ -6,9 +6,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.messaging.BatchResponse;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.SendResponse;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FirebaseClientImpl implements FirebaseClient {
     private final FirebaseAuth firebaseAuth;
@@ -64,13 +70,26 @@ public class FirebaseClientImpl implements FirebaseClient {
     }
 
     @Override
-    public void sendPushNotification(String token) {
+    public void sendPushNotification(List<String> tokens, String title, String body) {
         try {
-            Message message = Message
-                    .builder()
-                    .setToken(token)
-                    .build();
-            String response = firebaseMessaging.send(message);
+            List<Message> messages = tokens
+                    .stream()
+                    .map(token -> {
+                        Notification notification = Notification
+                                .builder()
+                                .setBody(body)
+                                .setTitle(title)
+                                .build();
+                        return Message
+                                .builder()
+                                .setToken(token)
+                                .setNotification(notification)
+                                .build();
+                    })
+                    .collect(Collectors.toList());
+            BatchResponse batchResponse = firebaseMessaging.sendEach(messages);
+            List<SendResponse> responses = batchResponse.getResponses();
+            responses.forEach(System.out::println);
         } catch(FirebaseMessagingException e) {
             throw new RuntimeException(e.getMessage());
         }

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { signout } from "@/services/authentication/data/authentication-repository";
 import Link from "next/link";
+import { sendTestNotification } from "@/services/devices/data/device_repository";
 
 export function AppSidebar() {
   return (
@@ -21,6 +22,9 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/main">Home</Link>
+                </SidebarMenuButton>
                 <SidebarMenuButton asChild>
                   <Link href="/main/workout">Fitness</Link>
                 </SidebarMenuButton>
@@ -38,6 +42,9 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
+                <SidebarMenuButton onClick={sendTestNotification}>
+                  Test Notification
+                </SidebarMenuButton>
                 <SidebarMenuButton asChild></SidebarMenuButton>
                 <SidebarMenuButton onClick={signout}>Logout</SidebarMenuButton>
               </SidebarMenuItem>

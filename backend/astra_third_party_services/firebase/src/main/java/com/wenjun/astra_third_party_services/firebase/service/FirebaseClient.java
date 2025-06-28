@@ -2,6 +2,8 @@ package com.wenjun.astra_third_party_services.firebase.service;
 
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
+import java.util.List;
+
 public interface FirebaseClient {
     /**
      * Delete the user from Firebase Auth based on the userId
@@ -40,6 +42,8 @@ public interface FirebaseClient {
 
     /**
      * Send push notification to all the listed devices
+     *
+     * @param tokens The list of firebase tokens to send
      */
-    void sendPushNotification(String token);
+    void sendPushNotification(List<String> tokens, String title, String topic);
 }
