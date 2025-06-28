@@ -163,7 +163,7 @@ export default function ListViewWorkoutPage() {
   const [workoutType, setWorkoutType] = useState("All Types");
   const clearFilter = useCallback(() => {
     setIntensity("All Levels");
-    setWorkoutType("All Types");
+    setWorkoutType("All Intensity");
   }, []);
   const { data, isLoading } = useSWR(
     ["/fitness/workouts", 20, 0, workoutType, intensity],
