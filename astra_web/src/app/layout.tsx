@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import ClientComponent from "@/components/client-component";
-import PushNotificationComponent from "@/components/push-notification-component";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,9 +35,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClientComponent>
-            <PushNotificationComponent>{children}</PushNotificationComponent>
-          </ClientComponent>
+          <ClientComponent>{children}</ClientComponent>
         </ThemeProvider>
       </body>
     </html>

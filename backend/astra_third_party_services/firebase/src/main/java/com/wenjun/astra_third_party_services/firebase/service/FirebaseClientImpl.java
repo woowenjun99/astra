@@ -80,7 +80,7 @@ public class FirebaseClientImpl implements FirebaseClient {
             MulticastMessage messages = MulticastMessage
                     .builder()
                     .addAllTokens(tokens)
-                    .setNotification(notification)
+                    .putData("key", "value")
                     .build();
 
             BatchResponse batchResponse = firebaseMessaging.sendEachForMulticast(messages);
