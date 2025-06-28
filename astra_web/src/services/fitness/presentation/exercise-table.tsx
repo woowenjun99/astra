@@ -8,7 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Exercise, Run } from "@/services/fitness/domain/workout";
+import type { Exercise, Run } from "@/services/fitness/domain/workout";
+import { Formatter } from "@/util/formatter";
 import { TrashIcon } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -43,12 +44,14 @@ export default function ExerciseRunTable({
             return (
               <TableRow key={index}>
                 <TableCell>{index}</TableCell>
-                <TableCell>{run.duration}</TableCell>
-                <TableCell>{run.distance}</TableCell>
+                <TableCell>
+                  {Formatter.formatTimeElapsed(run.duration)}
+                </TableCell>
+                <TableCell>{Formatter.formatDistance(run.distance)}</TableCell>
                 <TableCell>
                   <Button
                     onClick={() => {
-                      const newRun = runs.filter((run, idx) => index !== idx);
+                      const newRun = runs.filter((_, idx) => index !== idx);
                       setRuns(newRun);
                     }}
                     variant="ghost"

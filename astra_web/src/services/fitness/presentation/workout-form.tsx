@@ -24,12 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import {
-  createWorkout,
-  editWorkout,
   getWorkout,
+  modifyWorkout,
 } from "@/services/fitness/data/fitness-repository";
 import { Exercise, Run } from "@/services/fitness/domain/workout";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,13 +39,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import ExerciseRunTable from "./exercise-table";
+import { redirect } from "next/navigation";
 
 const schema = z.object({
   caloriesBurnt: z.number().int().nonnegative(),
   date: z.date(),
   duration: z.number().int().nonnegative(),
   intensity: z.string(),
-  remarks: z.string(),
   title: z.string(),
   workoutType: z.string(),
 });
@@ -67,7 +65,6 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
           date: new Date(),
           duration: 0,
           intensity: "Low",
-          remarks: "",
           title: "",
           workoutType: "Running",
         };
@@ -80,7 +77,6 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
         date: dayjs(data.workout.date).toDate(),
         duration: data.workout.duration,
         intensity: data.workout.intensity,
-        remarks: "",
         title: data.workout.title,
         workoutType: data.workout.workoutType,
       };
@@ -93,56 +89,23 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
     reps: 10,
     weight: 0,
   });
-  const [run, setRun] = useState<Run>({
+  const [run, setRun] = useState({
     distance: 0,
+    distanceInKm: 0,
     duration: 0,
+    durationInMinutes: 0,
   });
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [runs, setRuns] = useState<Run[]>([]);
 
-  const onSubmit = form.handleSubmit(
-    async ({
-      title,
-      caloriesBurnt,
-      date,
-      duration,
-      intensity,
-      remarks,
-      workoutType,
-    }) => {
-      try {
-        if (id === undefined) {
-          await createWorkout({
-            caloriesBurnt,
-            date,
-            duration,
-            exercises,
-            intensity,
-            remarks,
-            runs,
-            title,
-            workoutType,
-          });
-        } else {
-          await editWorkout({
-            caloriesBurnt,
-            date,
-            duration,
-            exercises,
-            id,
-            intensity,
-            remarks,
-            runs,
-            title,
-            workoutType,
-          });
-        }
-        window.history.back();
-      } catch (e) {
-        toast.error((e as Error).message);
-      }
+  const onSubmit = form.handleSubmit(async (payload) => {
+    try {
+      await modifyWorkout({ ...payload, id, exercises, runs });
+      redirect("/main/workout");
+    } catch (e) {
+      toast.error((e as Error).message);
     }
-  );
+  });
 
   return (
     <div className="flex flex-col">
@@ -155,7 +118,7 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
         </div>
 
         <Button
-          onClick={() => window.history.back()}
+          onClick={() => redirect("/main/workout")}
           type="button"
           variant="outline"
         >
@@ -274,7 +237,7 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                             onChange={(e) =>
                               field.onChange(
                                 e.target.value === ""
-                                  ? undefined
+                                  ? 0
                                   : Number(e.target.value)
                               )
                             }
@@ -328,7 +291,7 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                             onChange={(e) =>
                               field.onChange(
                                 e.target.value === ""
-                                  ? undefined
+                                  ? 0
                                   : Number(e.target.value)
                               )
                             }
@@ -345,17 +308,49 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                 <h3 className="mb-4 text-lg font-medium">Exercises</h3>
                 <div className="mb-4 rounded-md border bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 w-full">
                   {form.watch("workoutType") === "Running" ? (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-6">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-y-4 md:gap-x-6">
+                      <div className="flex flex-col space-y-2">
+                        <Label>Distance (km)</Label>
+                        <Input
+                          onChange={(e) =>
+                            setRun({
+                              ...run,
+                              distanceInKm: isNaN(parseInt(e.target.value))
+                                ? 0
+                                : parseInt(e.target.value),
+                            })
+                          }
+                          value={run.distanceInKm}
+                        />
+                      </div>
+
                       <div className="flex flex-col space-y-2">
                         <Label>Distance (m)</Label>
                         <Input
                           onChange={(e) =>
                             setRun({
                               ...run,
-                              distance: parseInt(e.target.value),
+                              distance: isNaN(parseInt(e.target.value))
+                                ? 0
+                                : parseInt(e.target.value),
                             })
                           }
                           value={run.distance}
+                        />
+                      </div>
+
+                      <div className="flex flex-col space-y-2">
+                        <Label>Duration (min)</Label>
+                        <Input
+                          onChange={(e) =>
+                            setRun({
+                              ...run,
+                              durationInMinutes: isNaN(parseInt(e.target.value))
+                                ? 0
+                                : parseInt(e.target.value),
+                            })
+                          }
+                          value={run.durationInMinutes}
                         />
                       </div>
 
@@ -365,7 +360,9 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                           onChange={(e) =>
                             setRun({
                               ...run,
-                              duration: parseInt(e.target.value),
+                              duration: isNaN(parseInt(e.target.value))
+                                ? 0
+                                : parseInt(e.target.value),
                             })
                           }
                           value={run.duration}
@@ -375,11 +372,16 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                       <Button
                         className="mt-5"
                         onClick={() => {
-                          runs.push(run);
+                          runs.push({
+                            duration: run.durationInMinutes * 60 + run.duration,
+                            distance: run.distanceInKm * 1000 + run.distance,
+                          });
                           setRuns(runs);
                           setRun({
                             distance: 0,
                             duration: 0,
+                            durationInMinutes: 0,
+                            distanceInKm: 0,
                           });
                         }}
                         variant="outline"
@@ -462,6 +464,8 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                     </div>
                   )}
                 </div>
+
+                {/* Data Table */}
                 <ExerciseRunTable
                   exercises={exercises}
                   runs={runs}
@@ -470,26 +474,6 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                   workoutType={form.watch("workoutType")}
                 />
               </div>
-
-              <FormField
-                control={form.control}
-                name="remarks"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel>Notes</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Any additional notes about your workout..."
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
-
               <div className="md:flex md:flex-row md:justify-end mt-5">
                 <Button className="w-full md:w-fit">Save Workout</Button>
               </div>
