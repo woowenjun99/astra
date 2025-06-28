@@ -26,27 +26,26 @@ export async function getWorkouts([endpoint, ...params]: string[]) {
   return response.data.data;
 }
 
-export async function createWorkout(payload: CreateWorkoutDTO) {
+export async function modifyWorkout(payload: CreateWorkoutDTO) {
   const jwt = await getJwtToken();
-  const response = await axiosInstance.post<
-    CreateWorkoutDTO,
-    BaseResponse<null>
-  >("/fitness/workouts", payload, {
-    headers: { Authorization: jwt },
-  });
-  if (!response.data.success) {
-    throw new Error(response.data.message);
+  let response: BaseResponse<null>;
+  if (payload.id === undefined) {
+    response = await axiosInstance.post<CreateWorkoutDTO, BaseResponse<null>>(
+      "/fitness/workouts",
+      payload,
+      {
+        headers: { Authorization: jwt },
+      }
+    );
+  } else {
+    response = await axiosInstance.put<CreateWorkoutDTO, BaseResponse<null>>(
+      "/fitness/workouts",
+      payload,
+      {
+        headers: { Authorization: jwt },
+      }
+    );
   }
-}
-
-export async function editWorkout(payload: CreateWorkoutDTO) {
-  const jwt = await getJwtToken();
-  const response = await axiosInstance.put<
-    CreateWorkoutDTO,
-    BaseResponse<null>
-  >("/fitness/workouts", payload, {
-    headers: { Authorization: jwt },
-  });
   if (!response.data.success) {
     throw new Error(response.data.message);
   }

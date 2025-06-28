@@ -7,7 +7,6 @@ export interface CreateWorkoutDTO {
   exercises: Exercise[];
   id?: number;
   intensity: string;
-  remarks: string;
   runs: Run[];
   title: string;
   workoutType: string;
