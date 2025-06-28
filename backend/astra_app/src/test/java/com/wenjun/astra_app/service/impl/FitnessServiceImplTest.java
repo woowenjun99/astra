@@ -16,6 +16,8 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+
 @ExtendWith(MockitoExtension.class)
 public class FitnessServiceImplTest {
     @Mock
@@ -23,10 +25,13 @@ public class FitnessServiceImplTest {
 
     @Test
     public void editWorkout_provideNullId_shouldThrow() {
-        FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository);
-        CreateWorkoutDTO request = new CreateWorkoutDTO();
-        Throwable exception = Assertions.assertThrows(AstraException.class, () -> fitnessService.editWorkout(request));
-        Assertions.assertEquals("ID cannot be null", exception.getMessage());
+        try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
+            mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
+            FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository);
+            CreateWorkoutDTO request = new CreateWorkoutDTO();
+            Throwable exception = Assertions.assertThrows(AstraException.class, () -> fitnessService.editWorkout(request));
+            Assertions.assertEquals("ID cannot be null", exception.getMessage());
+        }
     }
 
     @Test
@@ -43,18 +48,23 @@ public class FitnessServiceImplTest {
     }
 
     @Test
-    public void editWorkout_validId_shouldCallCorrectly() throws AstraException {
+    public void editWorkout_validId_shouldCallCorrectly() {
         try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
             mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
             Mockito.when(fitnessRepository.getWorkoutByUidAndId(1L, "userId")).thenReturn(new WorkoutLogEntity());
             FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository);
-            FitnessService fitnessServiceSpy = Mockito.spy(fitnessService);
             CreateWorkoutDTO request = new CreateWorkoutDTO();
             request.setId(1L);
-            Mockito.doNothing().when(fitnessServiceSpy).createWorkout(request);
-            Assertions.assertDoesNotThrow(() -> fitnessServiceSpy.editWorkout(request));
-            Mockito.verify(fitnessRepository, Mockito.times(1)).deleteWorkout("userId", 1L);
-            Mockito.verify(fitnessServiceSpy, Mockito.times(1)).createWorkout(request);
+            request.setRuns(Collections.singletonList(new CreateWorkoutDTO.RunningDTO(1, 1)));
+            request.setExercises(Collections.singletonList(new CreateWorkoutDTO.ExerciseDTO("Exercise", 1, 1, 1)));
+            Assertions.assertDoesNotThrow(() -> fitnessService.editWorkout(request));
+
+            // Assert
+            Mockito.verify(fitnessRepository, Mockito.times(1)).updateWorkoutByPrimaryKey(Mockito.any());
+            Mockito.verify(fitnessRepository, Mockito.times(1)).deleteRunsByWorkoutId(1L);
+            Mockito.verify(fitnessRepository, Mockito.times(1)).deleteExercisesByWorkoutId(1L);
+            Mockito.verify(fitnessRepository, Mockito.times(1)).batchInsertRuns(Mockito.any());
+            Mockito.verify(fitnessRepository, Mockito.times(1)).batchInsertExercises(Mockito.any());
         }
     }
 }
