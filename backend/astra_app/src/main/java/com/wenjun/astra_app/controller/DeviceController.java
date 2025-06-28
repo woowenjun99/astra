@@ -23,4 +23,9 @@ public class DeviceController {
     public void addPushNotificationToken(@Valid @RequestBody AddPushNotificationDTO request) throws AstraException {
         deviceService.addPushNotificationToken(request);
     }
+
+    @PostMapping("/test")
+    public void sendTestNotification() throws AstraException {
+        deviceService.sendTestNotification();
+    }
 }

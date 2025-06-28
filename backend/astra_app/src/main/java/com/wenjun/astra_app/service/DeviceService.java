@@ -21,4 +21,6 @@ public interface DeviceService {
      * @throws AstraException If the user is not logged in
      */
     void deletePushNotificationToken(String notificationToken) throws AstraException;
+
+    void sendTestNotification() throws AstraException;
 }
