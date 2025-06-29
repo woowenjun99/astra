@@ -44,7 +44,6 @@ import { redirect } from "next/navigation";
 const schema = z.object({
   caloriesBurnt: z.number().int().nonnegative(),
   date: z.date(),
-  duration: z.number().int().nonnegative(),
   intensity: z.string(),
   title: z.string(),
   workoutType: z.string(),
@@ -63,7 +62,6 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
         return {
           caloriesBurnt: 0,
           date: new Date(),
-          duration: 0,
           intensity: "Low",
           title: "",
           workoutType: "Running",
@@ -72,10 +70,10 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
       const data = await getWorkout(id);
       setExercises(data.exercises);
       setRuns(data.runs);
+      setDuration(data.workout.duration);
       return {
         caloriesBurnt: data.workout.caloriesBurnt,
         date: dayjs(data.workout.date).toDate(),
-        duration: data.workout.duration,
         intensity: data.workout.intensity,
         title: data.workout.title,
         workoutType: data.workout.workoutType,
@@ -97,10 +95,11 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
   });
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [runs, setRuns] = useState<Run[]>([]);
+  const [duration, setDuration] = useState(0);
 
   const onSubmit = form.handleSubmit(async (payload) => {
     try {
-      await modifyWorkout({ ...payload, id, exercises, runs });
+      await modifyWorkout({ ...payload, id, exercises, runs, duration });
       redirect("/main/workout");
     } catch (e) {
       toast.error((e as Error).message);
@@ -222,32 +221,29 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-6">
-                <FormField
-                  control={form.control}
-                  name="duration"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel>Duration (Minutes)</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            value={field.value ?? ""}
-                            onChange={(e) =>
-                              field.onChange(
-                                e.target.value === ""
-                                  ? 0
-                                  : Number(e.target.value)
-                              )
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
+              <div
+                className={cn(
+                  "grid grid-cols-1 gap-y-4 md:gap-x-6",
+                  form.watch("workoutType") !== "Running"
+                    ? "md:grid-cols-3"
+                    : "md:grid-cols-2"
+                )}
+              >
+                {/* Duration Input: Only show for gym workouts because for runs, we should compute the individual reps */}
+                {form.watch("workoutType") === "Gym" && (
+                  <div>
+                    <Label className="mb-2">Duration</Label>
+                    <Input
+                      name="duration"
+                      onChange={(e) =>
+                        setDuration(
+                          e.target.value === "" ? 0 : parseInt(e.target.value)
+                        )
+                      }
+                      value={duration}
+                    />
+                  </div>
+                )}
 
                 <FormField
                   control={form.control}

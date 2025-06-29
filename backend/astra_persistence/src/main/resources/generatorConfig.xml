@@ -50,21 +50,16 @@
 <!--            <columnOverride column="target_value" javaType="java.lang.Double" />-->
 <!--        </table>-->
 
-<!--            <table tableName="daily_logs" domainObjectName="DailyLogEntity" >-->
-<!--                <property name="useActualColumnNames" value="false"/>-->
-<!--                <columnOverride column="weight" javaType="java.lang.Double" />-->
-<!--            </table>-->
-
-        <table tableName="workout_logs" domainObjectName="WorkoutLogEntity" >
+        <!-- <table tableName="workout_logs" domainObjectName="WorkoutLogEntity" >
             <property name="useActualColumnNames" value="false"/>
-        </table>
+        </table> -->
 
 <!--                <table tableName="runs" domainObjectName="RunEntity" >-->
 <!--                    <property name="useActualColumnNames" value="false"/>-->
 <!--                </table>-->
 
-<!--                <table tableName="exercises" domainObjectName="ExerciseEntity" >-->
-<!--                    <property name="useActualColumnNames" value="false"/>-->
-<!--                </table>-->
+               <table tableName="strength_training" domainObjectName="StrengthTrainingEntity" >
+                   <property name="useActualColumnNames" value="false"/>
+               </table>
     </context>
 </generatorConfiguration>

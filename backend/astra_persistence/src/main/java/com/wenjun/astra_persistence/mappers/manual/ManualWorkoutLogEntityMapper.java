@@ -1,7 +1,7 @@
 package com.wenjun.astra_persistence.mappers.manual;
 
-import com.wenjun.astra_persistence.models.ExerciseEntity;
 import com.wenjun.astra_persistence.models.RunEntity;
+import com.wenjun.astra_persistence.models.StrengthTrainingEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 
@@ -22,7 +22,7 @@ public interface ManualWorkoutLogEntityMapper {
 
     void batchInsertRuns(@Param("runs") List<RunEntity> runs);
 
-    void batchInsertExercises(@Param("exercises")List<ExerciseEntity> exercises);
+    void batchInsertExercises(@Param("exercises")List<StrengthTrainingEntity> exercises);
 
     WorkoutMetadata getWorkoutMetadata(@Param("userId") String userId);
 }

@@ -17,28 +17,6 @@ CREATE TABLE accounts (
     uid VARCHAR(30) NOT NULL REFERENCES users
 );
 
-CREATE TABLE fitness_goals (
-    category VARCHAR(10) NOT NULL,
-    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    description VARCHAR(500),
-    target_date DATE NOT NULL,
-    target_value NUMERIC(10, 2) NOT NULL,
-    title VARCHAR(30) NOT NULL,
-    uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE,
-    PRIMARY KEY (category, uid)
-);
-
-CREATE TABLE daily_logs (
-    comments VARCHAR(500),
-    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    date DATE NOT NULL DEFAULT current_date,
-    id BIGSERIAL PRIMARY KEY,
-    uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE,
-    weight NUMERIC(10, 2)
-);
-
 CREATE TABLE workout_logs (
     calories_burnt INTEGER,
     date DATE NOT NULL,
@@ -51,7 +29,7 @@ CREATE TABLE workout_logs (
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
 );
 
-CREATE TABLE exercises (
+CREATE TABLE strength_training (
     date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     id BIGSERIAL PRIMARY KEY,

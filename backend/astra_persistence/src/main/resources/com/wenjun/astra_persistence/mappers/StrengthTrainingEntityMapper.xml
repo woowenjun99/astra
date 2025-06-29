@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wenjun.astra_persistence.mappers.DailyLogEntityMapper">
-  <resultMap id="BaseResultMap" type="com.wenjun.astra_persistence.models.DailyLogEntity">
+<mapper namespace="com.wenjun.astra_persistence.mappers.StrengthTrainingEntityMapper">
+  <resultMap id="BaseResultMap" type="com.wenjun.astra_persistence.models.StrengthTrainingEntity">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="comments" jdbcType="VARCHAR" property="comments" />
     <result column="date_created" jdbcType="TIMESTAMP" property="dateCreated" />
     <result column="date_updated" jdbcType="TIMESTAMP" property="dateUpdated" />
-    <result column="date" jdbcType="DATE" property="date" />
-    <result column="uid" jdbcType="VARCHAR" property="uid" />
-    <result column="weight" jdbcType="NUMERIC" property="weight" />
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="reps" jdbcType="INTEGER" property="reps" />
+    <result column="sets" jdbcType="INTEGER" property="sets" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="workout_log_id" jdbcType="BIGINT" property="workoutLogId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +71,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, comments, date_created, date_updated, date, uid, weight
+    id, date_created, date_updated, index, name, reps, sets, weight, workout_log_id
   </sql>
-  <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.DailyLogEntityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.wenjun.astra_persistence.models.StrengthTrainingEntityExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from daily_logs
+    from strength_training
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,35 +90,34 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from daily_logs
+    from strength_training
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from daily_logs
+    delete from strength_training
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.wenjun.astra_persistence.models.DailyLogEntityExample">
-    delete from daily_logs
+  <delete id="deleteByExample" parameterType="com.wenjun.astra_persistence.models.StrengthTrainingEntityExample">
+    delete from strength_training
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.wenjun.astra_persistence.models.DailyLogEntity">
-    insert into daily_logs (id, comments, date_created, 
-      date_updated, date, uid, 
-      weight)
-    values (#{id,jdbcType=BIGINT}, #{comments,jdbcType=VARCHAR}, #{dateCreated,jdbcType=TIMESTAMP}, 
-      #{dateUpdated,jdbcType=TIMESTAMP}, #{date,jdbcType=DATE}, #{uid,jdbcType=VARCHAR}, 
-      #{weight,jdbcType=NUMERIC})
+  <insert id="insert" parameterType="com.wenjun.astra_persistence.models.StrengthTrainingEntity">
+    insert into strength_training (id, date_created, date_updated, 
+      index, name, reps, 
+      sets, weight, workout_log_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{dateCreated,jdbcType=TIMESTAMP}, #{dateUpdated,jdbcType=TIMESTAMP}, 
+      #{index,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{reps,jdbcType=INTEGER}, 
+      #{sets,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{workoutLogId,jdbcType=BIGINT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.DailyLogEntity">
-    insert into daily_logs
+  <insert id="insertSelective" parameterType="com.wenjun.astra_persistence.models.StrengthTrainingEntity">
+    insert into strength_training
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="comments != null">
-        comments,
       </if>
       <if test="dateCreated != null">
         date_created,
@@ -124,22 +125,28 @@
       <if test="dateUpdated != null">
         date_updated,
       </if>
-      <if test="date != null">
-        date,
+      <if test="index != null">
+        index,
       </if>
-      <if test="uid != null">
-        uid,
+      <if test="name != null">
+        name,
+      </if>
+      <if test="reps != null">
+        reps,
+      </if>
+      <if test="sets != null">
+        sets,
       </if>
       <if test="weight != null">
         weight,
+      </if>
+      <if test="workoutLogId != null">
+        workout_log_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
-      </if>
-      <if test="comments != null">
-        #{comments,jdbcType=VARCHAR},
       </if>
       <if test="dateCreated != null">
         #{dateCreated,jdbcType=TIMESTAMP},
@@ -147,31 +154,37 @@
       <if test="dateUpdated != null">
         #{dateUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="date != null">
-        #{date,jdbcType=DATE},
+      <if test="index != null">
+        #{index,jdbcType=INTEGER},
       </if>
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reps != null">
+        #{reps,jdbcType=INTEGER},
+      </if>
+      <if test="sets != null">
+        #{sets,jdbcType=INTEGER},
       </if>
       <if test="weight != null">
-        #{weight,jdbcType=NUMERIC},
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="workoutLogId != null">
+        #{workoutLogId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.wenjun.astra_persistence.models.DailyLogEntityExample" resultType="java.lang.Long">
-    select count(*) from daily_logs
+  <select id="countByExample" parameterType="com.wenjun.astra_persistence.models.StrengthTrainingEntityExample" resultType="java.lang.Long">
+    select count(*) from strength_training
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update daily_logs
+    update strength_training
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=BIGINT},
-      </if>
-      <if test="row.comments != null">
-        comments = #{row.comments,jdbcType=VARCHAR},
       </if>
       <if test="row.dateCreated != null">
         date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
@@ -179,14 +192,23 @@
       <if test="row.dateUpdated != null">
         date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="row.date != null">
-        date = #{row.date,jdbcType=DATE},
+      <if test="row.index != null">
+        index = #{row.index,jdbcType=INTEGER},
       </if>
-      <if test="row.uid != null">
-        uid = #{row.uid,jdbcType=VARCHAR},
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.reps != null">
+        reps = #{row.reps,jdbcType=INTEGER},
+      </if>
+      <if test="row.sets != null">
+        sets = #{row.sets,jdbcType=INTEGER},
       </if>
       <if test="row.weight != null">
-        weight = #{row.weight,jdbcType=NUMERIC},
+        weight = #{row.weight,jdbcType=INTEGER},
+      </if>
+      <if test="row.workoutLogId != null">
+        workout_log_id = #{row.workoutLogId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="example != null">
@@ -194,50 +216,60 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update daily_logs
+    update strength_training
     set id = #{row.id,jdbcType=BIGINT},
-      comments = #{row.comments,jdbcType=VARCHAR},
       date_created = #{row.dateCreated,jdbcType=TIMESTAMP},
       date_updated = #{row.dateUpdated,jdbcType=TIMESTAMP},
-      date = #{row.date,jdbcType=DATE},
-      uid = #{row.uid,jdbcType=VARCHAR},
-      weight = #{row.weight,jdbcType=NUMERIC}
+      index = #{row.index,jdbcType=INTEGER},
+      name = #{row.name,jdbcType=VARCHAR},
+      reps = #{row.reps,jdbcType=INTEGER},
+      sets = #{row.sets,jdbcType=INTEGER},
+      weight = #{row.weight,jdbcType=INTEGER},
+      workout_log_id = #{row.workoutLogId,jdbcType=BIGINT}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wenjun.astra_persistence.models.DailyLogEntity">
-    update daily_logs
+  <update id="updateByPrimaryKeySelective" parameterType="com.wenjun.astra_persistence.models.StrengthTrainingEntity">
+    update strength_training
     <set>
-      <if test="comments != null">
-        comments = #{comments,jdbcType=VARCHAR},
-      </if>
       <if test="dateCreated != null">
         date_created = #{dateCreated,jdbcType=TIMESTAMP},
       </if>
       <if test="dateUpdated != null">
         date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
       </if>
-      <if test="date != null">
-        date = #{date,jdbcType=DATE},
+      <if test="index != null">
+        index = #{index,jdbcType=INTEGER},
       </if>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=VARCHAR},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reps != null">
+        reps = #{reps,jdbcType=INTEGER},
+      </if>
+      <if test="sets != null">
+        sets = #{sets,jdbcType=INTEGER},
       </if>
       <if test="weight != null">
-        weight = #{weight,jdbcType=NUMERIC},
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="workoutLogId != null">
+        workout_log_id = #{workoutLogId,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wenjun.astra_persistence.models.DailyLogEntity">
-    update daily_logs
-    set comments = #{comments,jdbcType=VARCHAR},
-      date_created = #{dateCreated,jdbcType=TIMESTAMP},
+  <update id="updateByPrimaryKey" parameterType="com.wenjun.astra_persistence.models.StrengthTrainingEntity">
+    update strength_training
+    set date_created = #{dateCreated,jdbcType=TIMESTAMP},
       date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
-      date = #{date,jdbcType=DATE},
-      uid = #{uid,jdbcType=VARCHAR},
-      weight = #{weight,jdbcType=NUMERIC}
+      index = #{index,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      reps = #{reps,jdbcType=INTEGER},
+      sets = #{sets,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      workout_log_id = #{workoutLogId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

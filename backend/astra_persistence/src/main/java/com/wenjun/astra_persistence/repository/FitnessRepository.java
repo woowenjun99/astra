@@ -1,13 +1,13 @@
 package com.wenjun.astra_persistence.repository;
 
-import com.wenjun.astra_persistence.mappers.ExerciseEntityMapper;
 import com.wenjun.astra_persistence.mappers.RunEntityMapper;
+import com.wenjun.astra_persistence.mappers.StrengthTrainingEntityMapper;
 import com.wenjun.astra_persistence.mappers.WorkoutLogEntityMapper;
 import com.wenjun.astra_persistence.mappers.manual.ManualWorkoutLogEntityMapper;
-import com.wenjun.astra_persistence.models.ExerciseEntity;
-import com.wenjun.astra_persistence.models.ExerciseEntityExample;
 import com.wenjun.astra_persistence.models.RunEntity;
 import com.wenjun.astra_persistence.models.RunEntityExample;
+import com.wenjun.astra_persistence.models.StrengthTrainingEntity;
+import com.wenjun.astra_persistence.models.StrengthTrainingEntityExample;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntityExample;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
@@ -31,7 +31,7 @@ public class FitnessRepository {
     private RunEntityMapper runEntityMapper;
 
     @Resource
-    private ExerciseEntityMapper exerciseEntityMapper;
+    private StrengthTrainingEntityMapper strengthTrainingEntityMapper;
 
     public List<WorkoutLogEntity> getWorkouts(String userId, Long pageSize, Long pageNo, String workoutType, String intensity) {
         return manualWorkoutLogEntityMapper.getWorkouts(userId, pageSize, pageSize * pageNo, workoutType, intensity);
@@ -45,7 +45,7 @@ public class FitnessRepository {
         manualWorkoutLogEntityMapper.batchInsertRuns(runs);
     }
 
-    public void batchInsertExercises(List<ExerciseEntity> exercises) {
+    public void batchInsertStrengthTraining(List<StrengthTrainingEntity> exercises) {
         manualWorkoutLogEntityMapper.batchInsertExercises(exercises);
     }
 
@@ -91,13 +91,13 @@ public class FitnessRepository {
         return runEntityMapper.selectByExample(example);
     }
 
-    public List<ExerciseEntity> getExerciseByWorkoutId(Long id) {
-        ExerciseEntityExample example = new ExerciseEntityExample();
+    public List<StrengthTrainingEntity> getStrengthTrainingByWorkoutId(Long id) {
+        StrengthTrainingEntityExample example = new StrengthTrainingEntityExample();
         example
                 .createCriteria()
                 .andWorkoutLogIdEqualTo(id);
         example.setOrderByClause("index desc");
-        return exerciseEntityMapper.selectByExample(example);
+        return strengthTrainingEntityMapper.selectByExample(example);
     }
 
     public void updateWorkoutByPrimaryKey(WorkoutLogEntity workout) {
@@ -110,9 +110,9 @@ public class FitnessRepository {
         runEntityMapper.deleteByExample(example);
     }
 
-    public void deleteExercisesByWorkoutId(Long workoutId) {
-        ExerciseEntityExample example = new ExerciseEntityExample();
+    public void deleteStrengthTrainingByWorkoutId(Long workoutId) {
+        StrengthTrainingEntityExample example = new StrengthTrainingEntityExample();
         example.createCriteria().andWorkoutLogIdEqualTo(workoutId);
-        exerciseEntityMapper.deleteByExample(example);
+        strengthTrainingEntityMapper.deleteByExample(example);
     }
 }

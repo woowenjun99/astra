@@ -1,5 +1,8 @@
 package com.wenjun.astra_app.model.dto;
 
+import com.wenjun.astra_app.model.AstraException;
+import com.wenjun.astra_app.model.enums.fitness.WorkoutType;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -73,5 +76,17 @@ public class CreateWorkoutDTO {
         @NotNull
         @PositiveOrZero
         private final Integer duration;
+    }
+
+    public Integer getDurationToSave() throws AstraException {
+        WorkoutType workoutType = WorkoutType.getByAlias(this.getWorkoutType());
+        if (WorkoutType.RUNNING.equals(workoutType)) {
+            Integer duration = 0;
+            for (RunningDTO runningDTO: this.getRuns()) {
+                duration += runningDTO.getDuration();
+            }
+            return duration;
+        }
+        return this.duration;
     }
 }

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ExerciseEntityExample {
+public class StrengthTrainingEntityExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ExerciseEntityExample() {
+    public StrengthTrainingEntityExample() {
         oredCriteria = new ArrayList<>();
     }
 

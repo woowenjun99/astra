@@ -1,7 +1,7 @@
 package com.wenjun.astra_app.model.vo;
 
-import com.wenjun.astra_persistence.models.ExerciseEntity;
 import com.wenjun.astra_persistence.models.RunEntity;
+import com.wenjun.astra_persistence.models.StrengthTrainingEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 
 import lombok.Builder;
@@ -14,5 +14,5 @@ import java.util.List;
 public class GetWorkoutVO {
     private WorkoutLogEntity workout;
     private List<RunEntity> runs;
-    private List<ExerciseEntity> exercises;
+    private List<StrengthTrainingEntity> exercises;
 }

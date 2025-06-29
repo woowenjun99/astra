@@ -2,7 +2,7 @@ package com.wenjun.astra_persistence.models;
 
 import java.util.Date;
 
-public class ExerciseEntity {
+public class StrengthTrainingEntity {
     private Long id;
 
     private Date dateCreated;
