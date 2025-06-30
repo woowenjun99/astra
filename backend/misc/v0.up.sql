@@ -61,3 +61,13 @@ CREATE TABLE devices (
 
 ALTER TABLE "public"."workout_logs"
 ADD COLUMN "workout_type" varchar(50) NOT NULL;
+
+CREATE TABLE scheduled (
+    body VARCHAR(500) NOT NULL,
+    date_created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    date_updated TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    id BIGSERIAL PRIMARY KEY,
+    scheduled_time TIMESTAMPTZ NOT NULL,
+    title VARCHAR(30) NOT NULL,
+    uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
+);

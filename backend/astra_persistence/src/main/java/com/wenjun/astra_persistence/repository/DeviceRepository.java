@@ -47,4 +47,10 @@ public class DeviceRepository {
         example.createCriteria().andUidEqualTo(userId);
         return deviceEntityMapper.selectByExample(example);
     }
+
+    public List<DeviceEntity> getDevicesByUserIds(List<String> userIds) {
+        DeviceEntityExample example = new DeviceEntityExample();
+        example.createCriteria().andUidIn(userIds);
+        return deviceEntityMapper.selectByExample(example);
+    }
 }
