@@ -46,4 +46,13 @@ public class RunningWorkoutTypePlugin implements WorkoutTypePlugin {
             fitnessRepository.batchInsertRuns(runs);
         }
     }
+
+    @Override
+    public Integer computeDuration(CreateWorkoutDTO request) {
+        Integer duration = 0;
+        for (CreateWorkoutDTO.RunningDTO run: request.getRuns()) {
+            duration += run.getDuration();
+        }
+        return duration;
+    }
 }

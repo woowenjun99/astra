@@ -45,4 +45,9 @@ public class StrengthTrainingWorkoutPlugin implements WorkoutTypePlugin {
             fitnessRepository.batchInsertStrengthTraining(exercises);
         }
     }
+
+    @Override
+    public Integer computeDuration(CreateWorkoutDTO request) {
+        return request.getDuration();
+    }
 }

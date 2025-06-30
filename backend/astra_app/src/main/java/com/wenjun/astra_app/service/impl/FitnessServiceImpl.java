@@ -57,13 +57,14 @@ public class FitnessServiceImpl implements FitnessService {
      *
      * @param workoutLog The workout log object to modify
      * @param request The payload from the frontend
+     * @param duration The duration to be saved in the workout log entity
      * @return The modified workout log
      */
-    private WorkoutLogEntity setWorkoutLogFields(WorkoutLogEntity workoutLog, CreateWorkoutDTO request) throws AstraException {
+    private WorkoutLogEntity setWorkoutLogFields(WorkoutLogEntity workoutLog, CreateWorkoutDTO request, Integer duration) throws AstraException {
         workoutLog.setDate(request.getDate());
         workoutLog.setTitle(request.getTitle());
         workoutLog.setCaloriesBurnt(request.getCaloriesBurnt());
-        workoutLog.setDuration(request.getDurationToSave());
+        workoutLog.setDuration(duration);
         workoutLog.setIntensity(request.getIntensity());
         workoutLog.setWorkoutType(request.getWorkoutType());
         return workoutLog;
@@ -85,11 +86,12 @@ public class FitnessServiceImpl implements FitnessService {
     public void createWorkout(CreateWorkoutDTO request) throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-        WorkoutLogEntity workoutLog = setWorkoutLogFields(new WorkoutLogEntity(), request);
-        workoutLog.setUid(userId);
-        Long workoutLogId = fitnessRepository.createWorkout(workoutLog);
         WorkoutType workoutType = WorkoutType.getByAlias(request.getWorkoutType());
         WorkoutTypePlugin plugin = workoutTypePlugins.getPlugin(workoutType);
+        Integer duration = plugin.computeDuration(request);
+        WorkoutLogEntity workoutLog = setWorkoutLogFields(new WorkoutLogEntity(), request, duration);
+        workoutLog.setUid(userId);
+        Long workoutLogId = fitnessRepository.createWorkout(workoutLog);
         plugin.handleCreateWorkout(request, workoutLogId);
     }
 
@@ -112,13 +114,14 @@ public class FitnessServiceImpl implements FitnessService {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
         WorkoutLogEntity original = getWorkoutLogByUserIdAndId(userId, request.getId());
-        WorkoutLogEntity workoutLog = setWorkoutLogFields(original, request);
+        WorkoutType workoutType = WorkoutType.getByAlias(request.getWorkoutType());
+        WorkoutTypePlugin plugin = workoutTypePlugins.getPlugin(workoutType);
+        Integer duration = plugin.computeDuration(request);
+        WorkoutLogEntity workoutLog = setWorkoutLogFields(original, request, duration);
         workoutLog.setDateUpdated(new Date());
         fitnessRepository.updateWorkoutByPrimaryKey(workoutLog);
         fitnessRepository.deleteRunsByWorkoutId(request.getId());
         fitnessRepository.deleteStrengthTrainingByWorkoutId(request.getId());
-        WorkoutType workoutType = WorkoutType.getByAlias(request.getWorkoutType());
-        WorkoutTypePlugin plugin = workoutTypePlugins.getPlugin(workoutType);
         plugin.handleCreateWorkout(request, request.getId());
     }
 

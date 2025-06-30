@@ -8,4 +8,6 @@ public interface WorkoutTypePlugin {
     WorkoutType getWorkoutType();
 
     void handleCreateWorkout(CreateWorkoutDTO request, Long workoutLogId) throws AstraException;
+
+    Integer computeDuration(CreateWorkoutDTO request);
 }
