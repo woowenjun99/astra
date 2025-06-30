@@ -1,5 +1,5 @@
 export interface WorkoutMetadata {
-  averageDuration: number;
+  averageDurationInSeconds: number;
   totalWorkouts: number;
-  totalHours: number;
+  totalDurationInSeconds: number;
 }

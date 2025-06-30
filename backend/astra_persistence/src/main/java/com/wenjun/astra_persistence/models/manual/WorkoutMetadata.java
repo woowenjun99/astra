@@ -3,14 +3,14 @@ package com.wenjun.astra_persistence.models.manual;
 public class WorkoutMetadata {
     private Integer totalWorkouts;
 
-    private Integer totalHours;
+    private Integer totalDurationInSeconds;
 
-    private Integer averageDuration;
+    private Integer averageDurationInSeconds;
 
-    public WorkoutMetadata(Integer totalWorkouts, Integer totalHours, Integer averageDuration) {
+    public WorkoutMetadata(Integer totalWorkouts, Integer totalDurationInSeconds, Integer averageDurationInSeconds) {
         this.totalWorkouts = totalWorkouts;
-        this.totalHours = totalHours;
-        this.averageDuration = averageDuration;
+        this.totalDurationInSeconds = totalDurationInSeconds;
+        this.averageDurationInSeconds = averageDurationInSeconds;
     }
 
     public Integer getTotalWorkouts() {
@@ -21,19 +21,19 @@ public class WorkoutMetadata {
         this.totalWorkouts = totalWorkouts;
     }
 
-    public Integer getTotalHours() {
-        return totalHours;
+    public Integer getTotalDurationInSeconds() {
+        return totalDurationInSeconds;
     }
 
-    public void setTotalHours(Integer totalHours) {
-        this.totalHours = totalHours;
+    public void setTotalHours(Integer totalDurationInSeconds) {
+        this.totalDurationInSeconds = totalDurationInSeconds;
     }
 
-    public Integer getAverageDuration() {
-        return averageDuration;
+    public Integer getAverageDurationInSeconds() {
+        return averageDurationInSeconds;
     }
 
-    public void setAverageDuration(Integer averageDuration) {
-        this.averageDuration = averageDuration;
+    public void setAverageDuration(Integer averageDurationInSeconds) {
+        this.averageDurationInSeconds = averageDurationInSeconds;
     }
 }

@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { Formatter } from "@/util/formatter";
 
 interface WorkoutCardProps {
   workout: Workout;
@@ -117,7 +118,7 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
             <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 my-3">
               <div className="flex items-center gap-1">
                 <IconClock />
-                {workout.duration} min
+                {Formatter.formatTimeElapsed(workout.duration)}
               </div>
 
               <div className="flex items-center gap-1">
