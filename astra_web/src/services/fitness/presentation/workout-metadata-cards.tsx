@@ -4,13 +4,13 @@ import useSWR from "swr";
 import { getWorkoutMetadata } from "../data/fitness-repository";
 import { Card, CardContent } from "@/components/ui/card";
 import { IconBarbell, IconClock, IconLoader } from "@tabler/icons-react";
+import { Formatter } from "@/util/formatter";
 
 type WorkoutMetadataCardProps = {
   icon: ReactElement;
   isLoading: boolean;
   title: string;
-  units?: string;
-  value?: number;
+  value?: number | string;
 };
 
 const WorkoutMetadataCard: FC<WorkoutMetadataCardProps> = ({
@@ -18,7 +18,6 @@ const WorkoutMetadataCard: FC<WorkoutMetadataCardProps> = ({
   isLoading,
   title,
   value,
-  units,
 }) => {
   return (
     <Card>
@@ -32,9 +31,7 @@ const WorkoutMetadataCard: FC<WorkoutMetadataCardProps> = ({
             {isLoading ? (
               <IconLoader className="animate-spin" />
             ) : (
-              <p className="text-2xl font-bold">
-                {value} {units}
-              </p>
+              <p className="text-2xl font-bold">{value}</p>
             )}
           </div>
         </div>
@@ -61,16 +58,15 @@ export default function WorkoutMetadataCards() {
       <WorkoutMetadataCard
         icon={<IconClock size={40} />}
         isLoading={isLoading}
-        title="Total Hours"
-        value={data?.totalHours}
+        title="Total Duration"
+        value={Formatter.formatTimeElapsed(data?.totalDurationInSeconds ?? 0)}
       />
 
       <WorkoutMetadataCard
         icon={<IconBarbell size={40} />}
         isLoading={isLoading}
         title="Average Duration"
-        units="Minutes"
-        value={data?.averageDuration}
+        value={Formatter.formatTimeElapsed(data?.averageDurationInSeconds ?? 0)}
       />
     </div>
   );

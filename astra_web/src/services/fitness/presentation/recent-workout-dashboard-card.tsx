@@ -21,6 +21,7 @@ import type { FC } from "react";
 import dayjs from "dayjs";
 import { cn } from "@/lib/utils";
 import { Dumbbell } from "lucide-react";
+import { Formatter } from "@/util/formatter";
 
 type WorkoutCardProps = {
   workouts: Workout[];
@@ -34,6 +35,8 @@ const WorkoutCards: FC<WorkoutCardProps> = ({ workouts }) => {
       return "Yesterday";
     } else if (today.diff(givenDate, "days") === -1) {
       return "Tomorrow";
+    } else if (today.isSame(givenDate, "days")) {
+      return "Today";
     }
     return `${today.diff(givenDate, "days")} days ago`;
   }
@@ -77,7 +80,9 @@ const WorkoutCards: FC<WorkoutCardProps> = ({ workouts }) => {
             <div className="flex flex-wrap mt-4 gap-4">
               <div className="flex items-center gap-1.5">
                 <IconClock className="h-4 w-4 text-gray-500" />
-                <span className="text-sm">{workout.duration} min</span>
+                <span className="text-sm">
+                  {Formatter.formatTimeElapsed(workout.duration)}
+                </span>
               </div>
 
               <div className="flex items-center gap-1.5">

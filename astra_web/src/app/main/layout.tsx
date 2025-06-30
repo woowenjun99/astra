@@ -2,6 +2,7 @@
 import type { ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <SidebarTrigger />
         {children}
       </div>
+      <Toaster />
     </SidebarProvider>
   );
 }

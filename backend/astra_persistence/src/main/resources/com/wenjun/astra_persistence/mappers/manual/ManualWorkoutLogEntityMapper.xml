@@ -76,8 +76,8 @@
     <select id="getWorkoutMetadata" resultType="com.wenjun.astra_persistence.models.manual.WorkoutMetadata">
         select
             count(*) as totalWorkouts,
-            floor(sum(duration) / 60) as totalHours,
-            floor(avg(duration)) as averageDuration
+            sum(duration) as totalDurationInSeconds,
+            floor(avg(duration)) as averageDurationInSeconds
         from workout_logs
         where uid = #{userId}
         group by uid;
