@@ -40,6 +40,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import ExerciseRunTable from "./exercise-table";
 import { redirect } from "next/navigation";
+import { IconLoader } from "@tabler/icons-react";
 
 const schema = z.object({
   caloriesBurnt: z.number().int().nonnegative(),
@@ -70,7 +71,10 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
       const data = await getWorkout(id);
       setExercises(data.exercises);
       setRuns(data.runs);
-      setDuration(data.workout.duration);
+      setDuration({
+        durationInMinutes: Math.min(data.workout.duration / 60),
+        durationInSeconds: data.workout.duration % 60,
+      });
       return {
         caloriesBurnt: data.workout.caloriesBurnt,
         date: dayjs(data.workout.date).toDate(),
@@ -95,12 +99,21 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
   });
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [runs, setRuns] = useState<Run[]>([]);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState({
+    durationInMinutes: 0,
+    durationInSeconds: 0,
+  });
 
   const onSubmit = form.handleSubmit(async (payload) => {
     try {
-      await modifyWorkout({ ...payload, id, exercises, runs, duration });
-      redirect("/main/workout");
+      await modifyWorkout({
+        ...payload,
+        id,
+        exercises,
+        runs,
+        duration: duration.durationInMinutes * 60 + duration.durationInSeconds,
+      });
+      toast.success("Workout successfully saved!");
     } catch (e) {
       toast.error((e as Error).message);
     }
@@ -225,22 +238,45 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                 className={cn(
                   "grid grid-cols-1 gap-y-4 md:gap-x-6",
                   form.watch("workoutType") !== "Running"
-                    ? "md:grid-cols-3"
+                    ? "md:grid-cols-4"
                     : "md:grid-cols-2"
                 )}
               >
                 {/* Duration Input: Only show for gym workouts because for runs, we should compute the individual reps */}
-                {form.watch("workoutType") === "Gym" && (
+                {form.watch("workoutType") === "Strength Training" && (
                   <div>
-                    <Label className="mb-2">Duration</Label>
+                    <Label className="mb-2">Duration (min)</Label>
                     <Input
                       name="duration"
                       onChange={(e) =>
-                        setDuration(
-                          e.target.value === "" ? 0 : parseInt(e.target.value)
-                        )
+                        setDuration({
+                          ...duration,
+                          durationInMinutes:
+                            e.target.value === ""
+                              ? 0
+                              : parseInt(e.target.value),
+                        })
                       }
-                      value={duration}
+                      value={duration.durationInMinutes}
+                    />
+                  </div>
+                )}
+
+                {form.watch("workoutType") === "Strength Training" && (
+                  <div>
+                    <Label className="mb-2">Duration (seconds)</Label>
+                    <Input
+                      name="duration"
+                      onChange={(e) =>
+                        setDuration({
+                          ...duration,
+                          durationInSeconds:
+                            e.target.value === ""
+                              ? 0
+                              : parseInt(e.target.value),
+                        })
+                      }
+                      value={duration.durationInSeconds}
                     />
                   </div>
                 )}
@@ -471,7 +507,15 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                 />
               </div>
               <div className="md:flex md:flex-row md:justify-end mt-5">
-                <Button className="w-full md:w-fit">Save Workout</Button>
+                <Button
+                  className="w-full md:w-fit"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting && (
+                    <IconLoader className="animate-spin" />
+                  )}
+                  Save Workout
+                </Button>
               </div>
             </form>
           </Form>
