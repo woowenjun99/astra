@@ -3,8 +3,8 @@ import type { FC, ReactElement } from "react";
 import useSWR from "swr";
 import { getWorkoutMetadata } from "../data/fitness-repository";
 import { Card, CardContent } from "@/components/ui/card";
-import { IconBarbell, IconClock, IconLoader } from "@tabler/icons-react";
 import { Formatter } from "@/util/formatter";
+import { Clock, Dumbbell, Loader } from "lucide-react";
 
 type WorkoutMetadataCardProps = {
   icon: ReactElement;
@@ -29,7 +29,7 @@ const WorkoutMetadataCard: FC<WorkoutMetadataCardProps> = ({
               {title}
             </h3>
             {isLoading ? (
-              <IconLoader className="animate-spin" />
+              <Loader className="animate-spin" />
             ) : (
               <p className="text-2xl font-bold">{value}</p>
             )}
@@ -49,21 +49,21 @@ export default function WorkoutMetadataCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <WorkoutMetadataCard
-        icon={<IconBarbell size={40} />}
+        icon={<Dumbbell size={40} />}
         isLoading={isLoading}
         title="Total Workouts"
         value={data?.totalWorkouts}
       />
 
       <WorkoutMetadataCard
-        icon={<IconClock size={40} />}
+        icon={<Clock size={40} />}
         isLoading={isLoading}
         title="Total Duration"
         value={Formatter.formatTimeElapsed(data?.totalDurationInSeconds ?? 0)}
       />
 
       <WorkoutMetadataCard
-        icon={<IconBarbell size={40} />}
+        icon={<Dumbbell size={40} />}
         isLoading={isLoading}
         title="Average Duration"
         value={Formatter.formatTimeElapsed(data?.averageDurationInSeconds ?? 0)}

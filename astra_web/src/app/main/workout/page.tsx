@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WorkoutMetadataCards from "@/services/fitness/presentation/workout-metadata-cards";
 import ListViewWorkoutPage from "@/services/fitness/presentation/list-view-workout-page";
-import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 
 export default function WorkoutPage() {
   return (
@@ -19,7 +19,7 @@ export default function WorkoutPage() {
 
         <Link passHref href="/main/workout/new">
           <Button className="bg-green-600 hover:bg-green-700" type="button">
-            <IconPlus />
+            <Plus />
             Record Workout
           </Button>
         </Link>

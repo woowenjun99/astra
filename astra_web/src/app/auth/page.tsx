@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { IconEye, IconEyeClosed, IconBrandGoogle } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
@@ -20,6 +19,7 @@ import {
   createUser,
   signin,
 } from "@/services/authentication/data/authentication-repository";
+import { Eye, EyeClosed } from "lucide-react";
 
 const schema = z.object({
   email: z.string().email(),
@@ -106,9 +106,9 @@ export default function AuthPage() {
                               variant="ghost"
                             >
                               {showPassword ? (
-                                <IconEye className="text-gray-400 h-4 w-4" />
+                                <Eye className="text-gray-400 h-4 w-4" />
                               ) : (
-                                <IconEyeClosed className="text-gray-400 h-4 w-4" />
+                                <EyeClosed className="text-gray-400 h-4 w-4" />
                               )}
                             </Button>
                           </div>
@@ -150,7 +150,6 @@ export default function AuthPage() {
               type="button"
               variant="outline"
             >
-              <IconBrandGoogle />
               <div className="font-bold text-md">Sign In With Google</div>
             </Button>
           </div>

@@ -8,20 +8,19 @@ import {
 } from "@/components/ui/card";
 import useSWR from "swr";
 import { getWorkouts } from "../data/fitness-repository";
-import {
-  IconClock,
-  IconFlame,
-  IconLoader,
-  IconGauge,
-} from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import type { Workout } from "../domain/workout";
 import type { FC } from "react";
-import dayjs from "dayjs";
 import { cn } from "@/lib/utils";
-import { Dumbbell } from "lucide-react";
+import { Clock, Dumbbell, Flame, Gauge, Loader } from "lucide-react";
 import { Formatter } from "@/util/formatter";
+import {
+  isToday,
+  isTomorrow,
+  isYesterday,
+  differenceInCalendarDays,
+} from "date-fns";
 
 type WorkoutCardProps = {
   workouts: Workout[];
@@ -29,16 +28,14 @@ type WorkoutCardProps = {
 
 const WorkoutCards: FC<WorkoutCardProps> = ({ workouts }) => {
   function convertDate(date: Date) {
-    const today = dayjs();
-    const givenDate = dayjs(date);
-    if (today.diff(givenDate, "days") === 1) {
+    if (isYesterday(date)) {
       return "Yesterday";
-    } else if (today.diff(givenDate, "days") === -1) {
+    } else if (isTomorrow(date)) {
       return "Tomorrow";
-    } else if (today.isSame(givenDate, "days")) {
+    } else if (isToday(date)) {
       return "Today";
     }
-    return `${today.diff(givenDate, "days")} days ago`;
+    return `${differenceInCalendarDays(new Date(), date)} days ago`;
   }
 
   if (workouts.length === 0) {
@@ -79,19 +76,19 @@ const WorkoutCards: FC<WorkoutCardProps> = ({ workouts }) => {
             </div>
             <div className="flex flex-wrap mt-4 gap-4">
               <div className="flex items-center gap-1.5">
-                <IconClock className="h-4 w-4 text-gray-500" />
+                <Clock className="h-4 w-4 text-gray-500" />
                 <span className="text-sm">
                   {Formatter.formatTimeElapsed(workout.duration)}
                 </span>
               </div>
 
               <div className="flex items-center gap-1.5">
-                <IconFlame className="h-4 w-4 text-orange-500" />
+                <Flame className="h-4 w-4 text-orange-500" />
                 <span className="text-sm">{workout.caloriesBurnt} kcal</span>
               </div>
 
               <div className="flex items-center gap-1.5">
-                <IconGauge
+                <Gauge
                   className={cn(
                     "h-4 w-4",
                     workout.intensity === "Low" && "text-green-600",
@@ -127,7 +124,7 @@ export default function RecentWorkoutDashboardCard() {
       <CardContent className="h-full">
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
-            <IconLoader className="animate-spin" />
+            <Loader className="animate-spin" />
           </div>
         ) : (
           <WorkoutCards workouts={data?.workouts ?? []} />

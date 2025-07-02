@@ -7,19 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  IconClock,
-  IconDots,
-  IconFilter,
-  IconFlame,
-  IconLoader,
-} from "@tabler/icons-react";
 import { useState, useCallback, type FC } from "react";
 import useSWR from "swr";
 import { deleteWorkout, getWorkouts } from "../data/fitness-repository";
 import type { Workout } from "../domain/workout";
 import { Card, CardContent } from "@/components/ui/card";
-import dayjs from "dayjs";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -40,6 +32,8 @@ import {
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Formatter } from "@/util/formatter";
+import { format, isToday, isTomorrow, isYesterday } from "date-fns";
+import { Clock, Ellipsis, Filter, Flame, Loader } from "lucide-react";
 
 interface WorkoutCardProps {
   workout: Workout;
@@ -50,12 +44,10 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getDateLabel = () => {
-    const today = dayjs();
-    const givenDate = dayjs(workout.date);
-    if (today.isSame(givenDate, "day")) return "Today";
-    if (today.diff(givenDate, "day") === -1) return "Tomorrow";
-    if (today.diff(givenDate, "day") === 1) return "Yesterday";
-    return givenDate.format("MMMM D, YYYY");
+    if (isToday(workout.date)) return "Today";
+    if (isTomorrow(workout.date)) return "Tomorrow";
+    if (isYesterday(workout.date)) return "Yesterday";
+    return format(workout.date, "MMMM d, yyyy");
   };
 
   const getIntensityColor = (intensity: string) => {
@@ -100,7 +92,7 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <IconDots />
+                  <Ellipsis />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem
@@ -117,12 +109,12 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
 
             <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 my-3">
               <div className="flex items-center gap-1">
-                <IconClock />
+                <Clock />
                 {Formatter.formatTimeElapsed(workout.duration)}
               </div>
 
               <div className="flex items-center gap-1">
-                <IconFlame />
+                <Flame />
                 {workout.caloriesBurnt} cal
               </div>
             </div>
@@ -150,7 +142,7 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction disabled={isLoading} onClick={onClick}>
-              {isLoading ? <IconLoader className="animate-spin" /> : "Continue"}
+              {isLoading ? <Loader className="animate-spin" /> : "Continue"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -200,13 +192,13 @@ export default function ListViewWorkoutPage() {
         </Select>
 
         <Button onClick={clearFilter} variant="outline" type="button">
-          <IconFilter />
+          <Filter />
           Clear Filters
         </Button>
       </div>
 
       {isLoading ? (
-        <IconLoader className="animate-spin" />
+        <Loader className="animate-spin" />
       ) : (
         data?.workouts.map((workout) => {
           return <WorkoutCard key={workout.id} workout={workout} />;

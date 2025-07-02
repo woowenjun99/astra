@@ -32,7 +32,6 @@ import {
 import { Exercise, Run } from "@/services/fitness/domain/workout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import dayjs from "dayjs";
 import { CalendarIcon } from "lucide-react";
 import { type FC, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -40,7 +39,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import ExerciseRunTable from "./exercise-table";
 import { redirect } from "next/navigation";
-import { IconLoader } from "@tabler/icons-react";
+import { Loader } from "lucide-react";
 
 const schema = z.object({
   caloriesBurnt: z.number().int().nonnegative(),
@@ -77,7 +76,7 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
       });
       return {
         caloriesBurnt: data.workout.caloriesBurnt,
-        date: dayjs(data.workout.date).toDate(),
+        date: data.workout.date,
         intensity: data.workout.intensity,
         title: data.workout.title,
         workoutType: data.workout.workoutType,
@@ -512,7 +511,7 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                   disabled={form.formState.isSubmitting}
                 >
                   {form.formState.isSubmitting && (
-                    <IconLoader className="animate-spin" />
+                    <Loader className="animate-spin" />
                   )}
                   Save Workout
                 </Button>
