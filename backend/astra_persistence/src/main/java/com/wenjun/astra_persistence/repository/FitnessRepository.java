@@ -49,8 +49,8 @@ public class FitnessRepository {
         manualWorkoutLogEntityMapper.batchInsertExercises(exercises);
     }
 
-    public WorkoutMetadata getWorkoutMetadata(String userId) {
-        return manualWorkoutLogEntityMapper.getWorkoutMetadata(userId);
+    public WorkoutMetadata getWorkoutMetadata(String userId, String intensity, String workoutType) {
+        return manualWorkoutLogEntityMapper.getWorkoutMetadata(userId, intensity, workoutType);
     }
 
     public void deleteWorkout(String userId, Long workoutId) {

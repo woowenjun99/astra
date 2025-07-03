@@ -79,7 +79,14 @@
             sum(duration) as totalDurationInSeconds,
             floor(avg(duration)) as averageDurationInSeconds
         from workout_logs
-        where uid = #{userId}
+        where
+            uid = #{userId}
+            <if test="intensity != null">
+                and intensity = #{intensity}
+            </if>
+            <if test="workoutType != null">
+                and workout_type = #{workoutType}
+            </if>
         group by uid;
     </select>
 </mapper>

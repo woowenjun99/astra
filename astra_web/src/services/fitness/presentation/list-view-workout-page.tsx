@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState, useCallback, type FC } from "react";
+import { useState, useCallback, type FC, useContext } from "react";
 import useSWR from "swr";
 import { deleteWorkout, getWorkouts } from "../data/fitness-repository";
 import type { Workout } from "../domain/workout";
@@ -34,6 +34,11 @@ import { redirect } from "next/navigation";
 import { Formatter } from "@/util/formatter";
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 import { Clock, Ellipsis, Filter, Flame, Loader } from "lucide-react";
+import {
+  type Intensity,
+  WorkoutPageContext,
+  type WorkoutType,
+} from "./workout-page-context";
 
 interface WorkoutCardProps {
   workout: Workout;
@@ -152,21 +157,23 @@ const WorkoutCard: FC<WorkoutCardProps> = ({ workout }) => {
 };
 
 export default function ListViewWorkoutPage() {
-  const [intensity, setIntensity] = useState("All Intensity");
-  const [workoutType, setWorkoutType] = useState("All Types");
+  const context = useContext(WorkoutPageContext);
   const clearFilter = useCallback(() => {
-    setIntensity("All Intensity");
-    setWorkoutType("All Types");
-  }, []);
+    context?.setIntensity("All Intensity");
+    context?.setWorkoutType("All Types");
+  }, [context]);
   const { data, isLoading } = useSWR(
-    ["/fitness/workouts", 20, 0, workoutType, intensity],
+    ["/fitness/workouts", 20, 0, context?.workoutType, context?.intensity],
     getWorkouts
   );
 
   return (
     <div className="flex flex-col">
       <div className="flex flex-col md:flex-row gap-4 md:gap-x-4 mb-5">
-        <Select value={workoutType} onValueChange={setWorkoutType}>
+        <Select
+          value={context?.workoutType}
+          onValueChange={(e) => context?.setWorkoutType(e as WorkoutType)}
+        >
           <SelectTrigger className="w-full md:w-32">
             <SelectValue placeholder="All Types" />
           </SelectTrigger>
@@ -174,11 +181,14 @@ export default function ListViewWorkoutPage() {
           <SelectContent>
             <SelectItem value="All Types">All Types</SelectItem>
             <SelectItem value="Running">Running</SelectItem>
-            <SelectItem value="Gym">Gym</SelectItem>
+            <SelectItem value="Strength Training">Strength Training</SelectItem>
           </SelectContent>
         </Select>
 
-        <Select value={intensity} onValueChange={setIntensity}>
+        <Select
+          value={context?.intensity}
+          onValueChange={(e) => context?.setIntensity(e as Intensity)}
+        >
           <SelectTrigger className="w-full md:w-32">
             <SelectValue placeholder="All Intensity" />
           </SelectTrigger>

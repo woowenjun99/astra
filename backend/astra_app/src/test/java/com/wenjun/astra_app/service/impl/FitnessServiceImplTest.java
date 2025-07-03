@@ -8,9 +8,10 @@ import com.wenjun.astra_app.plugins.fitness.WorkoutTypePlugins;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
+import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 import com.wenjun.astra_persistence.repository.FitnessRepository;
-
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,6 +74,32 @@ public class FitnessServiceImplTest {
 
             // Assert
             Mockito.verify(runningWorkoutTypePlugin, Mockito.times(1)).handleCreateWorkout(request, 1L);
+        }
+    }
+
+    @Test
+    public void getWorkout_ifMetadataNotNull_shouldReturnMetadata() {
+        try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
+            mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
+            Mockito.when(fitnessRepository.getWorkoutMetadata("userId", null, null)).thenReturn(new WorkoutMetadata(1, 2, 3));
+            FitnessService service = new FitnessServiceImpl(fitnessRepository, null);
+            WorkoutMetadata metadata = Assertions.assertDoesNotThrow(() -> service.getWorkoutMetadata(null, null));
+            Assertions.assertEquals(1, metadata.getTotalWorkouts());
+            Assertions.assertEquals(3, metadata.getAverageDurationInSeconds());
+            Assertions.assertEquals(2, metadata.getTotalDurationInSeconds());
+        }
+    }
+
+    @Test
+    public void getWorkout_ifMetadataNull_shouldReturnSomething() {
+        try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
+            mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
+            Mockito.when(fitnessRepository.getWorkoutMetadata("userId", null, null)).thenReturn(null);
+            FitnessService service = new FitnessServiceImpl(fitnessRepository, null);
+            WorkoutMetadata metadata = Assertions.assertDoesNotThrow(() -> service.getWorkoutMetadata(null, null));
+            Assertions.assertEquals(0, metadata.getTotalWorkouts());
+            Assertions.assertEquals(0, metadata.getAverageDurationInSeconds());
+            Assertions.assertEquals(0, metadata.getTotalDurationInSeconds());
         }
     }
 }
