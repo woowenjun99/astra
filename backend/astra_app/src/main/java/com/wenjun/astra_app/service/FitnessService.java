@@ -1,6 +1,7 @@
 package com.wenjun.astra_app.service;
 
 import com.wenjun.astra_app.model.AstraException;
+import com.wenjun.astra_app.model.dto.CreateScheduledWorkoutDTO;
 import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.vo.GetWorkoutVO;
 import com.wenjun.astra_app.model.vo.GetWorkoutsVO;
@@ -58,4 +59,12 @@ public interface FitnessService {
      * @throws AstraException If the user is not logged in.
      */
     GetWorkoutVO getWorkout(Long id) throws AstraException;
+
+    /**
+     * Create an upcoming workout and schedules push notification
+     *
+     * @param request
+     * @throws AstraException
+     */
+    void createScheduledWorkout(CreateScheduledWorkoutDTO request) throws AstraException;
 }
