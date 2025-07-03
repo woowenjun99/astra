@@ -61,7 +61,10 @@ public class FitnessController {
     }
 
     @GetMapping("/workouts/metadata")
-    public WorkoutMetadata getWorkoutMetadata() throws AstraException {
-        return fitnessService.getWorkoutMetadata();
+    public WorkoutMetadata getWorkoutMetadata(
+            @RequestParam(value = "workoutType", required = false) String workoutType,
+            @RequestParam(value = "intensity", required = false) String intensity
+    ) throws AstraException {
+        return fitnessService.getWorkoutMetadata(intensity, workoutType);
     }
 }

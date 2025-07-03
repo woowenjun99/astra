@@ -24,5 +24,8 @@ public interface ManualWorkoutLogEntityMapper {
 
     void batchInsertExercises(@Param("exercises")List<StrengthTrainingEntity> exercises);
 
-    WorkoutMetadata getWorkoutMetadata(@Param("userId") String userId);
+    WorkoutMetadata getWorkoutMetadata(
+            @Param("userId") String userId,
+            @Param("intensity") String intensity,
+            @Param("workoutType") String workoutType);
 }

@@ -51,14 +51,20 @@ export async function modifyWorkout(payload: CreateWorkoutDTO) {
   }
 }
 
-export async function getWorkoutMetadata(
-  endpoint: string
-): Promise<WorkoutMetadata> {
+export async function getWorkoutMetadata([
+  endpoint,
+  ...params
+]: string[]): Promise<WorkoutMetadata> {
   const jwt = await getJwtToken();
+  console.log(params);
   const response = await axiosInstance.get<null, BaseResponse<WorkoutMetadata>>(
     endpoint,
     {
       headers: { Authorization: jwt },
+      params: {
+        intensity: params[0] === "All Intensity" ? undefined : params[0],
+        workoutType: params[1] === "All Types" ? undefined : params[1],
+      },
     }
   );
   return response.data.data;

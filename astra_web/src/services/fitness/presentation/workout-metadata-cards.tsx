@@ -1,10 +1,11 @@
 "use client";
-import type { FC, ReactElement } from "react";
+import { useContext, type FC, type ReactElement } from "react";
 import useSWR from "swr";
 import { getWorkoutMetadata } from "../data/fitness-repository";
 import { Card, CardContent } from "@/components/ui/card";
 import { Formatter } from "@/util/formatter";
 import { Clock, Dumbbell, Loader } from "lucide-react";
+import { WorkoutPageContext } from "./workout-page-context";
 
 type WorkoutMetadataCardProps = {
   icon: ReactElement;
@@ -41,8 +42,9 @@ const WorkoutMetadataCard: FC<WorkoutMetadataCardProps> = ({
 };
 
 export default function WorkoutMetadataCards() {
+  const context = useContext(WorkoutPageContext);
   const { data, isLoading } = useSWR(
-    "/fitness/workouts/metadata",
+    ["/fitness/workouts/metadata", context?.intensity, context?.workoutType],
     getWorkoutMetadata
   );
 

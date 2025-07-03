@@ -96,10 +96,15 @@ public class FitnessServiceImpl implements FitnessService {
     }
 
     @Override
-    public WorkoutMetadata getWorkoutMetadata() throws AstraException {
+    public WorkoutMetadata getWorkoutMetadata(String intensity, String workoutType) throws AstraException {
         AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
         String userId = authenticatedUser.getUid();
-        return fitnessRepository.getWorkoutMetadata(userId);
+        WorkoutMetadata metadata = fitnessRepository.getWorkoutMetadata(userId, intensity, workoutType);
+        if (metadata != null) {
+            return metadata;
+        }
+        metadata = new WorkoutMetadata(0, 0, 0);
+        return metadata;
     }
 
     @Override

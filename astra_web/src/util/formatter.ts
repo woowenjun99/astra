@@ -19,9 +19,12 @@ export class Formatter {
    * Given a time in seconds, format in x h y min z s format
    *
    * @param time Time in seconds
-   * @returns Time format in x h y min z s format
+   * @returns Time format in x h y min z s format. If time === 0, return no data found
    */
   public static formatTimeElapsed(time: number): string {
+    if (time === 0) {
+      return "No data found";
+    }
     const hours = Math.floor(time / 3600);
     const remaining = time - hours * 3600;
     const minutes = Math.floor(remaining / 60);

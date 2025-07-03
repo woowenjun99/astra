@@ -28,9 +28,11 @@ public interface FitnessService {
      * number of workouts, the total duration of all the workouts
      * and the average duration of each workout.
      *
+     * @param intensity The intensity of the workout that we are querying
+     * @param workoutType The type of workout that we are querying
      * @throws AstraException If the user is not logged in
      */
-    WorkoutMetadata getWorkoutMetadata() throws AstraException;
+    WorkoutMetadata getWorkoutMetadata(String intensity, String workoutType) throws AstraException;
 
     /**
      * Delete a workout based on the workout id
