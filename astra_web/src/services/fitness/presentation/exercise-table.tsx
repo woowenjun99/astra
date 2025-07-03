@@ -43,7 +43,7 @@ export default function ExerciseRunTable({
           {runs.map((run, index) => {
             return (
               <TableRow key={index}>
-                <TableCell>{index}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>
                   {Formatter.formatTimeElapsed(run.duration)}
                 </TableCell>
@@ -83,7 +83,6 @@ export default function ExerciseRunTable({
         {exercises.map((exercise, index) => {
           return (
             <TableRow key={index}>
-              <TableCell>{index}</TableCell>
               <TableCell>{exercise.name}</TableCell>
               <TableCell>{exercise.sets}</TableCell>
               <TableCell>{exercise.reps}</TableCell>
@@ -92,7 +91,7 @@ export default function ExerciseRunTable({
                 <Button
                   onClick={() => {
                     const newExercises = exercises.filter(
-                      (run, idx) => index !== idx
+                      (_, idx) => index !== idx
                     );
                     setExercises(newExercises);
                   }}
