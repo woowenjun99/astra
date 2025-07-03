@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <SidebarTrigger />
         {children}
       </div>
-      <Toaster />
+      <Toaster richColors />
     </SidebarProvider>
   );
 }

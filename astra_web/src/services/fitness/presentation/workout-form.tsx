@@ -442,7 +442,9 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                           onChange={(e) =>
                             setExercise({
                               ...exercise,
-                              sets: parseInt(e.target.value),
+                              sets: isNaN(parseInt(e.target.value))
+                                ? 0
+                                : parseInt(e.target.value),
                             })
                           }
                           value={exercise.sets}
@@ -455,7 +457,9 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                           onChange={(e) =>
                             setExercise({
                               ...exercise,
-                              reps: parseInt(e.target.value),
+                              reps: isNaN(parseInt(e.target.value))
+                                ? 0
+                                : parseInt(e.target.value),
                             })
                           }
                           value={exercise.reps}
@@ -468,7 +472,9 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ id }) => {
                           onChange={(e) =>
                             setExercise({
                               ...exercise,
-                              weight: parseInt(e.target.value),
+                              weight: isNaN(parseInt(e.target.value))
+                                ? 0
+                                : parseInt(e.target.value),
                             })
                           }
                           value={exercise.weight}
