@@ -1,21 +1,17 @@
 version: 2
 updates:
-    # Enable version updates for npm
-    - package-ecosystem: "bun"
-      # Look for `package.json` and `lock` files in the `root` directory
-      directory: "/astra_web"
-      # Check the npm registry for updates every day (weekdays)
-      schedule:
-          interval: "daily"
+  # Enable version updates for npm
+  - package-ecosystem: "bun"
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: "/astra_web"
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: "daily"
 
-    # Enable version updates for Docker
-    - package-ecosystem: "maven"
-      # Look for a `Dockerfile` in the `root` directory
-      directory: "/backend"
-      # Check for updates once a week
-      schedule:
-          interval: "daily"
-    - package-ecosystem: "pub"
-      directory: "/astra"
-      schedule:
-          interval: "daily"
+  # Enable version updates for Docker
+  - package-ecosystem: "maven"
+    # Look for a `Dockerfile` in the `root` directory
+    directory: "/backend"
+    # Check for updates once a week
+    schedule:
+      interval: "daily"
