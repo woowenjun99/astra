@@ -60,7 +60,7 @@
     </insert>
 
     <insert id = "batchInsertExercises">
-        insert into exercises (
+        insert into strength_training (
             index,
             name,
             reps,
