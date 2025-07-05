@@ -13,8 +13,6 @@ public class WorkoutLogEntity {
 
     private Date dateUpdated;
 
-    private Integer duration;
-
     private String intensity;
 
     private String title;
@@ -22,6 +20,10 @@ public class WorkoutLogEntity {
     private String uid;
 
     private String workoutType;
+
+    private String frequency;
+
+    private Integer duration;
 
     public Long getId() {
         return id;
@@ -63,14 +65,6 @@ public class WorkoutLogEntity {
         this.dateUpdated = dateUpdated;
     }
 
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
     public String getIntensity() {
         return intensity;
     }
@@ -101,5 +95,21 @@ public class WorkoutLogEntity {
 
     public void setWorkoutType(String workoutType) {
         this.workoutType = workoutType == null ? null : workoutType.trim();
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency == null ? null : frequency.trim();
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 }

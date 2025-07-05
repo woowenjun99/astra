@@ -71,3 +71,5 @@ CREATE TABLE scheduled (
     title VARCHAR(30) NOT NULL,
     uid VARCHAR(30) NOT NULL REFERENCES users ON DELETE CASCADE
 );
+
+ALTER TABLE "public"."workout_logs" ADD COLUMN "frequency" VARCHAR(20);
