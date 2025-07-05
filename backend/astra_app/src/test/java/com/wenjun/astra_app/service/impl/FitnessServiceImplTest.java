@@ -10,6 +10,7 @@ import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 import com.wenjun.astra_persistence.repository.FitnessRepository;
+import com.wenjun.astra_persistence.repository.ScheduleRepository;
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
 import org.junit.jupiter.api.Assertions;
@@ -33,11 +34,14 @@ public class FitnessServiceImplTest {
     @Mock
     private RunningWorkoutTypePlugin runningWorkoutTypePlugin;
 
+    @Mock
+    private ScheduleRepository scheduleRepository;
+
     @Test
     public void editWorkout_provideNullId_shouldThrow() {
         try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
             mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
-            FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository, workoutTypePlugins);
+            FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository, scheduleRepository, workoutTypePlugins);
             CreateWorkoutDTO request = new CreateWorkoutDTO();
             Throwable exception = Assertions.assertThrows(AstraException.class, () -> fitnessService.editWorkout(request));
             Assertions.assertEquals("ID cannot be null", exception.getMessage());
@@ -49,7 +53,7 @@ public class FitnessServiceImplTest {
         try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
             mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
             Mockito.when(fitnessRepository.getWorkoutByUidAndId(1L, "userId")).thenReturn(null);
-            FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository, workoutTypePlugins);
+            FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository, scheduleRepository, workoutTypePlugins);
             CreateWorkoutDTO request = new CreateWorkoutDTO();
             request.setId(1L);
             Throwable exception = Assertions.assertThrows(AstraException.class, () -> fitnessService.editWorkout(request));
@@ -63,7 +67,7 @@ public class FitnessServiceImplTest {
             mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
             Mockito.when(fitnessRepository.getWorkoutByUidAndId(1L, "userId")).thenReturn(new WorkoutLogEntity());
             Mockito.when(workoutTypePlugins.getPlugin(WorkoutType.RUNNING)).thenReturn(runningWorkoutTypePlugin);
-            FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository, workoutTypePlugins);
+            FitnessService fitnessService = new FitnessServiceImpl(fitnessRepository, scheduleRepository, workoutTypePlugins);
             CreateWorkoutDTO request = new CreateWorkoutDTO();
             request.setId(1L);
             request.setRuns(Collections.singletonList(new CreateWorkoutDTO.RunningDTO(1, 1)));
@@ -82,7 +86,7 @@ public class FitnessServiceImplTest {
         try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
             mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
             Mockito.when(fitnessRepository.getWorkoutMetadata("userId", null, null)).thenReturn(new WorkoutMetadata(1, 2, 3));
-            FitnessService service = new FitnessServiceImpl(fitnessRepository, null);
+            FitnessService service = new FitnessServiceImpl(fitnessRepository, scheduleRepository, workoutTypePlugins);
             WorkoutMetadata metadata = Assertions.assertDoesNotThrow(() -> service.getWorkoutMetadata(null, null));
             Assertions.assertEquals(1, metadata.getTotalWorkouts());
             Assertions.assertEquals(3, metadata.getAverageDurationInSeconds());
@@ -95,7 +99,7 @@ public class FitnessServiceImplTest {
         try (MockedStatic<ThreadLocalUser> mocked = Mockito.mockStatic(ThreadLocalUser.class)) {
             mocked.when(() -> ThreadLocalUser.getAuthenticatedUser()).thenReturn(new AuthenticatedUser("userId"));
             Mockito.when(fitnessRepository.getWorkoutMetadata("userId", null, null)).thenReturn(null);
-            FitnessService service = new FitnessServiceImpl(fitnessRepository, null);
+            FitnessService service = new FitnessServiceImpl(fitnessRepository, scheduleRepository, null);
             WorkoutMetadata metadata = Assertions.assertDoesNotThrow(() -> service.getWorkoutMetadata(null, null));
             Assertions.assertEquals(0, metadata.getTotalWorkouts());
             Assertions.assertEquals(0, metadata.getAverageDurationInSeconds());

@@ -33,4 +33,8 @@ public class ScheduleRepository {
         example.createCriteria().andScheduledTimeBetween(dateAt29, dateAt31);
         return scheduledEntityMapper.selectByExample(example);
     }
+
+    public void createSchedule(ScheduledEntity scheduled) {
+        scheduledEntityMapper.insertSelective(scheduled);
+    }
 }

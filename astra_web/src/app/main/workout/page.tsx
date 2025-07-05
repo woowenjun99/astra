@@ -11,6 +11,7 @@ import {
   WorkoutType,
 } from "@/services/fitness/presentation/workout-page-context";
 import { useState } from "react";
+import ScheduledWorkoutDialog from "@/services/schedule/presentation/scheduled-workout-dialog";
 
 export default function WorkoutPage() {
   const [workoutType, setWorkoutType] = useState<WorkoutType>("All Types");
@@ -29,12 +30,15 @@ export default function WorkoutPage() {
             </p>
           </div>
 
-          <Link passHref href="/main/workout/new">
-            <Button className="bg-green-600 hover:bg-green-700" type="button">
-              <Plus />
-              Record Workout
-            </Button>
-          </Link>
+          <div className="flex flex-row space-x-2">
+            <Link passHref href="/main/workout/new">
+              <Button className="bg-green-600 hover:bg-green-700" type="button">
+                <Plus />
+                Record Workout
+              </Button>
+            </Link>
+            <ScheduledWorkoutDialog />
+          </div>
         </div>
 
         <WorkoutMetadataCards />

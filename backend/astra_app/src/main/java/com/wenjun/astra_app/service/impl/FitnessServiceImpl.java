@@ -1,6 +1,7 @@
 package com.wenjun.astra_app.service.impl;
 
 import com.wenjun.astra_app.model.AstraException;
+import com.wenjun.astra_app.model.dto.CreateScheduledWorkoutDTO;
 import com.wenjun.astra_app.model.dto.CreateWorkoutDTO;
 import com.wenjun.astra_app.model.enums.AstraExceptionEnum;
 import com.wenjun.astra_app.model.enums.fitness.WorkoutType;
@@ -11,10 +12,12 @@ import com.wenjun.astra_app.plugins.fitness.WorkoutTypePlugins;
 import com.wenjun.astra_app.service.FitnessService;
 import com.wenjun.astra_app.util.ThreadLocalUser;
 import com.wenjun.astra_persistence.models.RunEntity;
+import com.wenjun.astra_persistence.models.ScheduledEntity;
 import com.wenjun.astra_persistence.models.StrengthTrainingEntity;
 import com.wenjun.astra_persistence.models.WorkoutLogEntity;
 import com.wenjun.astra_persistence.models.manual.WorkoutMetadata;
 import com.wenjun.astra_persistence.repository.FitnessRepository;
+import com.wenjun.astra_persistence.repository.ScheduleRepository;
 import com.wenjun.astra_third_party_services.firebase.model.AuthenticatedUser;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +38,7 @@ import java.util.List;
 @Slf4j
 public class FitnessServiceImpl implements FitnessService {
     private final FitnessRepository fitnessRepository;
+    private final ScheduleRepository scheduleRepository;
     private final WorkoutTypePlugins workoutTypePlugins;
 
     /**
@@ -144,5 +153,34 @@ public class FitnessServiceImpl implements FitnessService {
                 .workout(workoutLog)
                 .build();
         return response;
+    }
+
+    private Date combineDateAndTime(Date date, LocalTime time) {
+        Instant instant = date.toInstant();
+        ZoneId zoneId = ZoneId.of("Asia/Singapore");
+        LocalDate localDate = instant.atZone(zoneId).toLocalDate();
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, time);
+        return Date.from(localDateTime.atZone(zoneId).toInstant());
+    }
+
+    @Override
+    public void createScheduledWorkout(CreateScheduledWorkoutDTO request) throws AstraException {
+        AuthenticatedUser authenticatedUser = ThreadLocalUser.getAuthenticatedUser();
+        String userId = authenticatedUser.getUid();
+
+        WorkoutLogEntity workoutLog = new WorkoutLogEntity();
+        workoutLog.setUid(userId);
+        workoutLog.setDate(request.getDate());
+
+        // Do not need to create push notification
+        if (!request.getShouldSendReminder()) {
+            return;
+        }
+
+        ScheduledEntity scheduled = new ScheduledEntity();
+        scheduled.setTitle("Upcoming workout " + request.getTitle() + " scheduled at " + request.getTime());
+        scheduled.setBody("You have a workout scheduled at " + request.getTime() + " today");
+        scheduled.setScheduledTime(combineDateAndTime(request.getDate(), request.getTime()));
+        scheduleRepository.createSchedule(scheduled);
     }
 }
